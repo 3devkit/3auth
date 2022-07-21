@@ -11,9 +11,6 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/3devkit/3devkit.git"
@@ -21,5 +18,5 @@
   "dependencies": {
     "@solana/web3.js": "^1.48.0"
   },
-  "gitHead": "1b663eecedd705c6f1a9ce68f91bb5551c72e569"
+  "gitHead": "04c8776d586179e3b88a39e8d35a4050a11b5a78"
 }

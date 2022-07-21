@@ -37,6 +37,7 @@
     "pull": "git pull --reb",
     "up": "yarn upgrade-interactive --latest",
     "ps": "node scripts/publish.js",
+    "ps-npm": "lerna publish --no-private",
     "npm:publish": "node scripts/npm-publish.js",
     "clean": "node scripts/dist-clean.js",
     "i": "lerna bootstrap & export NODE_OPTIONS='--max_old_space_size=4096' & yarn build",
