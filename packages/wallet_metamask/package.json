@@ -12,11 +12,12 @@
     "dist"
   ],
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "repository": {
     "type": "github",
     "url": "https://github.com/3devkit/3auth"
   },
-  "gitHead": "6e55e08060d4ec00cfa3d2c8d17de1afa727bf26"
+  "gitHead": "ad16d2ce31415c20466ee4011a0e312ed2cd8d7f"
 }
