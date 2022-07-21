@@ -22,5 +22,5 @@
   "dependencies": {
     "@solana/web3.js": "^1.48.0"
   },
-  "gitHead": "2361bad82bda5bd6ea6373501d960e440c012cba"
+  "gitHead": "73c73e5710f06e7307748ae2b1fe5b8a300930d5"
 }
