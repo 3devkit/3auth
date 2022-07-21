@@ -36,7 +36,7 @@
     "push": "git push",
     "pull": "git pull --reb",
     "up": "yarn upgrade-interactive --latest",
-    "ps": "node scripts/publish.js",
+    "ps-github": "node scripts/publish.js",
     "ps-npm": "lerna publish --no-private",
     "npm:publish": "node scripts/npm-publish.js",
     "clean": "node scripts/dist-clean.js",
