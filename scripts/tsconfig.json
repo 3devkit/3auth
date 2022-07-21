@@ -1,0 +1,21 @@
+// https://blog.dkvirus.top/frontend/typescript/tsconfig1.html
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react",
+    "declaration": true,
+    "declarationMap": true,
+    "allowJs": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true
+  },
+  "include": ["src"],
+  "references": []
+}

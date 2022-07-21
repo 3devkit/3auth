@@ -1,0 +1,15 @@
+*.log
+.next/
+.vscode/
+build
+dist
+lib/
+node_modules/
+packages/*/yarn.lock
+site/out/
+tmp/
+packages/**/dist
+.VSCodeCounter
+coverage
+.DS_STORE
+report*.json

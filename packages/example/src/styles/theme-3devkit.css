@@ -1,0 +1,26 @@
+.lib_exbox {
+  background-color: #fff;
+  box-shadow: 1px 3px 8px #dbd9d8;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.lib_dialogbox {
+  background-color: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.lib_dialogbox_title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth_walletlist {
+  width: 300px;
+  border-radius: 2px;
+}

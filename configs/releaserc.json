@@ -1,0 +1,11 @@
+{
+  "extends": [],
+  "branches": [
+    "master",
+    {
+      "name": "dev",
+      "prerelease": "alpha"
+    }
+  ],
+  "plugins": []
+}

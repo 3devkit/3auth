@@ -1,0 +1,25 @@
+{
+  "name": "@3auth/wallet_phantom",
+  "version": "0.0.1",
+  "description": "wallet login",
+  "author": "WEB3.WALLE <web3.walle@keypod.cn>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3devkit/3devkit.git"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.48.0"
+  },
+  "gitHead": "4ac36c0ed38a7bc0bd430620779fee285e5d1e71"
+}

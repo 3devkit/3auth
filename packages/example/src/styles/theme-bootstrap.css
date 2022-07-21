@@ -1,0 +1,90 @@
+html {
+  --primaryColor: #0d6efd;
+  --secondColor: #eb5c5c;
+  --headerHeight: 72px;
+}
+
+.btn {
+  border-radius: 6px;
+  padding: 0 30px;
+  height: 42px;
+  transition: 300ms ease;
+  border: var(--primaryColor);
+}
+
+.btn:hover {
+  transform: scale(1.03);
+}
+
+.btn-primary {
+  background-color: var(--primaryColor);
+  border-color: #ccc;
+  box-shadow: none !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--primaryColor);
+}
+
+.btn-primary:visited {
+  background-color: var(--primaryColor);
+}
+
+.btn-primary:focus {
+  background-color: var(--primaryColor);
+}
+
+.btn-light {
+  color: var(--primaryColor);
+}
+
+.btn-light:hover {
+  color: var(--primaryColor);
+}
+
+.loading-primary {
+  fill: var(--primaryColor) !important;
+}
+
+/* nav tab */
+
+.nav-item {
+  font-size: 15px;
+}
+
+.nav-link {
+  color: var(--secondColor);
+}
+
+.nav-link.active {
+  font-weight: normal;
+}
+
+.nav-link:hover {
+  color: var(--secondColor);
+}
+
+/* Form */
+
+.form-label {
+  font-size: 15px;
+}
+
+.form-control {
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.form-select {
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.form-text {
+  font-size: 13px;
+}
+
+.input-group-text {
+  font-size: 13px;
+  border-radius: 0;
+}
