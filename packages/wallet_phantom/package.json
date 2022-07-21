@@ -13,7 +13,7 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.com"
   },
   "repository": {
     "type": "github",
@@ -22,5 +22,5 @@
   "dependencies": {
     "@solana/web3.js": "^1.48.0"
   },
-  "gitHead": "daaab11132bc6718a3a282cf19878410a0a780dd"
+  "gitHead": "2361bad82bda5bd6ea6373501d960e440c012cba"
 }
