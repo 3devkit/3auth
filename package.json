@@ -1,17 +1,17 @@
 {
-  "name": "3devkit",
-  "description": "",
+  "name": "3auth",
+  "description": "web3 wallet login",
   "version": "0.0.0",
   "private": true,
-  "author": "",
-  "license": "ISC",
+  "author": "WEB3.WALLE <web3.walle@gmail.com>",
+  "license": "MIT",
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "repository": {
-    "type": "git",
-    "url": "https://github.com/3devkit/3devkit.git"
+    "type": "github",
+    "url": "https://github.com/3devkit/3auth"
   },
   "scripts": {
     "ex-dev": "cd packages/example && yarn dev",

@@ -2,7 +2,7 @@
   "name": "@3auth/helpers",
   "version": "0.0.1",
   "description": "wallet login",
-  "author": "WEB3.WALLE <web3.walle@keypod.cn>",
+  "author": "WEB3.WALLE <web3.walle@gmail.com>",
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.cjs.js",
