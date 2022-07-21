@@ -55,7 +55,7 @@ export class WalletConnectorSdk {
   }
 
   /**
-   * eagerlyConnect
+   * eagerly Connect
    */
   public async eagerlyConnect(): Promise<void> {
     const walletName = this._walletMemoryRepo.get();
