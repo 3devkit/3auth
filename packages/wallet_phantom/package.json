@@ -11,9 +11,12 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/3devkit/3devkit.git"
+    "type": "github",
+    "url": "https://github.com/3devkit/3auth"
   },
   "dependencies": {
     "@solana/web3.js": "^1.48.0"
