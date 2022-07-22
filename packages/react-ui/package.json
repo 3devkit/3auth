@@ -1,5 +1,5 @@
 {
-  "name": "@3auth/wallet_phantom",
+  "name": "@3auth/react-ui",
   "version": "0.0.16",
   "description": "wallet login",
   "author": "WEB3.WALLE <web3.walle@gmail.com>",
@@ -19,8 +19,11 @@
     "type": "github",
     "url": "https://github.com/3devkit/3auth"
   },
+  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0",
   "dependencies": {
-    "@solana/web3.js": "^1.50.0"
-  },
-  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0"
+    "@3lib/components": "^0.0.17",
+    "@3lib/helpers": "^0.0.17",
+    "eventemitter3": "^4.0.7",
+    "react-loading": "^2.0.3"
+  }
 }

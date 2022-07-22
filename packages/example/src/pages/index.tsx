@@ -1,15 +1,18 @@
 import React from 'react';
-import { Button, Container, Stack } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { BaseConnector, ConfigureParam } from '@3auth/core';
+import { AuthStateBox } from '@3auth/react-ui';
 import { MetamaskConnector } from '@3auth/wallet_metamask';
 import { PhantomConnector } from '@3auth/wallet_phantom';
+import { ExButton, ExPopover, ExPopoverBox } from '@3lib/components';
+import { StyleHelper } from '@3lib/helpers';
 import {
   useWalletConnector,
   useWalletState,
   Web3AuthProvider,
 } from '@3auth/react';
 import { Class } from 'utility-types';
-import { BrowserRender, EthereumChainInfoHelper } from '@3auth/helpers';
+import { EthereumChainInfoHelper } from '@3auth/helpers';
 import styles from './index.module.scss';
 
 export default function Page() {
@@ -56,80 +59,56 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 }
 
 function PageConnent() {
-  const walletConnector = useWalletConnector();
-
-  const walletState = useWalletState();
-
-  async function onDisconnect() {
-    await walletConnector.disconnect();
-  }
-
-  async function onSignMessage() {
-    const signedMessage = await walletConnector.signMessage(
-      'Hi! my name is walle',
-    );
-  }
-
   return (
     <Container>
-      {walletState.isConnected ? (
-        <Stack direction="horizontal" gap={3}>
-          <div>account : {walletState.account}</div>
-          <div>chainId : {walletState.chainId}</div>
-          <Button onClick={onDisconnect} variant="link">
-            Disconnect
-          </Button>
-          <Button onClick={onSignMessage}>Sign Message</Button>
-        </Stack>
-      ) : (
-        <>
-          <WalletList />
-          {walletState.isConnecting && `Connecting...`}
-        </>
-      )}
-    </Container>
-  );
-}
-
-function WalletList() {
-  const walletConnector = useWalletConnector();
-
-  async function onConnect(connector: BaseConnector) {
-    if (!connector.isInstalled) {
-      window.open(connector.installUrl);
-      return;
-    }
-
-    await walletConnector.connect(connector.name);
-  }
-
-  return (
-    <div className={styles.WalletList}>
-      {walletConnector.connectors.map(connector => {
-        return (
-          <div
-            key={connector.name}
-            className={styles.item}
-            onClick={() => onConnect(connector)}
-          >
-            <div className={styles.left}>
-              {connector.icon}
-              {connector.name}
-            </div>
-            <div className={styles.right}>
-              <BrowserRender
-                onRender={() => (
-                  <>
-                    {!connector.isInstalled && (
-                      <div className={styles.tag}>Install</div>
-                    )}
-                  </>
-                )}
+      <AuthStateBox
+        onLoggedBuilder={context => {
+          return (
+            <div className={styles.UserBox}>
+              <ExPopover
+                onButtonBuilder={function (open) {
+                  return (
+                    <div
+                      className={StyleHelper.combinedSty(
+                        styles.UserInfo,
+                        open ? styles.selected : '',
+                      )}
+                    >
+                      <div className={styles.avatar} />
+                      <div className={styles.name}>
+                        {context.walletState.shortAccount}
+                      </div>
+                    </div>
+                  );
+                }}
+                onPopoverBuilder={function (closeHandle) {
+                  return (
+                    <ExPopoverBox>
+                      <ul className={styles.MenuList} style={{ width: 200 }}>
+                        <li
+                          onClick={() => {
+                            closeHandle();
+                            context.walletConnector.disconnect();
+                          }}
+                        >
+                          <div className={styles.left}>Disconnect Wallet</div>
+                        </li>
+                      </ul>
+                    </ExPopoverBox>
+                  );
+                }}
               />
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        }}
+        onNotLoggedBuilder={context => {
+          return (
+            <ExButton onClick={context.openLoginDialog}>
+              Connect Wallet
+            </ExButton>
+          );
+        }}
+      />
+    </Container>
   );
 }

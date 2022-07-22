@@ -42,7 +42,8 @@
     "clean": "node scripts/dist-clean.js",
     "i": "lerna bootstrap & export NODE_OPTIONS='--max_old_space_size=4096' & yarn build",
     "link-all": "yarn unlink-all && yarn lerna exec --parallel yarn link",
-    "unlink-all": "yarn lerna exec --parallel --bail=false yarn unlink"
+    "unlink-all": "yarn lerna exec --parallel --bail=false yarn unlink",
+    "lb": "yarn lerna bootstrap"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",

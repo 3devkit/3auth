@@ -2,6 +2,22 @@
 # yarn lockfile v1
 
 
+"@3lib/components@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.npmjs.org/@3lib/components/-/components-0.0.17.tgz#27717475195f8f63e00b0f89ae28396002b98f6b"
+  integrity sha512-HtzFqtmWuKZ1vXNSA8z6lIEmAMI9MiiDxeCYHLSlVkTXQUzZJ/ZT0gjmq0LQAeFYo3Zb37xQLIuo1iyGquTRuw==
+  dependencies:
+    ahooks "^3.5.2"
+    react-cool-portal "^1.2.0"
+    react-loading "^2.0.3"
+    react-popper "^2.3.0"
+    zustand "^4.0.0-rc.4"
+
+"@3lib/helpers@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.npmjs.org/@3lib/helpers/-/helpers-0.0.17.tgz#41686fcbc64a72b22b45383e65b9dff900ab81c2"
+  integrity sha512-rTxOkaW59jqhDAVPgDU1WnUFqBhHYp4YHJqz7oW2RliIvQjK68MQFlvXUk7FULBCaXWKnY7/HhLlLcpl2guU1g==
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmmirror.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -3083,10 +3099,10 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/web3.js@^1.48.0":
-  version "1.48.0"
-  resolved "https://registry.npmmirror.com/@solana/web3.js/-/web3.js-1.48.0.tgz#331281b2d80640431fb3b6fdc6b704ec325917aa"
-  integrity sha512-Gb6XvdhGjGI7CdAXLmlMIEvEYvrwqc78JOtwCsSrTqzz7Ek/BhJpZ/Cv89gxRDrWxf6kHegAfaN2FxwuYMmDZQ==
+"@solana/web3.js@^1.50.0":
+  version "1.50.0"
+  resolved "https://registry.npmmirror.com/@solana/web3.js/-/web3.js-1.50.0.tgz#afc01b0fdeb86b571eefd243567a7dc9a281f236"
+  integrity sha512-9KCuF3QLHd/dkYlffYPSHPbPFaBKqiwwDqWR+C/z1CZZbQybu+NCydWvwHHqrrlG50wn15L/6zYLb5Tjr6tOkA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@ethersproject/sha2" "^5.5.0"
@@ -9684,6 +9700,11 @@ react-dom@18.2.0, react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-fast-compare@^3.0.1:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
 react-headroom@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmmirror.com/react-headroom/-/react-headroom-3.2.0.tgz#ff14d01343b850d02bf30624bfa2c7ed60c75558"
@@ -9724,6 +9745,14 @@ react-native-url-polyfill@^1.3.0:
   integrity sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==
   dependencies:
     whatwg-url-without-unicode "8.0.0-3"
+
+react-popper@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/react-popper/-/react-popper-2.3.0.tgz#17891c620e1320dce318bad9fede46a5f71c70ba"
+  integrity sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==
+  dependencies:
+    react-fast-compare "^3.0.1"
+    warning "^4.0.2"
 
 react-reconciler@^0.26.2:
   version "0.26.2"
@@ -11362,7 +11391,7 @@ walker@^1.0.8:
   dependencies:
     makeerror "1.0.12"
 
-warning@^4.0.0, warning@^4.0.3:
+warning@^4.0.0, warning@^4.0.2, warning@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npmmirror.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
@@ -11649,7 +11678,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmmirror.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zustand@^4.0.0-rc.3:
+zustand@^4.0.0-rc.3, zustand@^4.0.0-rc.4:
   version "4.0.0-rc.4"
   resolved "https://registry.npmmirror.com/zustand/-/zustand-4.0.0-rc.4.tgz#ed0e0f1fa3e1c7d0d9021739d862d88048d845da"
   integrity sha512-BP35Rq40GBTKKtYyjLuZogzXGh289xqO8U8ivGIK43nRqURD2dEEImkUci1/jWRUz7J1OPJkUZuNySCho801gQ==

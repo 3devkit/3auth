@@ -1,10 +1,22 @@
 import { StoreDto } from './store';
 
 export class WalletState {
-  public constructor(private connecting: boolean = false, public chainId?: number, public account?: string) {}
+  public constructor(
+    private connecting: boolean = false,
+    public chainId?: number,
+    public account?: string,
+  ) {}
 
   public static fromDto(dto: StoreDto) {
     return new WalletState(dto.connecting, dto.chainId, dto.account);
+  }
+
+  public get shortAccount() {
+    return (
+      this.account?.substring(0, 6) +
+      '...' +
+      this.account?.substring(this.account.length - 4)
+    );
   }
 
   public get isConnected() {
