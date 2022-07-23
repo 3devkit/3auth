@@ -2,14 +2,13 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import { BaseConnector, Bytes, ConfigureParam } from '@3auth/core';
 import {
-  SignLoginServerAdapter,
-  AuthServerAdapter,
   AuthToken,
   SiginNonce,
   LoginLauncherProvider,
-  SignLoginPluginProvider,
   useLoginState,
   ChangeUserInfoDto,
+  AuthServerAdapter,
+  useMyInfo,
 } from '@3auth/signlogin';
 import { AuthStateBox } from '@3auth/react-ui';
 import { MetamaskConnector } from '@3auth/wallet_metamask';
@@ -61,20 +60,20 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
   return (
     <Web3AuthProvider configure={configure} connectors={connectors}>
       <LoginLauncherProvider authServer={new TestAuthServerAdapter()}>
-        <SignLoginPluginProvider
+        {props.children}
+        {/* <SignLoginPluginProvider
           authServerAdapter={new TestSignLoginServerAdapter()}
         >
-          {props.children}
-        </SignLoginPluginProvider>
+        </SignLoginPluginProvider> */}
       </LoginLauncherProvider>
     </Web3AuthProvider>
   );
 }
 
 class TestAuthServerAdapter extends AuthServerAdapter {
-  public async walletAuthLogin(
+  public async walletSignLogin(
     account: string,
-    hexsign: string | Bytes,
+    hexsign: string,
     nonce: string,
   ): Promise<string> {
     return 'sadas';
@@ -99,20 +98,23 @@ class TestAuthServerAdapter extends AuthServerAdapter {
   }
 }
 
-class TestSignLoginServerAdapter extends SignLoginServerAdapter {
-  public async getSiginNonce(): Promise<SiginNonce> {
-    return 'abcdetf';
-  }
+// class TestSignLoginServerAdapter extends SignLoginServerAdapter {
+//   public async getSiginNonce(): Promise<SiginNonce> {
+//     return 'abcdetf';
+//   }
 
-  public async auth(): Promise<AuthToken> {
-    return '123456789';
-  }
-}
+//   public async auth(): Promise<AuthToken> {
+//     return '123456789';
+//   }
+// }
 
 function PageConnent() {
   const loginState = useLoginState();
 
+  const { myInfo } = useMyInfo();
+
   console.info('======loginState===========', loginState);
+  console.info('======myInfo===========', myInfo);
 
   return (
     <Container>

@@ -1,5 +1,4 @@
-import { LoginStateType, StoreDto } from './store';
-import { UserInfo } from './userInfo';
+import { LoginStateType, StoreDto, UserInfo } from '../domain';
 
 export class LoginState {
   public constructor(
@@ -24,6 +23,6 @@ export class LoginState {
   }
 
   public get isMyInfoGetting() {
-    return this.loginState === 'myInfoGetting';
+    return this.loginState === 'loginSuccessful' && !this.userInfo;
   }
 }

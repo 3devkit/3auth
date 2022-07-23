@@ -6,7 +6,7 @@ import { Configure } from '../domain';
 import { WalletMemoryRepo } from '../repo';
 
 export class WalletConnectorSdk {
-  private store: Store;
+  public store: Store;
   private actions: Actions;
   public connectors: BaseConnector[] = [];
   public connector?: BaseConnector;
@@ -50,7 +50,7 @@ export class WalletConnectorSdk {
    * @param message
    * @returns
    */
-  public async signMessage(message: string): Promise<string | Bytes> {
+  public async signMessage(message: string): Promise<string> {
     return await this.connector!.signMessage(message);
   }
 

@@ -7,7 +7,6 @@ export type LoginStateType =
   | 'notLogin'
   | 'loggingin'
   | 'loginSuccessful'
-  | 'myInfoGetting'
   | 'myInfoGetSuccessful';
 
 export interface StoreData {

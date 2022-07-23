@@ -1,4 +1,3 @@
-import { Bytes } from '@3auth/core';
 import { ChangeUserInfoDto, UserInfoDto } from './userInfo';
 
 export type AuthToken = string;
@@ -8,9 +7,9 @@ export type SiginNonce = string;
 export abstract class AuthServerAdapter {
   public abstract getSiginNonce(): Promise<SiginNonce>;
 
-  public abstract walletAuthLogin(
+  public abstract walletSignLogin(
     account: string,
-    hexsign: string | Bytes,
+    hexsign: string,
     nonce: string,
   ): Promise<AuthToken>;
 

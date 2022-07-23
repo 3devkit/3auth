@@ -1,22 +1,24 @@
+import { AuthTokenRepo } from '../repo';
 import { Store } from './store';
 import { UserInfo } from './userInfo';
 
 export class Actions {
-  public constructor(private store: Store) {}
+  public constructor(
+    private store: Store,
+    private authTokenRepo: AuthTokenRepo,
+  ) {}
 
   public beginLogin() {
     this.store.update({ loginState: 'loggingin' });
   }
 
-  public loginSuccess(account: string) {
+  public loginSuccess(account: string, token: string) {
+    this.authTokenRepo.set(account, token);
+
     this.store.update({
       loginState: 'loginSuccessful',
       account,
     });
-  }
-
-  public beginGetMyInfo() {
-    this.store.update({ loginState: 'myInfoGetting' });
   }
 
   public getMyInfoSuccess(userInfo: UserInfo) {
@@ -27,14 +29,16 @@ export class Actions {
   }
 
   public loginFail() {
-    this.resetState();
+    this._resetState();
   }
 
   public signout() {
-    this.resetState();
+    this.authTokenRepo.clear();
+
+    this._resetState();
   }
 
-  public resetState() {
+  private _resetState() {
     this.store.update({
       loginState: 'notLogin',
       account: undefined,

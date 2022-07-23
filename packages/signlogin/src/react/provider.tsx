@@ -1,8 +1,8 @@
 import React, { useContext, useMemo } from 'react';
 import { createContext } from 'react';
-import { LoginLauncherSdk } from '../../application';
-import { AuthServerAdapter } from '../../domain/authServerAdapter';
-import { LoginStateProvider } from './LoginStateProvider';
+import { LoginLauncherSdk } from '../application';
+import { AuthServerAdapter } from '../domain/authServerAdapter';
+import { MyInfoProvider } from './use-myInfo';
 
 export const LoginLauncherContext = createContext<LoginLauncherSdk | null>(
   null,
@@ -18,16 +18,13 @@ export function LoginLauncherProvider(
   const { authServer } = props;
 
   const loginLauncher = useMemo(() => {
-    const ll = new LoginLauncherSdk(authServer);
-
-    ll.eagerlyLogin();
-
-    return ll;
+    return new LoginLauncherSdk(authServer);
   }, [authServer]);
 
   return (
     <LoginLauncherContext.Provider value={loginLauncher}>
-      <LoginStateProvider>{props.children}</LoginStateProvider>
+      <MyInfoProvider />
+      {props.children}
     </LoginLauncherContext.Provider>
   );
 }

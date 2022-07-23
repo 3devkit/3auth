@@ -1,6 +1,7 @@
 import React from 'react';
 import { BaseProvider, BaseConnector, Bytes } from '@3auth/core';
 import { ReactComponent as PhantomIcon } from './phantom.svg';
+import { Base64 } from 'js-base64';
 import {
   Connection,
   PublicKey,
@@ -73,12 +74,12 @@ export class PhantomConnector extends BaseConnector<PhantomProvider> {
     }
   }
 
-  public async signMessage(message: string): Promise<string | Bytes> {
+  public async signMessage(message: string): Promise<string> {
     const encodedMessage = new TextEncoder().encode(message);
 
     const { signature } = await this.provider.signMessage(encodedMessage);
 
-    return signature;
+    return Base64.fromUint8Array(signature);
   }
 
   public async disconnect(): Promise<void> {

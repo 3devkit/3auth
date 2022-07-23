@@ -32,6 +32,7 @@ export class SignLoginPlugin {
           hexsign,
           nonce,
         );
+
         console.info('=======signLogin======', account, nonce, hexsign, token);
 
         this.loginLauncher.loginSuccess(account, token);

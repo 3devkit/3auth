@@ -61,7 +61,7 @@ export class MetamaskConnector extends EthConnector<MetamaskProvider> {
     }
   }
 
-  public async signMessage(message: string): Promise<string | Bytes> {
+  public async signMessage(message: string): Promise<string> {
     const signer = this.web3Provider.getSigner();
 
     return await signer.signMessage(message);

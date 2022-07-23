@@ -40,7 +40,7 @@ export abstract class BaseConnector<T = any> {
 
   public abstract disconnect(): Promise<void>;
 
-  public abstract signMessage(message: string): Promise<string | Bytes>;
+  public abstract signMessage(message: string): Promise<string>;
 }
 
 export abstract class EthConnector<T> extends BaseConnector<T> {

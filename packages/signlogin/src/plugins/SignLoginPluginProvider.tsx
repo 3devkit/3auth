@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { SignLoginPlugin } from './SignLoginPlugin';
 import { useWalletConnector, useWalletState } from '@3auth/react';
 import { SignLoginServerAdapter } from './SignLoginServerAdapter';
-import { useLoginLauncher } from '../react/context';
+import { useLoginLauncher } from '../react';
 
 export const SignLoginPluginContext = createContext<SignLoginPlugin | null>(
   null,

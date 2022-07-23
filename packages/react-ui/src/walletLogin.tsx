@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BaseConnector } from '@3auth/core';
 import { useWalletConnector, useWalletState } from '@3auth/react';
-import { useLoginState, useSignLoginPlugin } from '@3auth/signlogin';
+import { useLoginLauncher, useLoginState } from '@3auth/signlogin';
 import { BrowserRender } from '@3auth/helpers';
 import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
@@ -105,16 +105,18 @@ export function WalletListWrapper(props: {
 function SignBox(props: { onBack: () => void }) {
   const { onBack } = props;
 
-  const walletState = useWalletState();
+  const walletConnector = useWalletConnector();
 
-  const signLoginPlugin = useSignLoginPlugin();
+  const { walletSignLoginPlugin } = useLoginLauncher();
+
+  const walletState = useWalletState();
 
   const loginState = useLoginState();
 
   const { closeDialog } = useModalAction();
 
   async function onSign() {
-    const loginState = await signLoginPlugin.signLogin();
+    const loginState = await walletSignLoginPlugin.signLogin(walletConnector);
 
     if (loginState.isLogin) {
       closeDialog();

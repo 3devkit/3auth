@@ -1,48 +1,25 @@
 import { Actions, Store } from '../domain';
 import { AuthServerAdapter } from '../domain/authServerAdapter';
-import { LoginState } from '../domain/loginState';
-import { UserInfo } from '../domain/userInfo';
+import { WalletSignLoginPlugin } from '../domain/plugins/walletSignLogin';
 import { AuthTokenRepo } from '../repo';
+import { LoginState } from '../vo/loginState';
 
 export class LoginLauncherSdk {
-  private store: Store;
-  private actions: Actions;
+  public store: Store;
+  public actions: Actions;
   private authTokenRepo: AuthTokenRepo;
+
+  public walletSignLoginPlugin: WalletSignLoginPlugin;
 
   public constructor(public authServer: AuthServerAdapter) {
     this.store = new Store();
-    this.actions = new Actions(this.store);
     this.authTokenRepo = new AuthTokenRepo();
-  }
-
-  public beginLogin() {
-    this.actions.beginLogin();
-  }
-
-  public eagerlyLogin() {
-    if (this.authTokenRepo.has()) {
-      this.actions.beginGetMyInfo();
-    }
-  }
-
-  public loginSuccess(account: string, token: string) {
-    this.authTokenRepo.set(account, token);
-
-    this.actions.loginSuccess(account);
-  }
-
-  public getMyInfoSuccess(userInfo: UserInfo) {
-    this.actions.getMyInfoSuccess(userInfo);
-  }
-
-  public loginFail() {
-    this.actions.loginFail();
-  }
-
-  public signout() {
-    this.authTokenRepo.clear();
-
-    this.actions.signout();
+    this.actions = new Actions(this.store, this.authTokenRepo);
+    this.walletSignLoginPlugin = new WalletSignLoginPlugin(
+      authServer,
+      this.store,
+      this.actions,
+    );
   }
 
   public get subscribeChange() {
