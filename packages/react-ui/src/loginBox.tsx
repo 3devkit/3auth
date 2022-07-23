@@ -1,6 +1,6 @@
 import React from 'react';
-import { LoginProvider } from './loginController';
-import { WalletLogin } from './walletLogin';
+import { LoginProvider } from './LoginController';
+import { WalletList } from './WalletLogin';
 import styles from './styles.less';
 
 export function LoginBox(props: React.PropsWithChildren<unknown>) {
@@ -16,7 +16,7 @@ export function LoginBox(props: React.PropsWithChildren<unknown>) {
 function LoginBoxContent() {
   return (
     <>
-      <WalletLogin />
+      <WalletList />
     </>
   );
 }

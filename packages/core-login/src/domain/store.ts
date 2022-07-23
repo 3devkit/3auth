@@ -3,10 +3,9 @@ import { createStore, StoreApi } from 'zustand';
 export type StoreDto = StoreData;
 
 export interface StoreData {
-  chainId?: number;
-  account?: string;
-  eagerlyConnecting: boolean;
-  connecting: boolean;
+  eagerlyLoggingin: boolean;
+  loggingin: boolean;
+  userInfo?: any;
 }
 
 function createDataStore(defData: StoreData): StoreApi<StoreData> {
@@ -18,10 +17,9 @@ export class Store {
 
   public constructor() {
     this.store = createDataStore({
-      chainId: undefined,
-      account: undefined,
-      eagerlyConnecting: false,
-      connecting: false,
+      eagerlyLoggingin: false,
+      loggingin: false,
+      userInfo: undefined,
     });
   }
 

@@ -3,12 +3,18 @@ import { StoreDto } from './store';
 export class WalletState {
   public constructor(
     private connecting: boolean = false,
+    private eagerlyConnecting: boolean = false,
     public chainId?: number,
     public account?: string,
   ) {}
 
   public static fromDto(dto: StoreDto) {
-    return new WalletState(dto.connecting, dto.chainId, dto.account);
+    return new WalletState(
+      dto.connecting,
+      dto.eagerlyConnecting,
+      dto.chainId,
+      dto.account,
+    );
   }
 
   public get shortAccount() {
@@ -27,8 +33,13 @@ export class WalletState {
     return this.connecting;
   }
 
+  public get isEagerlyConnecting() {
+    return this.eagerlyConnecting;
+  }
+
   public dto() {
     return {
+      isEagerlyConnecting: this.isEagerlyConnecting,
       isConnecting: this.isConnecting,
       isConnected: this.isConnected,
       chainId: this.chainId,

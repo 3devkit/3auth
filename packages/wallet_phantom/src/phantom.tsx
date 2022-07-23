@@ -60,13 +60,17 @@ export class PhantomConnector extends BaseConnector<PhantomProvider> {
   public async connect(props: { eagerly: boolean }): Promise<void> {
     const { eagerly } = props;
 
-    this.actions.beginConnect();
+    this.actions.beginConnect(eagerly);
 
-    const account = await new PhantomRepo(this.provider).reqPublicKey({
-      eagerly,
-    });
+    try {
+      const account = await new PhantomRepo(this.provider).reqPublicKey({
+        eagerly,
+      });
 
-    this.actions.connectSuccess({ account });
+      this.actions.connectSuccess({ account });
+    } catch (error) {
+      this.actions.connectFail();
+    }
   }
 
   public async signMessage(message: string): Promise<string | Bytes> {

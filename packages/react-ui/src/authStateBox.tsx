@@ -7,9 +7,8 @@ import {
   ExModalProvider,
   useModalAction,
 } from '@3lib/components';
-import { WalletLogin } from './walletLogin';
 import { useMemoizedFn } from 'ahooks';
-import { LoginBox } from './loginBox';
+import { LoginBox } from './LoginBox';
 
 interface AuthStateBoxProps {
   onLoggedBuilder: (context: AuthStateBoxContext) => JSX.Element;
@@ -50,7 +49,7 @@ function AuthStateBoxContent(props: {
     );
   }, [walletConnector, walletState, openLoginDialog]);
 
-  if (walletState.isConnecting) return <ExLoading />;
+  if (walletState.isEagerlyConnecting) return <ExLoading />;
 
   return (
     <>

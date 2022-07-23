@@ -44,17 +44,21 @@ export class MetamaskConnector extends EthConnector<MetamaskProvider> {
   public async connect(props: { eagerly: boolean }): Promise<void> {
     const { eagerly } = props;
 
-    this.actions.beginConnect();
+    this.actions.beginConnect(eagerly);
 
-    const repo = new MetamaskRepo(this.provider);
-    const account = await repo.reqAccount({ eagerly });
-    const chainId = await repo.reqChainId();
+    try {
+      const repo = new MetamaskRepo(this.provider);
+      const account = await repo.reqAccount({ eagerly });
+      const chainId = await repo.reqChainId();
 
-    if (!eagerly) {
-      await this._handleChain(chainId);
+      if (!eagerly) {
+        await this._handleChain(chainId);
+      }
+
+      this.actions.connectSuccess({ account, chainId });
+    } catch (error) {
+      this.actions.connectFail();
     }
-
-    this.actions.connectSuccess({ account, chainId });
   }
 
   public async signMessage(message: string): Promise<string | Bytes> {

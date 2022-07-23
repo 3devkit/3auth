@@ -3,13 +3,22 @@ import { Store } from './store';
 export class Actions {
   public constructor(private store: Store) {}
 
-  public beginConnect() {
-    this.store.update({ connecting: true });
+  public beginConnect(eagerly: boolean) {
+    if (eagerly) {
+      this.store.update({ eagerlyConnecting: true });
+    } else {
+      this.store.update({ connecting: true });
+    }
   }
 
   public connectSuccess(props: { account: string; chainId?: number }) {
     const { account, chainId } = props;
-    this.store.update({ connecting: false, account, chainId });
+    this.store.update({
+      connecting: false,
+      eagerlyConnecting: false,
+      account,
+      chainId,
+    });
   }
 
   public connectFail() {
@@ -31,6 +40,7 @@ export class Actions {
   public resetState() {
     this.store.update({
       connecting: false,
+      eagerlyConnecting: false,
       account: undefined,
     });
   }

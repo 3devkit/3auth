@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { BaseConnector } from '@3auth/core';
 import { useWalletConnector, useWalletState } from '@3auth/react';
+import { useLoginState, useSignLoginPlugin } from '@3auth/signlogin';
 import { BrowserRender } from '@3auth/helpers';
 import { BsChevronLeft } from 'react-icons/bs';
-import { ExButton, ExLoading } from '@3lib/components';
+import { ExButton, ExLoading, useModalAction } from '@3lib/components';
 import { IconButton } from './components/button';
 import styles from './styles.less';
 
-export function WalletLogin() {
+export function WalletList() {
   return (
-    <WalletList
+    <WalletListWrapper
       walletListClassName={styles.WalletList}
       onBuilderListTile={(connector, onConnect, loading) => {
         return (
@@ -27,7 +28,7 @@ export function WalletLogin() {
   );
 }
 
-function WalletList(props: {
+export function WalletListWrapper(props: {
   className?: string;
   walletListClassName?: string;
   onBuilderListTile: (
@@ -43,6 +44,8 @@ function WalletList(props: {
     onBuilderListTile,
     onBuilderSignView,
   } = props;
+
+  const { closeDialog } = useModalAction();
 
   const walletConnector = useWalletConnector();
 
@@ -64,7 +67,11 @@ function WalletList(props: {
     setLoadingConnector(null);
 
     if (walletState.isConnected) {
-      setSelected(connector);
+      if (walletConnector.configure.isSignLogin) {
+        setSelected(connector);
+      } else {
+        closeDialog();
+      }
     }
   }
 
@@ -98,15 +105,20 @@ function WalletList(props: {
 function SignBox(props: { onBack: () => void }) {
   const { onBack } = props;
 
-  const walletConnector = useWalletConnector();
-
   const walletState = useWalletState();
 
-  const [loggingin, setLoggingin] = useState<boolean>(false);
+  const signLoginPlugin = useSignLoginPlugin();
 
-  function onSign() {
-    // setLoggingin(true);
-    walletConnector.signMessage('abc');
+  const loginState = useLoginState();
+
+  const { closeDialog } = useModalAction();
+
+  async function onSign() {
+    const loginState = await signLoginPlugin.signLogin();
+
+    if (loginState.isLogin) {
+      closeDialog();
+    }
   }
 
   return (
@@ -120,7 +132,7 @@ function SignBox(props: { onBack: () => void }) {
       <div className={styles.but}>
         <ExButton
           onClick={onSign}
-          loading={loggingin}
+          loading={loginState.isLoggingin}
           style={{ width: '100%' }}
         >
           Sign Login

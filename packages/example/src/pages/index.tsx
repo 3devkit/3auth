@@ -1,19 +1,26 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { BaseConnector, ConfigureParam } from '@3auth/core';
+import { BaseConnector, Bytes, ConfigureParam } from '@3auth/core';
+import {
+  SignLoginServerAdapter,
+  AuthServerAdapter,
+  AuthToken,
+  SiginNonce,
+  LoginLauncherProvider,
+  SignLoginPluginProvider,
+  useLoginState,
+  ChangeUserInfoDto,
+} from '@3auth/signlogin';
 import { AuthStateBox } from '@3auth/react-ui';
 import { MetamaskConnector } from '@3auth/wallet_metamask';
 import { PhantomConnector } from '@3auth/wallet_phantom';
 import { ExButton, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
-import {
-  useWalletConnector,
-  useWalletState,
-  Web3AuthProvider,
-} from '@3auth/react';
+import { Web3AuthProvider } from '@3auth/react';
 import { Class } from 'utility-types';
 import { EthereumChainInfoHelper } from '@3auth/helpers';
 import styles from './index.module.scss';
+import { UserInfoDto } from '@3auth/signlogin/dist/domain/userInfo';
 
 export default function Page() {
   return <PageConnent />;
@@ -27,7 +34,7 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
   const configure: ConfigureParam = {
     appName: '',
     defaultConnectChainId: EthereumChainInfoHelper.getMainnet().chainId,
-    isSignLogin: false,
+    isSignLogin: true,
     signNoceMessage: 'hello',
     supportedEthereumChain: [
       EthereumChainInfoHelper.getMainnet(),
@@ -53,12 +60,60 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 
   return (
     <Web3AuthProvider configure={configure} connectors={connectors}>
-      {props.children}
+      <LoginLauncherProvider authServer={new TestAuthServerAdapter()}>
+        <SignLoginPluginProvider
+          authServerAdapter={new TestSignLoginServerAdapter()}
+        >
+          {props.children}
+        </SignLoginPluginProvider>
+      </LoginLauncherProvider>
     </Web3AuthProvider>
   );
 }
 
+class TestAuthServerAdapter extends AuthServerAdapter {
+  public async walletAuthLogin(
+    account: string,
+    hexsign: string | Bytes,
+    nonce: string,
+  ): Promise<string> {
+    return 'sadas';
+  }
+
+  public async getMyInfo(): Promise<UserInfoDto> {
+    return {
+      id: 1,
+      regTm: 12323,
+    };
+  }
+  public async setUserInfo(dto: ChangeUserInfoDto): Promise<boolean> {
+    return true;
+  }
+
+  public async getSiginNonce(): Promise<SiginNonce> {
+    return '123456';
+  }
+
+  public async auth(): Promise<AuthToken> {
+    return '123456789';
+  }
+}
+
+class TestSignLoginServerAdapter extends SignLoginServerAdapter {
+  public async getSiginNonce(): Promise<SiginNonce> {
+    return 'abcdetf';
+  }
+
+  public async auth(): Promise<AuthToken> {
+    return '123456789';
+  }
+}
+
 function PageConnent() {
+  const loginState = useLoginState();
+
+  console.info('======loginState===========', loginState);
+
   return (
     <Container>
       <AuthStateBox
@@ -66,12 +121,12 @@ function PageConnent() {
           return (
             <div className={styles.UserBox}>
               <ExPopover
-                onButtonBuilder={function (open) {
+                onButtonBuilder={open => {
                   return (
                     <div
                       className={StyleHelper.combinedSty(
                         styles.UserInfo,
-                        open ? styles.selected : '',
+                        open && styles.selected,
                       )}
                     >
                       <div className={styles.avatar} />
@@ -81,7 +136,7 @@ function PageConnent() {
                     </div>
                   );
                 }}
-                onPopoverBuilder={function (closeHandle) {
+                onPopoverBuilder={closeHandle => {
                   return (
                     <ExPopoverBox>
                       <ul className={styles.MenuList} style={{ width: 200 }}>

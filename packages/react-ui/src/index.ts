@@ -1,3 +1,3 @@
-export * from './walletLogin';
-export * from './loginBox';
-export * from './authStateBox';
+export * from './WalletLogin';
+export * from './LoginBox';
+export * from './AuthStateBox';

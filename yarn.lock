@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3lib/components@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.npmjs.org/@3lib/components/-/components-0.0.17.tgz#27717475195f8f63e00b0f89ae28396002b98f6b"
-  integrity sha512-HtzFqtmWuKZ1vXNSA8z6lIEmAMI9MiiDxeCYHLSlVkTXQUzZJ/ZT0gjmq0LQAeFYo3Zb37xQLIuo1iyGquTRuw==
+"@3lib/components@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.npmmirror.com/@3lib/components/-/components-0.0.19.tgz#380f8fdb4b9e9193765047322cf50c12e6ce5021"
+  integrity sha512-gRNRlD7oJf7/W69Mo/hFY6Q4T+EPIk16UAt1reW9sZCgvUyXxCt4B1jQXcm4BmR9KoK42yjit3GquVcaUrzLfQ==
   dependencies:
     ahooks "^3.5.2"
     react-cool-portal "^1.2.0"
@@ -13,10 +13,10 @@
     react-popper "^2.3.0"
     zustand "^4.0.0-rc.4"
 
-"@3lib/helpers@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.npmjs.org/@3lib/helpers/-/helpers-0.0.17.tgz#41686fcbc64a72b22b45383e65b9dff900ab81c2"
-  integrity sha512-rTxOkaW59jqhDAVPgDU1WnUFqBhHYp4YHJqz7oW2RliIvQjK68MQFlvXUk7FULBCaXWKnY7/HhLlLcpl2guU1g==
+"@3lib/helpers@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.npmmirror.com/@3lib/helpers/-/helpers-0.0.19.tgz#308c624f9d08a81cf371fd76adafbcdc561df4cd"
+  integrity sha512-zW0yaISNTCyguV3jwyvxvJA+NWFrXI/SUHFfpw1TQr+FipgTYk2opaeXNsXHCZl2biWdVYN96FmcBzEmv3SQ/A==
 
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
@@ -3302,10 +3302,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bootstrap@^5.1.13":
-  version "5.1.13"
-  resolved "https://registry.npmmirror.com/@types/bootstrap/-/bootstrap-5.1.13.tgz#249acdef3580b09c8a6ed1f878f4f1771a8c6fca"
-  integrity sha512-1hIIOgfkMlyQCQz/3ae53xr6ZN2d6EDj/n3G+Sh/LBsBUVigyDmnCbLwsaXJJ1GBGlkjgfXVoyIvEPowQw25xQ==
+"@types/bootstrap@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.npmmirror.com/@types/bootstrap/-/bootstrap-5.2.0.tgz#e619da0357f243b1252bd82eb236389ea1fd811d"
+  integrity sha512-zncxyEdbShnbOkY1zGBNqvpdVuIGDEA3rxcANJ4v9b3yaMxp+xDCNSwrXK5+uM7Wz7cb1RoIoRUQ0Q5JyfjyfA==
   dependencies:
     "@popperjs/core" "^2.9.2"
 
@@ -9728,6 +9728,13 @@ react-is@^18.0.0, react-is@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmmirror.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-jwt@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/react-jwt/-/react-jwt-1.1.6.tgz#cbf9250e57189ef1aed4b5de92315ae446a6021f"
+  integrity sha512-Yp+FmwkTvYUuO5gu6sFApLXFuMAIAlh1NEfxcB2EGnmS1chKqXXv77vp23IphV1UpSyMtm0wrphUZfDSr8GiSA==
+  optionalDependencies:
+    fsevents "^2.3.2"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
