@@ -1,8 +1,7 @@
 import { Actions, Store } from '../domain';
-import { AuthRepo, AuthTokenRepo } from '../repo';
+import { AuthTokenRepo } from '../repo';
 import { Class } from 'utility-types';
 import { AuthServerAdapter, BaseLoginPlugin } from '../types';
-import { UserRepo } from '../repo/userRepo';
 
 export class LoginLauncherSdk {
   public store: Store;

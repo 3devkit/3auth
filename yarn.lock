@@ -18,34 +18,34 @@
   resolved "https://registry.npmmirror.com/@3lib/helpers/-/helpers-0.0.20.tgz#80ef8b47bdf5d62a3a2fe92606fdc5d4849bde4a"
   integrity sha512-bgb40x44bZC7lVkKb87n6dT5UjDoL17pHCt85wh4eMFA5hBqAQF0Fq310ASxB5C6wbHONISrEt4n6PaDNoLw5g==
 
-"@3walletconnector/core@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npmjs.org/@3walletconnector/core/-/core-0.0.19.tgz#470e11bd548f75263cabd48a9f6af34fe294cabe"
-  integrity sha512-dnahTe/6ie/c7dWu6TGu8NfCzp2msMM1xcWPFdJSswlxyDHFt4jldwm3EGXR3hW+MIlBsMYGWROPmJPjfXmg2A==
+"@3walletconnector/core@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@3walletconnector/core/-/core-0.0.20.tgz#71ff0eacf6f57379b2ac3def56fcc5526423959e"
+  integrity sha512-ViJGzBAOkXo/Baf72k3lvdJb4gsaaRQdP5i7OwTFkenaGrK0VP8Lg/GO2BUhKZFClKSEptsdxstDb78lbskJkw==
   dependencies:
-    "@3walletconnector/helpers" "^0.0.19"
+    "@3walletconnector/helpers" "^0.0.20"
     js-base64 "^3.7.2"
     utility-types "^3.10.0"
 
-"@3walletconnector/helpers@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npmjs.org/@3walletconnector/helpers/-/helpers-0.0.19.tgz#fbbf12baea9c084a3a4c62c7e721cc8ef605a61c"
-  integrity sha512-kHbqnKP4qBwnUszCn2m7v1wDFe/jlP0sTzZ99iirCftu9z5jtltfVZQajBubbFAHUrJw7pf2BXZ5j/nY39We3w==
+"@3walletconnector/helpers@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@3walletconnector/helpers/-/helpers-0.0.20.tgz#8dbfc82e11d1be3725c43f6b5a23ed236ee13235"
+  integrity sha512-w3eb7CkObR2t+Is5GopY37qnT+vqiRM/4FFEkDHXdlfiZFX5sJFwVLMG69YenKBd3xCLaIJuSIWDfw/bVCVnzA==
 
-"@3walletconnector/react@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npmjs.org/@3walletconnector/react/-/react-0.0.19.tgz#1a444007dd59db36cd6a8afc8f5dff59790d828a"
-  integrity sha512-m0qtNOpvuNAMcCLlhS+d5KY7DIynem67wr/ECou6hZjPtRfaBRGTa1l5XISdSpP7FEUVacEoK1N0Lp+HWtvNig==
+"@3walletconnector/react@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@3walletconnector/react/-/react-0.0.20.tgz#5cf804e35a8b0b6bc61cd62b5012fe08e351aaa8"
+  integrity sha512-kfUJuhc7QidN+Q3isy1YLtAVG48DWtueUeJpPEkX0Dg16qHzw0UECU4u4DT6urSQafantDMWVJoDIMBneqabVg==
 
-"@3walletconnector/wallet-metamask@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npmjs.org/@3walletconnector/wallet-metamask/-/wallet-metamask-0.0.19.tgz#4e834bcd0676dcf18f8dc56e9c7aab1a0ab3f2db"
-  integrity sha512-msf5N7sZWjEDynlanxHL19p7BOdqIGToZGYx0FE2jHxXVNrxNjdFfMBZ8PVXR5/sTA7TIee3VdHs5yOCTNI7Cg==
+"@3walletconnector/wallet-metamask@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@3walletconnector/wallet-metamask/-/wallet-metamask-0.0.20.tgz#a4466a9af255a62ac185ada99b260db8dce7b6ca"
+  integrity sha512-CqgCd/AtL7wQAD8/G07yYYqbl7P1xuei4P6bmrMuOmbUOqNSeE3uP2k02I9kXxyyuqIVbIa9EbcL2YPq2k9nyA==
 
-"@3walletconnector/wallet-phantom@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npmjs.org/@3walletconnector/wallet-phantom/-/wallet-phantom-0.0.19.tgz#b88f08691b6415c00d632691ec0ebc989cc18099"
-  integrity sha512-t4x9ysB2R/EH2k2uJuylrFL/eYSKnXpkMh9FQvWIZN6mUOLK53p4auf1P8mbqSQviMdW+tDQZG7HigdDdmuFNA==
+"@3walletconnector/wallet-phantom@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@3walletconnector/wallet-phantom/-/wallet-phantom-0.0.20.tgz#c737286a56eb6280190886434d0d0658bf373320"
+  integrity sha512-cO424s+mHhM/BsWLgJrpsdJFjnOK8JLwJoSTWgvsCxfsICqwU3aBAKUL4tg4Av1AhFSn04D3pimxOz9Fln1XZQ==
   dependencies:
     "@solana/web3.js" "^1.50.0"
 
@@ -10345,10 +10345,10 @@ safe-identifier@^0.4.2:
   resolved "https://registry.npmmirror.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.53.0:
-  version "1.53.0"
-  resolved "https://registry.npmmirror.com/sass/-/sass-1.53.0.tgz#eab73a7baac045cc57ddc1d1ff501ad2659952eb"
-  integrity sha512-zb/oMirbKhUgRQ0/GFz8TSAwRq2IlR29vOUJZOx0l8sV+CkHUfHa4u5nqrG+1VceZp7Jfj59SVW9ogdhTvJDcQ==
+sass@^1.54.0:
+  version "1.54.0"
+  resolved "https://registry.npmmirror.com/sass/-/sass-1.54.0.tgz#24873673265e2a4fe3d3a997f714971db2fba1f4"
+  integrity sha512-C4zp79GCXZfK0yoHZg+GxF818/aclhp9F48XBu/+bm9vXEVAYov9iU3FBVRMq3Hx3OA4jfKL+p2K9180mEh0xQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"

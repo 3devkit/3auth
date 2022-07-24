@@ -11,6 +11,7 @@ export abstract class AuthServerAdapter {
     account: string,
     hexsign: string,
     nonce: string,
+    wallet: string,
   ): Promise<AuthToken>;
 
   public abstract getMyInfo(): Promise<UserInfoDto>;

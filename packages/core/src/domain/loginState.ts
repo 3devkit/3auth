@@ -11,11 +11,15 @@ export class LoginState {
     return new LoginState(dto.loginState, dto.account, dto.userInfo);
   }
 
-  public get isLogin(): boolean {
+  public get isLogged(): boolean {
     if (this.loginState === 'loginSuccessful' && !this.account) {
       throw new Error('no account');
     }
     return this.loginState === 'loginSuccessful';
+  }
+
+  public get hasUserInfo() {
+    return !!this.userInfo;
   }
 
   public get isLoggingin() {

@@ -1,17 +1,16 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { BaseConnector, ConfigureParam } from '@3walletconnector/core';
+import { ConfigureParam } from '@3walletconnector/core';
 import { Web3AuthProvider } from '@3walletconnector/react';
 import { MetamaskConnector } from '@3walletconnector/wallet-metamask';
 import { PhantomConnector } from '@3walletconnector/wallet-phantom';
 import { EthereumChainInfoHelper } from '@3walletconnector/helpers';
-import { LoginLauncherProvider, useLoginState, useMyInfo } from '@3auth/react';
-import { AuthStateBox } from '@3auth/react-ui';
-import { ExButton, ExPopover, ExPopoverBox } from '@3lib/components';
+import { LoginLauncherProvider } from '@3auth/react';
+import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
-import { Class } from 'utility-types';
-import styles from './index.module.scss';
 import { TestAuthServerAdapter } from '@/3org/server';
+import { LoginStateWrapper } from '@/view/LoginStateWrapper';
+import styles from './index.module.scss';
 
 export default function Page() {
   return <PageConnent />;
@@ -31,13 +30,11 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
     ],
   };
 
-  const connectors: Class<BaseConnector>[] = [
-    PhantomConnector,
-    MetamaskConnector,
-  ];
-
   return (
-    <Web3AuthProvider configure={configure} connectors={connectors}>
+    <Web3AuthProvider
+      configure={configure}
+      connectors={[PhantomConnector, MetamaskConnector]}
+    >
       <LoginLauncherProvider authServer={new TestAuthServerAdapter()}>
         {props.children}
       </LoginLauncherProvider>
@@ -46,15 +43,12 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 }
 
 function PageConnent() {
-  const loginState = useLoginState();
-
-  const { myInfo } = useMyInfo();
-
-  console.info('======loginState===========', loginState);
-
   return (
     <Container>
-      <AuthStateBox
+      <LoginStateWrapper
+        onLoadingBuilder={() => {
+          return <ExLoading />;
+        }}
         onLoggedBuilder={context => {
           return (
             <div className={styles.UserBox}>
@@ -69,7 +63,7 @@ function PageConnent() {
                     >
                       <div className={styles.avatar} />
                       <div className={styles.name}>
-                        {context.walletState.shortAccount}
+                        {context.myInfo.shortAccount}
                       </div>
                     </div>
                   );
@@ -77,11 +71,11 @@ function PageConnent() {
                 onPopoverBuilder={closeHandle => {
                   return (
                     <ExPopoverBox>
-                      <ul className={styles.MenuList} style={{ width: 200 }}>
+                      <ul className={styles.MenuList}>
                         <li
                           onClick={() => {
                             closeHandle();
-                            context.walletConnector.disconnect();
+                            context.loginLauncher.actions.signout();
                           }}
                         >
                           <div className={styles.left}>Disconnect Wallet</div>

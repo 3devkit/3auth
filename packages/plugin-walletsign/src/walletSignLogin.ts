@@ -10,18 +10,17 @@ export class WalletSignLoginPlugin extends BaseLoginPlugin {
     try {
       const account = walletConnector.store.state.account;
 
-      if (account) {
+      const walletName = walletConnector.connector?.name;
+
+      if (account && walletName) {
         const nonce = await this.authRepo.getSiginNonce();
         const hexsign = await walletConnector.signMessage(nonce);
         const token = await this.authRepo.walletSignLogin(
           account,
           hexsign,
           nonce,
+          walletName,
         );
-
-        console.info('=======signLogin=account=====', account);
-        console.info('=======signLogin=nonce=====', nonce);
-        console.info('=======signLogin=hexsign=====', hexsign);
 
         this.actions.loginSuccess(account, token);
       }

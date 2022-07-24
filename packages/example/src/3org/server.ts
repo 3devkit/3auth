@@ -15,7 +15,7 @@ export class TestAuthServerAdapter extends AuthServerAdapter {
   public constructor() {
     super();
 
-    const serverUrl = 'https://test-server.apeu.xyz';
+    const serverUrl = 'https://test-server.hipass.xyz';
 
     this.httpClient = new HttpClient(serverUrl, () => {
       return LoginLauncherSdk.getToken() ?? '';
@@ -26,6 +26,7 @@ export class TestAuthServerAdapter extends AuthServerAdapter {
     account: string,
     hexsign: string,
     nonce: string,
+    wallet: string,
   ): Promise<AuthToken> {
     const res = await this.httpClient.post({
       url: '/api/auth',
@@ -33,6 +34,7 @@ export class TestAuthServerAdapter extends AuthServerAdapter {
         account,
         hexsign,
         nonce,
+        wallet,
       },
     });
     return res.authorization;

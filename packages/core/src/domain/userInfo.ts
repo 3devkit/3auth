@@ -23,6 +23,14 @@ export class UserInfo {
     public summary?: string,
   ) {}
 
+  public get shortAccount() {
+    return (
+      this.account?.substring(0, 6) +
+      '...' +
+      this.account?.substring(this.account.length - 4)
+    );
+  }
+
   public static fromDto(dto: UserInfoDto) {
     return new UserInfo(
       dto.id,
