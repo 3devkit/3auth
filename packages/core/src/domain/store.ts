@@ -1,43 +1,26 @@
-import { createStore, StoreApi } from 'zustand';
+import { BaseStore } from '../types';
+import { UserInfo } from './userInfo';
 
 export type StoreDto = StoreData;
 
+export type LoginStateType =
+  | 'notLogin'
+  | 'loggingin'
+  | 'loginSuccessful'
+  | 'myInfoGetSuccessful';
+
 export interface StoreData {
-  chainId?: number;
-  account?: string;
-  eagerlyConnecting: boolean;
-  connecting: boolean;
+  loginState: LoginStateType;
+  account: string | undefined;
+  userInfo: UserInfo | undefined;
 }
 
-function createDataStore(defData: StoreData): StoreApi<StoreData> {
-  return createStore<StoreData>(() => defData);
-}
-
-export class Store {
-  private store: StoreApi<StoreData>;
-
+export class Store extends BaseStore<StoreData> {
   public constructor() {
-    this.store = createDataStore({
-      chainId: undefined,
+    super({
+      loginState: 'notLogin',
       account: undefined,
-      eagerlyConnecting: false,
-      connecting: false,
+      userInfo: undefined,
     });
-  }
-
-  public get update() {
-    return this.store.setState;
-  }
-
-  public get subscribe() {
-    return this.store.subscribe;
-  }
-
-  public get destroy() {
-    return this.store.destroy;
-  }
-
-  public get state() {
-    return this.store.getState();
   }
 }

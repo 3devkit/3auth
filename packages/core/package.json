@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@3auth/helpers": "^0.0.16",
-    "js-base64": "^3.7.2",
     "utility-types": "^3.10.0"
   },
   "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0"

@@ -1,47 +1,78 @@
+import { AuthTokenRepo } from '../repo';
 import { Store } from './store';
+import { UserInfo } from './userInfo';
 
 export class Actions {
-  public constructor(private store: Store) {}
+  public constructor(
+    private store: Store,
+    private authTokenRepo: AuthTokenRepo,
+  ) {}
 
-  public beginConnect(eagerly: boolean) {
-    if (eagerly) {
-      this.store.update({ eagerlyConnecting: true });
-    } else {
-      this.store.update({ connecting: true });
+  /**
+   * Called when the page is initialized
+   */
+  public eagerlyLogin() {
+    const { account, token } = this.authTokenRepo.get();
+    if (account && token) {
+      this.loginSuccess(account, token);
     }
   }
 
-  public connectSuccess(props: { account: string; chainId?: number }) {
-    const { account, chainId } = props;
+  /**
+   * [Used in the login plugin]
+   * this function is called to change the state when the login is started
+   */
+  public beginLogin() {
+    this.store.update({ loginState: 'loggingin' });
+  }
+
+  /**
+   * [Used in the login plugin]
+   * When the login is successful call this function to change the state
+   * @param account
+   * @param token
+   */
+  public loginSuccess(account: string, token: string) {
+    this.authTokenRepo.set(account, token);
     this.store.update({
-      connecting: false,
-      eagerlyConnecting: false,
+      loginState: 'loginSuccessful',
       account,
-      chainId,
     });
   }
 
-  public connectFail() {
-    this.resetState();
-  }
-
-  public disconnect() {
-    this.resetState();
-  }
-
-  public chainChanged(chainId: number) {
-    this.store.update({ chainId });
-  }
-
-  public accountsChanged(account: string) {
-    this.store.update({ account });
-  }
-
-  public resetState() {
+  /**
+   * When the user information is obtained successfully，
+   * call this function to change the state
+   * @param userInfo
+   */
+  public getMyInfoSuccess(userInfo: UserInfo) {
     this.store.update({
-      connecting: false,
-      eagerlyConnecting: false,
+      loginState: 'myInfoGetSuccessful',
+      userInfo,
+    });
+  }
+
+  /**
+   * Called after login failure
+   */
+  public loginFail() {
+    this._resetState();
+  }
+
+  /**
+   * Called when the user actively logs out
+   */
+  public signout() {
+    this.authTokenRepo.clear();
+
+    this._resetState();
+  }
+
+  private _resetState() {
+    this.store.update({
+      loginState: 'notLogin',
       account: undefined,
+      userInfo: undefined,
     });
   }
 }

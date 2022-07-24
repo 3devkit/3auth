@@ -1,7 +1,7 @@
 {
-  "name": "@3auth/react-ui",
+  "name": "@3auth/plugin-walletsign",
   "version": "0.0.16",
-  "description": "wallet login",
+  "description": "wallet login core",
   "author": "WEB3.WALLE <web3.walle@gmail.com>",
   "homepage": "",
   "license": "MIT",
@@ -19,11 +19,11 @@
     "type": "github",
     "url": "https://github.com/3devkit/3auth"
   },
-  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0",
   "dependencies": {
-    "@3lib/components": "^0.0.20",
-    "@3lib/helpers": "^0.0.20",
-    "eventemitter3": "^4.0.7",
-    "react-loading": "^2.0.3"
-  }
+    "@3auth/helpers": "^0.0.16",
+    "@3walletconnector/core": "^0.0.19",
+    "@3walletconnector/react": "^0.0.19",
+    "utility-types": "^3.10.0"
+  },
+  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0"
 }

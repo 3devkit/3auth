@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { BaseConnector } from '@3auth/core';
-import { useWalletConnector, useWalletState } from '@3auth/react';
-import { useLoginLauncher, useLoginState } from '@3auth/signlogin';
-import { BrowserRender } from '@3auth/helpers';
+import { BaseConnector } from '@3walletconnector/core';
+import { useWalletConnector, useWalletState } from '@3walletconnector/react';
+import { useLoginLauncher, useLoginState } from '@3auth/react';
+import { WalletSignLoginPlugin } from '@3auth/plugin-walletsign';
+import { BrowserRender } from '@3lib/helpers';
 import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
 import { IconButton } from './components/button';
@@ -67,11 +68,7 @@ export function WalletListWrapper(props: {
     setLoadingConnector(null);
 
     if (walletState.isConnected) {
-      if (walletConnector.configure.isSignLogin) {
-        setSelected(connector);
-      } else {
-        closeDialog();
-      }
+      setSelected(connector);
     }
   }
 
@@ -107,7 +104,9 @@ function SignBox(props: { onBack: () => void }) {
 
   const walletConnector = useWalletConnector();
 
-  const { walletSignLoginPlugin } = useLoginLauncher();
+  const loginLauncher = useLoginLauncher();
+
+  const walletSignLoginPlugin = loginLauncher.factory(WalletSignLoginPlugin);
 
   const walletState = useWalletState();
 
@@ -150,6 +149,7 @@ function WalletTile(props: {
   loading?: boolean;
 }) {
   const { connector, loading = false, onClick } = props;
+
   return (
     <div
       key={connector.name}

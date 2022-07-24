@@ -1,40 +1,41 @@
-import React, { useMemo } from 'react';
-import {
-  BaseConnector,
-  Configure,
-  ConfigureParam,
-  WalletConnectorSdk,
-} from '@3auth/core';
-import { WalletConnectorProvider, WalletStateProvider } from './context';
-import { Class } from 'utility-types';
+import React, { useContext, useEffect, useMemo } from 'react';
+import { createContext } from 'react';
+import { LoginLauncherSdk, AuthServerAdapter } from '@3auth/core';
+import { MyInfoProvider } from './use-myInfo';
 
-export interface Web3AuthProviderProps {
-  configure: ConfigureParam;
-  connectors: Class<BaseConnector>[];
+export const LoginLauncherContext = createContext<LoginLauncherSdk | null>(
+  null,
+);
+
+interface LoginLauncherProviderProps {
+  authServer: AuthServerAdapter;
 }
 
-export function Web3AuthProvider(
-  props: React.PropsWithChildren<Web3AuthProviderProps>,
+export function LoginLauncherProvider(
+  props: React.PropsWithChildren<LoginLauncherProviderProps>,
 ) {
-  const { configure, connectors } = props;
+  const { authServer } = props;
 
-  const walletConnector = useMemo(() => {
-    const walletConnector = new WalletConnectorSdk(
-      Configure.fromParam(configure),
-    );
+  const loginLauncher = useMemo(() => {
+    return new LoginLauncherSdk(authServer);
+  }, [authServer]);
 
-    connectors.forEach(Connector => {
-      walletConnector.addConnector(
-        (actions, configure) => new Connector(actions, configure),
-      );
-    });
-
-    return walletConnector;
-  }, []);
+  useEffect(() => {
+    loginLauncher.actions.eagerlyLogin();
+  }, [loginLauncher]);
 
   return (
-    <WalletConnectorProvider walletConnector={walletConnector}>
-      <WalletStateProvider>{props.children}</WalletStateProvider>
-    </WalletConnectorProvider>
+    <LoginLauncherContext.Provider value={loginLauncher}>
+      <MyInfoProvider />
+      {props.children}
+    </LoginLauncherContext.Provider>
   );
+}
+
+export function useLoginLauncher() {
+  const context = useContext(LoginLauncherContext);
+
+  if (!context) throw new Error('no LoginLauncherProviderContext');
+
+  return context;
 }
