@@ -15,7 +15,10 @@ export class LoginState {
     if (this.loginState === 'loginSuccessful' && !this.account) {
       throw new Error('no account');
     }
-    return this.loginState === 'loginSuccessful';
+    return (
+      this.loginState === 'loginSuccessful' ||
+      this.loginState === 'myInfoGetSuccessful'
+    );
   }
 
   public get hasUserInfo() {
