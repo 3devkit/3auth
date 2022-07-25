@@ -54,4 +54,8 @@ export class AuthSdk {
   public async signout(): Promise<void> {
     return this.loginLauncher.actions.signout();
   }
+
+  public static get getCookies() {
+    return LoginLauncherSdk.getCookies;
+  }
 }

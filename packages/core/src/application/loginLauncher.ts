@@ -24,9 +24,8 @@ export class LoginLauncherSdk {
     return LoginState.fromDto(this.store.state);
   }
 
-  public static getToken() {
+  public static getCookies() {
     const tokenRepo = new AuthTokenRepo();
-    const { token } = tokenRepo.get();
-    return token;
+    return tokenRepo.get();
   }
 }
