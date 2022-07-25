@@ -24,6 +24,7 @@
     "@3auth/auth": "^0.0.19",
     "@3auth/core": "^0.0.19",
     "@3auth/helpers": "^0.0.19",
+    "@3auth/plugin-walletsign": "^0.0.19",
     "@3auth/react-ui": "^0.0.19",
     "@3walletconnector/core": "^0.0.20",
     "@3walletconnector/helpers": "^0.0.20",
