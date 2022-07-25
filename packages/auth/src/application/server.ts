@@ -3,11 +3,11 @@ import {
   AuthServerAdapter,
   AuthToken,
   ChangeUserInfoDto,
-  LoginLauncherSdk,
   SiginNonce,
   UserInfoDto,
 } from '@3auth/core';
 import { random } from 'lodash';
+import { AuthSdk } from './auth';
 
 export class Web3AuthServerAdapter extends AuthServerAdapter {
   private httpClient: HttpClient;
@@ -16,7 +16,7 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     super();
 
     this.httpClient = new HttpClient(serverUrl, () => {
-      return LoginLauncherSdk.getToken() ?? '';
+      return AuthSdk.cookies.token ?? '';
     });
   }
 

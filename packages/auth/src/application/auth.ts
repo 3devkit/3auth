@@ -55,7 +55,7 @@ export class AuthSdk {
     return this.loginLauncher.actions.signout();
   }
 
-  public static get getCookies() {
-    return LoginLauncherSdk.getCookies;
+  public static get cookies() {
+    return LoginLauncherSdk.getCookies();
   }
 }
