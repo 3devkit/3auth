@@ -19,5 +19,15 @@
     "type": "github",
     "url": "https://github.com/3devkit/3auth"
   },
-  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0"
+  "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0",
+  "dependencies": {
+    "@3auth/auth": "^0.0.18",
+    "@3auth/core": "^0.0.18",
+    "@3auth/helpers": "^0.0.18",
+    "@3auth/react-ui": "^0.0.18",
+    "@3walletconnector/core": "^0.0.20",
+    "@3walletconnector/helpers": "^0.0.20",
+    "@3walletconnector/wallet-metamask": "^0.0.20",
+    "@3walletconnector/wallet-phantom": "^0.0.20"
+  }
 }
