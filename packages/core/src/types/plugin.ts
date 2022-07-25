@@ -4,7 +4,7 @@ import { AuthServerAdapter } from './authServer';
 
 export class BaseLoginPlugin {
   public constructor(
-    protected authRepo: AuthServerAdapter,
+    protected authServer: AuthServerAdapter,
     protected store: Store,
     protected actions: Actions,
   ) {}

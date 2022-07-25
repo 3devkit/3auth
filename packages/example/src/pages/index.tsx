@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Container } from 'react-bootstrap';
 import { ConfigureParam } from '@3walletconnector/core';
-import { Web3AuthProvider } from '@3walletconnector/react';
 import { MetamaskConnector } from '@3walletconnector/wallet-metamask';
 import { PhantomConnector } from '@3walletconnector/wallet-phantom';
 import { EthereumChainInfoHelper } from '@3walletconnector/helpers';
-import { LoginLauncherProvider } from '@3auth/react';
+import { AuthProvider } from '@3auth/react';
 import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
-import { TestAuthServerAdapter } from '@/3org/server';
-import { LoginStateWrapper } from '@/view/LoginStateWrapper';
+import { LoginStateWrapper } from '@3auth/react-ui';
 import styles from './index.module.scss';
 
 export default function Page() {
@@ -21,25 +19,34 @@ Page.getLayout = function getLayout(page: React.ReactElement) {
 };
 
 function LayoutConnent(props: React.PropsWithChildren<unknown>) {
-  const configure: ConfigureParam = {
-    appName: '',
-    defaultConnectChainId: EthereumChainInfoHelper.getMainnet().chainId,
-    supportedEthereumChain: [
-      EthereumChainInfoHelper.getMainnet(),
-      EthereumChainInfoHelper.getRinkeby(),
-    ],
-  };
+  const web3AuthProps = useWeb3AuthProps();
 
   return (
-    <Web3AuthProvider
-      configure={configure}
-      connectors={[PhantomConnector, MetamaskConnector]}
+    <AuthProvider
+      serverUrl="https://test-server.hipass.xyz"
+      web3AuthProps={web3AuthProps}
     >
-      <LoginLauncherProvider authServer={new TestAuthServerAdapter()}>
-        {props.children}
-      </LoginLauncherProvider>
-    </Web3AuthProvider>
+      {props.children}
+    </AuthProvider>
   );
+}
+
+function useWeb3AuthProps() {
+  const web3AuthProps = useMemo(() => {
+    const configure: ConfigureParam = {
+      appName: '',
+      defaultConnectChainId: EthereumChainInfoHelper.getMainnet().chainId,
+      supportedEthereumChain: [
+        EthereumChainInfoHelper.getMainnet(),
+        EthereumChainInfoHelper.getRinkeby(),
+      ],
+    };
+    const connectors = [PhantomConnector, MetamaskConnector];
+
+    return { configure, connectors };
+  }, []);
+
+  return web3AuthProps;
 }
 
 function PageConnent() {
@@ -75,7 +82,7 @@ function PageConnent() {
                         <li
                           onClick={() => {
                             closeHandle();
-                            context.loginLauncher.actions.signout();
+                            context.auth.signout();
                           }}
                         >
                           <div className={styles.left}>Disconnect Wallet</div>

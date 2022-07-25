@@ -13,9 +13,9 @@ export class WalletSignLoginPlugin extends BaseLoginPlugin {
       const walletName = walletConnector.connector?.name;
 
       if (account && walletName) {
-        const nonce = await this.authRepo.getSiginNonce();
+        const nonce = await this.authServer.getSiginNonce();
         const hexsign = await walletConnector.signMessage(nonce);
-        const token = await this.authRepo.walletSignLogin(
+        const token = await this.authServer.walletSignLogin(
           account,
           hexsign,
           nonce,

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { BaseConnector } from '@3walletconnector/core';
-import { useWalletConnector, useWalletState } from '@3walletconnector/react';
-import { useLoginLauncher, useLoginState } from '@3auth/react';
-import { WalletSignLoginPlugin } from '@3auth/plugin-walletsign';
+import { useWalletState } from '@3walletconnector/react';
 import { BrowserRender } from '@3lib/helpers';
 import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
 import { IconButton } from './components/button';
+import { useLoginBoxController } from './LoginController';
+import { useAuth, useLoginState } from '@3auth/react';
 import styles from './styles.less';
 
 export function WalletList() {
@@ -22,9 +22,6 @@ export function WalletList() {
           />
         );
       }}
-      onBuilderSignView={onBack => {
-        return <SignBox onBack={onBack} />;
-      }}
     />
   );
 }
@@ -37,23 +34,14 @@ export function WalletListWrapper(props: {
     onConnect: (connector: BaseConnector) => void,
     loading: boolean,
   ) => JSX.Element;
-  onBuilderSignView: (onBack: () => void) => JSX.Element;
 }) {
-  const {
-    className,
-    walletListClassName,
-    onBuilderListTile,
-    onBuilderSignView,
-  } = props;
+  const { className, walletListClassName, onBuilderListTile } = props;
 
-  const { closeDialog } = useModalAction();
+  const boxController = useLoginBoxController();
 
-  const walletConnector = useWalletConnector();
+  const auth = useAuth();
 
   const [selected, setSelected] = useState<BaseConnector | null>(null);
-
-  const [loadingConnector, setLoadingConnector] =
-    useState<BaseConnector | null>(null);
 
   async function onConnect(connector: BaseConnector) {
     if (!connector.isInstalled) {
@@ -61,52 +49,34 @@ export function WalletListWrapper(props: {
       return;
     }
 
-    setLoadingConnector(connector);
+    setSelected(connector);
 
-    const walletState = await walletConnector.connect(connector.name);
+    const walletState = await auth.walletConnector.connect(connector.name);
 
-    setLoadingConnector(null);
+    setSelected(null);
 
     if (walletState.isConnected) {
-      setSelected(connector);
+      boxController.show('signLogin');
     }
-  }
-
-  function onBack() {
-    setSelected(null);
   }
 
   return (
     <div className={className}>
-      {selected ? (
-        onBuilderSignView(onBack)
-      ) : (
-        <div className={walletListClassName}>
-          {walletConnector.connectors.map(connector => {
-            return (
-              <div key={connector.name}>
-                {onBuilderListTile(
-                  connector,
-                  onConnect,
-                  loadingConnector === connector,
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <div className={walletListClassName}>
+        {auth.walletConnector.connectors.map(connector => {
+          return (
+            <div key={connector.name}>
+              {onBuilderListTile(connector, onConnect, selected === connector)}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
-function SignBox(props: { onBack: () => void }) {
-  const { onBack } = props;
-
-  const walletConnector = useWalletConnector();
-
-  const loginLauncher = useLoginLauncher();
-
-  const walletSignLoginPlugin = loginLauncher.factory(WalletSignLoginPlugin);
+export function SignBox() {
+  const auth = useAuth();
 
   const walletState = useWalletState();
 
@@ -114,12 +84,20 @@ function SignBox(props: { onBack: () => void }) {
 
   const { closeDialog } = useModalAction();
 
-  async function onSign() {
-    const loginState = await walletSignLoginPlugin.signLogin(walletConnector);
+  const loginBoxController = useLoginBoxController();
 
-    if (loginState.isLogin) {
+  async function onSign() {
+    const loginState = await auth.plugins.walletLoginPlugin.signLogin(
+      auth.walletConnector,
+    );
+
+    if (loginState.isLogged) {
       closeDialog();
     }
+  }
+
+  function onBack() {
+    loginBoxController.show('home');
   }
 
   return (

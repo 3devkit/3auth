@@ -1,44 +1,45 @@
 import React, { useEffect } from 'react';
 import useSWR from 'swr';
 import { useStore } from 'zustand';
-import { UserInfo } from '@3auth/core';
-import { useLoginLauncher } from './provider';
 import { useLoginState } from './use-loginState';
+import { useAuth } from './provider';
 
 const GET_SWR_KEY = (account: string) => {
   return `getMyInfo/${account}`;
 };
 
-export function MyInfoProvider() {
-  const loginLauncher = useLoginLauncher();
+export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
+  const auth = useAuth();
 
   const loginState = useLoginState();
 
-  const { data: myInfo, mutate: reload } = useSWR(
+  const {
+    data: myInfo,
+    mutate: reload,
+    error,
+  } = useSWR(
     loginState.account && GET_SWR_KEY(loginState.account),
 
     async () => {
-      const userInfoDto = await loginLauncher.authServerAdapter.getMyInfo();
-      return UserInfo.fromDto(userInfoDto);
+      return await auth.reqMyInfo();
     },
   );
 
   useEffect(() => {
-    if (myInfo) {
-      loginLauncher.actions.getMyInfoSuccess(myInfo);
+    if (error) {
+      console.info('error:', error);
+    } else if (myInfo) {
+      auth.loginLauncher.actions.getMyInfoSuccess(myInfo);
     }
-  }, [myInfo]);
+  }, [myInfo, error]);
 
-  return <></>;
+  return <>{props.children}</>;
 }
 
 export const useMyInfo = () => {
-  const loginLauncher = useLoginLauncher();
+  const auth = useAuth();
 
-  const myInfo = useStore(
-    loginLauncher.store.originalStore,
-    state => state.userInfo,
-  );
+  const myInfo = useStore(auth.store, state => state.userInfo);
 
   return { myInfo };
 };

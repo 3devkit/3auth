@@ -1,41 +1,54 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { createContext } from 'react';
-import { LoginLauncherSdk, AuthServerAdapter } from '@3auth/core';
+import { AuthSdk } from '@3auth/auth';
 import { MyInfoProvider } from './use-myInfo';
+import { useWalletConnector } from '@3walletconnector/react';
+import {
+  Web3AuthProvider,
+  Web3AuthProviderProps,
+} from '@3walletconnector/react';
 
-export const LoginLauncherContext = createContext<LoginLauncherSdk | null>(
-  null,
-);
+export const AuthContext = createContext<AuthSdk | null>(null);
 
-interface LoginLauncherProviderProps {
-  authServer: AuthServerAdapter;
+interface Props {
+  serverUrl: string;
+  web3AuthProps: Web3AuthProviderProps;
 }
 
-export function LoginLauncherProvider(
-  props: React.PropsWithChildren<LoginLauncherProviderProps>,
-) {
-  const { authServer } = props;
-
-  const loginLauncher = useMemo(() => {
-    return new LoginLauncherSdk(authServer);
-  }, [authServer]);
-
-  useEffect(() => {
-    loginLauncher.actions.eagerlyLogin();
-  }, [loginLauncher]);
+export function AuthProvider(props: React.PropsWithChildren<Props>) {
+  const { web3AuthProps } = props;
 
   return (
-    <LoginLauncherContext.Provider value={loginLauncher}>
-      <MyInfoProvider />
-      {props.children}
-    </LoginLauncherContext.Provider>
+    <Web3AuthProvider {...web3AuthProps}>
+      <AuthProviderConnent {...props}>{props.children}</AuthProviderConnent>
+    </Web3AuthProvider>
   );
 }
 
-export function useLoginLauncher() {
-  const context = useContext(LoginLauncherContext);
+function AuthProviderConnent(props: React.PropsWithChildren<Props>) {
+  const { serverUrl } = props;
 
-  if (!context) throw new Error('no LoginLauncherProviderContext');
+  const walletConnector = useWalletConnector();
+
+  const authSdk = useMemo(() => {
+    return new AuthSdk(serverUrl, walletConnector);
+  }, [walletConnector]);
+
+  useEffect(() => {
+    authSdk.initLogin();
+  }, [authSdk]);
+
+  return (
+    <AuthContext.Provider value={authSdk}>
+      <MyInfoProvider>{props.children}</MyInfoProvider>
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  if (!context) throw new Error('no AuthContext');
 
   return context;
 }

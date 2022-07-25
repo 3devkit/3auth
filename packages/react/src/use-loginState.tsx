@@ -1,11 +1,10 @@
 import { useStore } from 'zustand';
-import { LoginState } from '@3auth/core';
-import { useLoginLauncher } from './provider';
+import { useAuth } from './provider';
 
 export function useLoginState() {
-  const loginLauncher = useLoginLauncher();
+  const auth = useAuth();
 
-  const state = useStore(loginLauncher.store.originalStore);
+  useStore(auth.store);
 
-  return LoginState.fromDto(state);
+  return auth.loginState;
 }

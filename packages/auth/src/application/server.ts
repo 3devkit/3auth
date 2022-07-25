@@ -1,4 +1,4 @@
-import { HttpClient } from '@/utils';
+import { HttpClient } from '@3auth/helpers';
 import {
   AuthServerAdapter,
   AuthToken,
@@ -9,13 +9,11 @@ import {
 } from '@3auth/core';
 import { random } from 'lodash';
 
-export class TestAuthServerAdapter extends AuthServerAdapter {
+export class Web3AuthServerAdapter extends AuthServerAdapter {
   private httpClient: HttpClient;
 
-  public constructor() {
+  public constructor(serverUrl: string) {
     super();
-
-    const serverUrl = 'https://test-server.hipass.xyz';
 
     this.httpClient = new HttpClient(serverUrl, () => {
       return LoginLauncherSdk.getToken() ?? '';
@@ -48,8 +46,16 @@ export class TestAuthServerAdapter extends AuthServerAdapter {
     return userInfoDto;
   }
 
-  public async setUserInfo(dto: ChangeUserInfoDto): Promise<boolean> {
-    return true;
+  public async updateUserInfo(changeInfo: ChangeUserInfoDto): Promise<boolean> {
+    try {
+      await this.httpClient.put({
+        url: '/api/user',
+        data: changeInfo,
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   public async getSiginNonce(): Promise<SiginNonce> {
@@ -57,9 +63,5 @@ export class TestAuthServerAdapter extends AuthServerAdapter {
       url: '/api/common/nonce?v=' + random(100000),
     });
     return res.Nonce;
-  }
-
-  public async auth(): Promise<AuthToken> {
-    return '123456789';
   }
 }

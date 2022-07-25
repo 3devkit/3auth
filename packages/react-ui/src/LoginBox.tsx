@@ -1,9 +1,8 @@
 import React from 'react';
-import { LoginProvider } from './LoginController';
-import { WalletList } from './WalletLogin';
+import { LoginProvider, useView } from './LoginController';
 import styles from './styles.less';
 
-export function LoginBox(props: React.PropsWithChildren<unknown>) {
+export function Web3LoginBox(props: React.PropsWithChildren<unknown>) {
   return (
     <div className={styles.LoginBox}>
       <LoginProvider>
@@ -14,9 +13,6 @@ export function LoginBox(props: React.PropsWithChildren<unknown>) {
 }
 
 function LoginBoxContent() {
-  return (
-    <>
-      <WalletList />
-    </>
-  );
+  const view = useView();
+  return <>{view}</>;
 }

@@ -8,6 +8,56 @@ export class Actions {
     private authTokenRepo: AuthTokenRepo,
   ) {}
 
+  // public exec(
+  //   op:
+  //     | { type: 'eagerlyLogin' }
+  //     | { type: 'beginLogin' }
+  //     | { type: 'loginSuccess'; account: string; token: string }
+  //     | { type: 'getMyInfoSuccess'; userInfo: UserInfo }
+  //     | { type: 'loginFail' }
+  //     | { type: 'signout' },
+  // ) {
+  //   switch (op.type) {
+  //     case 'eagerlyLogin': {
+  //       const { account, token } = this.authTokenRepo.get();
+  //       if (account && token) {
+  //         this.exec({ type: 'loginSuccess', account, token });
+  //       }
+  //       break;
+  //     }
+  //     case 'beginLogin': {
+  //       this.store.update({ loginState: 'loggingin' });
+  //       break;
+  //     }
+  //     case 'loginSuccess': {
+  //       const { account, token } = op;
+  //       this.authTokenRepo.set(account, token);
+  //       this.store.update({
+  //         loginState: 'loginSuccessful',
+  //         account,
+  //       });
+  //       break;
+  //     }
+  //     case 'getMyInfoSuccess': {
+  //       const { userInfo } = op;
+  //       this.store.update({
+  //         loginState: 'myInfoGetSuccessful',
+  //         userInfo,
+  //       });
+  //       break;
+  //     }
+  //     case 'loginFail': {
+  //       this._resetState();
+  //       break;
+  //     }
+  //     case 'signout': {
+  //       this.authTokenRepo.clear();
+  //       this._resetState();
+  //       break;
+  //     }
+  //   }
+  // }
+
   /**
    * Called when the page is initialized
    */

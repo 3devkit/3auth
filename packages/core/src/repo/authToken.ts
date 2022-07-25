@@ -2,10 +2,10 @@ import Cookies from 'js-cookie';
 import { isExpired } from 'react-jwt';
 
 export class AuthTokenRepo {
-  private AuthTokenKey = 'CURR_ACCOUNT';
+  private AUTH_TOKEN_KEY = 'CURR_ACCOUNT';
 
   public set(account: string, token: string) {
-    Cookies.set(this.AuthTokenKey, account);
+    Cookies.set(this.AUTH_TOKEN_KEY, account);
     Cookies.set(account, token);
   }
 
@@ -17,7 +17,7 @@ export class AuthTokenRepo {
   public get(): { account: string | null; token: string | null } {
     const nullValue = { account: null, token: null };
 
-    const account = Cookies.get(this.AuthTokenKey) ?? null;
+    const account = Cookies.get(this.AUTH_TOKEN_KEY) ?? null;
     const token = account ? Cookies.get(account) ?? null : null;
 
     if (account && token) {
@@ -35,10 +35,10 @@ export class AuthTokenRepo {
   }
 
   public clear() {
-    const account = Cookies.get(this.AuthTokenKey);
+    const account = Cookies.get(this.AUTH_TOKEN_KEY);
 
     if (account) {
-      Cookies.remove(this.AuthTokenKey);
+      Cookies.remove(this.AUTH_TOKEN_KEY);
       Cookies.remove(account);
     }
   }

@@ -1,31 +1,54 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { useUpdate } from 'ahooks';
 import EventEmitter from 'eventemitter3';
+import { BaseStore } from '@3auth/core';
+import { LoginBoxHome } from './LoginBoxHome';
+import { SignBox } from './WalletList';
+import { useStore } from 'zustand';
 
-type DisplayView = 'WalletList' | 'SignLogin';
+type DisplayView = 'home' | 'signLogin';
 
-export class LoginController extends EventEmitter {
-  private displayView: DisplayView = 'WalletList';
+interface ViewRouter {
+  getView: () => JSX.Element;
+}
+
+const loginBoxRouter: Record<DisplayView, ViewRouter> = {
+  home: {
+    getView: () => <LoginBoxHome />,
+  },
+  signLogin: {
+    getView: () => <SignBox />,
+  },
+};
+
+interface StoreData {
+  viewRouter: ViewRouter;
+}
+
+class ControllerStore extends BaseStore<StoreData> {
+  public constructor() {
+    super({
+      viewRouter: loginBoxRouter.home,
+    });
+  }
+}
+
+export class LoginBoxController extends EventEmitter {
+  public store = new ControllerStore();
 
   public constructor() {
     super();
-    this.emit('onChange', '1', '2');
   }
 
-  public apply(op: { type: 'showWalletList' }) {}
+  public show(displayView: DisplayView) {
+    this.store.update({ viewRouter: loginBoxRouter[displayView] });
+  }
 }
 
-const LoginConnext = createContext<LoginController | null>(null);
+const LoginConnext = createContext<LoginBoxController | null>(null);
 
 export function LoginProvider(props: React.PropsWithChildren<unknown>) {
-  const onUpdate = useUpdate();
-
   const loginController = useMemo(() => {
-    const controller = new LoginController();
-    controller.on('onChange', (a, b) => {
-      console.info('=================1=====', a, b);
-    });
-    return controller;
+    return new LoginBoxController();
   }, []);
 
   return (
@@ -35,7 +58,18 @@ export function LoginProvider(props: React.PropsWithChildren<unknown>) {
   );
 }
 
-export function useLoginController() {
+export function useView() {
+  const controller = useLoginBoxController();
+
+  const viewRouter = useStore(
+    controller.store.originalStore,
+    state => state.viewRouter,
+  );
+
+  return viewRouter.getView();
+}
+
+export function useLoginBoxController() {
   const context = useContext(LoginConnext);
 
   if (!context) throw new Error('no LoginConnext');

@@ -16,5 +16,5 @@ export abstract class AuthServerAdapter {
 
   public abstract getMyInfo(): Promise<UserInfoDto>;
 
-  public abstract setUserInfo(dto: ChangeUserInfoDto): Promise<boolean>;
+  public abstract updateUserInfo(dto: ChangeUserInfoDto): Promise<boolean>;
 }

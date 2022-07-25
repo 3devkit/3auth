@@ -2,16 +2,17 @@ import React from 'react';
 import { ExDialogBox, ExModalProvider, useModalAction } from '@3lib/components';
 import { useMemoizedFn } from 'ahooks';
 import { Web3LoginBox } from './LoginBox';
-import { useLoginLauncher, useLoginState } from '@3auth/react';
-import { LoginLauncherSdk, UserInfo } from '@3auth/core';
+import { UserInfo } from '@3auth/core';
+import { useAuth, useLoginState } from '@3auth/react';
+import { AuthSdk } from '@3auth/auth';
 
 interface LoggedContext {
-  loginLauncher: LoginLauncherSdk;
+  auth: AuthSdk;
   myInfo: UserInfo;
 }
 
 interface NotLoggedContext {
-  loginLauncher: LoginLauncherSdk;
+  auth: AuthSdk;
   openLoginDialog: () => void;
 }
 
@@ -33,8 +34,8 @@ function LoginStateContent(props: LoginStateWrapperProps) {
   const { onLoggedBuilder, onNotLoggedBuilder, onLoadingBuilder } = props;
   const { openDialog } = useModalAction();
 
+  const auth = useAuth();
   const loginState = useLoginState();
-  const loginLauncher = useLoginLauncher();
 
   const openLoginDialog = useMemoizedFn(() => {
     openDialog(
@@ -49,8 +50,8 @@ function LoginStateContent(props: LoginStateWrapperProps) {
   return (
     <>
       {loginState.hasUserInfo
-        ? onLoggedBuilder({ loginLauncher, myInfo: loginState.userInfo! })
-        : onNotLoggedBuilder({ loginLauncher, openLoginDialog })}
+        ? onLoggedBuilder({ auth, myInfo: loginState.userInfo! })
+        : onNotLoggedBuilder({ auth, openLoginDialog })}
     </>
   );
 }
