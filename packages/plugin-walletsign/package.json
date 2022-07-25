@@ -1,6 +1,6 @@
 {
   "name": "@3auth/plugin-walletsign",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "wallet login core",
   "author": "WEB3.WALLE <web3.walle@gmail.com>",
   "homepage": "",
@@ -20,7 +20,7 @@
     "url": "https://github.com/3devkit/3auth"
   },
   "dependencies": {
-    "@3auth/helpers": "^0.0.16",
+    "@3auth/helpers": "^0.0.17",
     "@3walletconnector/core": "^0.0.20",
     "@3walletconnector/react": "^0.0.20",
     "utility-types": "^3.10.0"
