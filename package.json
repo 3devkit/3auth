@@ -158,9 +158,6 @@
     "extends": "./configs/releaserc.json"
   },
   "dependencies": {
-    "@3walletconnector/wallet-metamask": "^0.0.20",
-    "@3walletconnector/wallet-phantom": "^0.0.20",
-    "@ethersproject/providers": "^5.6.8",
     "@types/bootstrap": "^5.2.0",
     "@types/react-headroom": "^2.2.2",
     "a": "^2.1.2",
