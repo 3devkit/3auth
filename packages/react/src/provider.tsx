@@ -2,20 +2,22 @@ import React, { useContext, useEffect, useMemo } from 'react';
 import { createContext } from 'react';
 import { AuthSdk } from '@3auth/auth';
 import { MyInfoProvider } from './use-myInfo';
-import { useWalletConnector } from '@3walletconnector/react';
 import {
+  useWalletConnector,
   Web3AuthProvider,
   Web3AuthProviderProps,
 } from '@3walletconnector/react';
 
 export const AuthContext = createContext<AuthSdk | null>(null);
 
-interface Props {
+export interface AuthProviderProps {
   serverUrl: string;
   web3AuthProps: Web3AuthProviderProps;
 }
 
-export function AuthProvider(props: React.PropsWithChildren<Props>) {
+export function AuthProvider(
+  props: React.PropsWithChildren<AuthProviderProps>,
+) {
   const { web3AuthProps } = props;
 
   return (
@@ -25,7 +27,9 @@ export function AuthProvider(props: React.PropsWithChildren<Props>) {
   );
 }
 
-function AuthProviderConnent(props: React.PropsWithChildren<Props>) {
+function AuthProviderConnent(
+  props: React.PropsWithChildren<AuthProviderProps>,
+) {
   const { serverUrl } = props;
 
   const walletConnector = useWalletConnector();

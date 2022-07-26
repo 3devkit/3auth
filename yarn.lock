@@ -38,6 +38,11 @@
   resolved "https://registry.npmmirror.com/@3walletconnector/react/-/react-0.0.21.tgz#54d9423ca5e3d1fa754a3ae7ebaa38b8cb92d822"
   integrity sha512-P7SAhzZE2YbbpqM7sTebFX5daRCU5Cm+qmGMzk5hgMD3qouqTkTaqojBZ8dDUswbcx8pWR2L5E7tBzdfbCHYcg==
 
+"@3walletconnector/react@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.npmjs.org/@3walletconnector/react/-/react-0.0.26.tgz#c26f3b5e01ccb75c522a8522864881e9ea9c527f"
+  integrity sha512-YToHyl642mqTF8YMjwq9pje/AATpyvAlf9zZ5GgmCzaJKBeAcTmimooiS47llxbUKhtzIKjNb5n2ihEc3k/vlA==
+
 "@3walletconnector/wallet-metamask@^0.0.21":
   version "0.0.21"
   resolved "https://registry.npmmirror.com/@3walletconnector/wallet-metamask/-/wallet-metamask-0.0.21.tgz#3ff04f1a4cac633beded5dda4591eff10a7d3bd1"
