@@ -1,14 +1,18 @@
 import React, { useMemo } from 'react';
 import { Container } from 'react-bootstrap';
-import { ConfigureParam } from '@3walletconnector/core';
-import { MetamaskConnector } from '@3walletconnector/wallet-metamask';
-import { PhantomConnector } from '@3walletconnector/wallet-phantom';
-import { EthereumChainInfoHelper } from '@3walletconnector/helpers';
-import { AuthProvider } from '@3auth/react';
+import {
+  PhantomConnector,
+  MetamaskConnector,
+  BaseConnector,
+  ConfigureParam,
+  EthereumChainInfoHelper,
+  AuthProvider,
+  LoginStateWrapper,
+} from '@3auth/react';
 import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
-import { LoginStateWrapper } from '@3auth/react-ui';
 import styles from './index.module.scss';
+import { Class } from 'utility-types';
 
 export default function Page() {
   return <PageConnent />;
@@ -41,7 +45,10 @@ function useWeb3AuthProps() {
         EthereumChainInfoHelper.getRinkeby(),
       ],
     };
-    const connectors = [PhantomConnector, MetamaskConnector];
+    const connectors: Class<BaseConnector>[] = [
+      PhantomConnector,
+      MetamaskConnector,
+    ];
 
     return { configure, connectors };
   }, []);
