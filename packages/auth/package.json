@@ -1,6 +1,6 @@
 {
   "name": "@3auth/auth",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "wallet login core",
   "author": "WEB3.WALLE <web3.walle@gmail.com>",
   "homepage": "",
@@ -20,7 +20,7 @@
     "url": "https://github.com/3devkit/3auth"
   },
   "dependencies": {
-    "@3auth/helpers": "^0.0.25",
+    "@3auth/helpers": "^0.0.26",
     "utility-types": "^3.10.0"
   },
   "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0"
