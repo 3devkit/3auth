@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { Web3AuthProvider } from '@/view/AuthProvider';
-import { ConnectWalletBox, LoginBox } from '@/view/LoginBox';
+import { LoginBox } from '@/view/LoginBox';
 
 export default function Page() {
   return <PageConnent />;
@@ -20,7 +20,7 @@ function PageConnent() {
     <Container>
       <Stack gap={3} direction="horizontal">
         <LoginBox />
-        <ConnectWalletBox />
+        {/* <ConnectWalletBox /> */}
       </Stack>
     </Container>
   );

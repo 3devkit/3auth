@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { createContext } from 'react';
-import { AuthSdk } from '@3auth/auth';
+import { AuthSdk, AuthSdkConfigProps } from '@3auth/auth';
 import { MyInfoProvider } from './use-myInfo';
 import {
   useWalletConnector,
@@ -11,7 +11,7 @@ import {
 export const AuthContext = createContext<AuthSdk | null>(null);
 
 export interface AuthProviderProps {
-  serverUrl: string;
+  config: AuthSdkConfigProps;
   web3AuthProps: Web3AuthProviderProps;
 }
 
@@ -30,12 +30,12 @@ export function AuthProvider(
 function AuthProviderConnent(
   props: React.PropsWithChildren<AuthProviderProps>,
 ) {
-  const { serverUrl } = props;
+  const { config } = props;
 
   const walletConnector = useWalletConnector();
 
   const authSdk = useMemo(() => {
-    return new AuthSdk(serverUrl, walletConnector);
+    return new AuthSdk(config, walletConnector);
   }, [walletConnector]);
 
   useEffect(() => {

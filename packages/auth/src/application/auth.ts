@@ -7,17 +7,20 @@ import {
 import { Web3AuthServerAdapter } from './server';
 import { Plugins } from './plugins';
 import { WalletConnectorSdk } from '@3walletconnector/react';
+import { AuthSdkConfig, AuthSdkConfigProps } from './config';
 
 export class AuthSdk {
   private _serverAdapter: Web3AuthServerAdapter;
   public loginLauncher: LoginLauncherSdk;
   public plugins: Plugins;
+  public config: AuthSdkConfig;
 
   public constructor(
-    public serverUrl: string,
+    configProps: AuthSdkConfigProps,
     public walletConnector: WalletConnectorSdk,
   ) {
-    this._serverAdapter = new Web3AuthServerAdapter(serverUrl);
+    this.config = new AuthSdkConfig(configProps);
+    this._serverAdapter = new Web3AuthServerAdapter(this.config.serverUrl);
     this.loginLauncher = new LoginLauncherSdk(this._serverAdapter);
     this.plugins = new Plugins(this.loginLauncher);
   }
@@ -52,6 +55,7 @@ export class AuthSdk {
   }
 
   public async signout(): Promise<void> {
+    this.walletConnector.disconnect();
     return this.loginLauncher.actions.signout();
   }
 

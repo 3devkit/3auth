@@ -5,7 +5,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
 import { IconButton } from './button';
 import { useLoginBoxController } from './controller';
-import { useAuth, useLoginState } from '@3auth/react';
+import { useAuth, useLoginState, UserInfo } from '@3auth/react';
 import styles from './styles.less';
 
 export function WalletList() {
@@ -40,6 +40,8 @@ export function WalletListWrapper(props: {
 
   const auth = useAuth();
 
+  const { closeDialog } = useModalAction();
+
   const [selected, setSelected] = useState<BaseConnector | null>(null);
 
   async function onConnect(connector: BaseConnector) {
@@ -55,7 +57,11 @@ export function WalletListWrapper(props: {
     setSelected(null);
 
     if (walletState.isConnected) {
-      boxController.show('signLogin');
+      if (auth.config.isSignLogin) {
+        boxController.show('signLogin');
+      } else {
+        closeDialog();
+      }
     }
   }
 
