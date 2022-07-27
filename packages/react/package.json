@@ -26,6 +26,6 @@
     "@3auth/helpers": "^0.0.37",
     "@3auth/plugin-walletsign": "^0.0.37",
     "@3auth/react-ui": "^0.0.37",
-    "@3walletconnector/react": "^0.0.38"
+    "@3walletconnector/react": "^0.0.39"
   }
 }
