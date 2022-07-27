@@ -29,7 +29,9 @@ function MyInfoProviderByWallet(props: React.PropsWithChildren<unknown>) {
   const walletState = useWalletState();
 
   useEffect(() => {
-    if (walletState.isConnected) {
+    if (walletState.isEagerlyConnecting) {
+      auth.loginLauncher.actions.beginLogin();
+    } else if (walletState.isConnected) {
       auth.loginLauncher.actions.loginSuccess(walletState.account!, '');
       auth.loginLauncher.actions.getMyInfoSuccess(
         walletStateToUserInfo(walletState),
