@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { Web3AuthProvider } from '@/view/AuthProvider';
 import { LoginBox } from '@/view/LoginBox';
+import { ExModalProvider } from '@3lib/components';
 
 export default function Page() {
   return <PageConnent />;

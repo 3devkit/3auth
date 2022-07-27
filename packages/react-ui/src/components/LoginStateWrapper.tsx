@@ -10,6 +10,7 @@ import {
   WalletState,
 } from '@3auth/react';
 import { AuthSdk } from '@3auth/auth';
+import { useLoginAction } from '../context/use-loginActions';
 
 interface LoggedContext {
   auth: AuthSdk;
@@ -46,19 +47,11 @@ function walletStateToUserInfo(walletState: WalletState): UserInfo {
 function LoginStateContent(props: LoginStateWrapperProps) {
   const { onLoggedBuilder, onNotLoggedBuilder, onLoadingBuilder } = props;
 
-  const { openDialog } = useModalAction();
+  const { openLoginDialog } = useLoginAction();
 
   const auth = useAuth();
   const loginState = useLoginState();
   const walletState = useWalletState();
-
-  const openLoginDialog = useMemoizedFn(() => {
-    openDialog(
-      <ExDialogBox title={'Connect Wallet'}>
-        <Web3LoginBox />
-      </ExDialogBox>,
-    );
-  });
 
   useEffect(() => {
     // Handling non-signature logins

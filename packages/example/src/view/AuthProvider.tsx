@@ -6,7 +6,6 @@ import {
   ConfigureParam,
   EthereumChainInfoHelper,
   AuthProvider,
-  LoginStateWrapper,
 } from '@3auth/react';
 import { Class } from 'utility-types';
 
