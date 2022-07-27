@@ -21,7 +21,6 @@ interface LoginStateWrapperProps {
   onLoggedBuilder: (context: LoggedContext) => JSX.Element;
   onNotLoggedBuilder: (context: NotLoggedContext) => JSX.Element;
 }
-
 export function LoginStateWrapper(props: LoginStateWrapperProps) {
   return (
     <ExModalProvider>
@@ -32,6 +31,7 @@ export function LoginStateWrapper(props: LoginStateWrapperProps) {
 
 function LoginStateContent(props: LoginStateWrapperProps) {
   const { onLoggedBuilder, onNotLoggedBuilder, onLoadingBuilder } = props;
+
   const { openDialog } = useModalAction();
 
   const auth = useAuth();

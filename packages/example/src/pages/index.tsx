@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Stack } from 'react-bootstrap';
 import { Web3AuthProvider } from '@/view/AuthProvider';
-import { LoginBox } from '@/view/LoginBox';
+import { ConnectWalletBox, LoginBox } from '@/view/LoginBox';
 
 export default function Page() {
   return <PageConnent />;
@@ -18,7 +18,10 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 function PageConnent() {
   return (
     <Container>
-      <LoginBox />
+      <Stack gap={3} direction="horizontal">
+        <LoginBox />
+        <ConnectWalletBox />
+      </Stack>
     </Container>
   );
 }

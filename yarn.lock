@@ -34,51 +34,51 @@
   resolved "https://registry.npmjs.org/@3lib/helpers/-/helpers-0.0.23.tgz#bf0922d9b62ae21afd38689f487185559b417e77"
   integrity sha512-liDVz4vAyRqkf3owVaYEvazoQv4c8R/i3jH06R6yNoxgFwAPcPW8XYeGsfccKskCewsdYLntvW816Ygee0gvJg==
 
-"@3walletconnector/core@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/core/-/core-0.0.34.tgz#b58dbb25a6af57aa21c10e66f1e92ec84ca28e47"
-  integrity sha512-l7uTc3DXg81dq2yy3CnzxH2rLCpakHvn1XA2GJqvRwYNHnPKvmaslTNRLyOhTAVHnchXRYKkyM2kCa/ZcUAvfw==
+"@3walletconnector/core@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/core/-/core-0.0.35.tgz#29358520e0fb9573c82522f01b367b3932efa675"
+  integrity sha512-NbJ9E4nOgD+XDMnpxpa4xSCrSYAZTBXM15LkQmSgHJiXAZUyG4rA6xPBOXb7y0uipmQ8v7qwR/IgnL4OzAQGNw==
   dependencies:
-    "@3walletconnector/helpers" "^0.0.34"
+    "@3walletconnector/helpers" "^0.0.35"
     "@ethersproject/providers" "^5.6.8"
     js-base64 "^3.7.2"
     utility-types "^3.10.0"
 
-"@3walletconnector/helpers@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/helpers/-/helpers-0.0.34.tgz#0a967ce1a4a1329cc284664d7ba49c15140dee5c"
-  integrity sha512-n6b+caU3KXv/0guEiilf95arxObe3g2jsM486guGyUUGjDdRS/CiyHbMiSjBIpbOsQhwC7XEEY10YlIS0QUXQw==
+"@3walletconnector/helpers@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/helpers/-/helpers-0.0.35.tgz#825067fc00966c94f985c4760bd84858d86cc080"
+  integrity sha512-VwR1fQWd/KqizcdZHLkxzBvGCbYutFw0nNzBDdOnT31senxCHH1b/odL7YF+ffZr1X0B/5gOZNc/wavPepXTNA==
 
-"@3walletconnector/react-ui@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/react-ui/-/react-ui-0.0.34.tgz#1366f41cfbefa252b52a09f28b8ddac179520f7e"
-  integrity sha512-Fpx1fipwLCcLPBB8UP5Jg2Of4qeEw3zI1grNjrMeW04fSqrbpfka91h9nvJKy8GEv3QymBaOHHt3prAhu+dWug==
+"@3walletconnector/react-ui@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/react-ui/-/react-ui-0.0.35.tgz#ce29deac7029bb138f072b1ac3fef0cb1a5da3c8"
+  integrity sha512-pUzCbBt7ufqYhhD3nPulANrcjrCZ9gfkfuwZe4Xlh0C+NhQMo43tkChxsS9d0EBhRFTIXuxM34XMQ7/bYh8iIw==
   dependencies:
     "@3lib/components" "^0.0.19"
     "@3lib/helpers" "^0.0.19"
     eventemitter3 "^4.0.7"
     react-loading "^2.0.3"
 
-"@3walletconnector/react@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/react/-/react-0.0.34.tgz#69b36925592f8f89122224731bf57eea2889ddf5"
-  integrity sha512-ccnZ2erE67W0OzRzR/0xMje60SfhdvrVgD5Z2lRV9VXxlr27AerDXEoQoKQSgEF/TIGw+Do+U2yy1rij95tqYg==
+"@3walletconnector/react@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/react/-/react-0.0.35.tgz#fc4272496384a2f2c2086e2bc31b1e79b318c427"
+  integrity sha512-4vFEWQ1ux7ObkT8CXRmBFxOAIBTmqcLZMaFdCdMbQu3tVQBu/BT2f4Y3c70nhaxGXbl/UPWjcnEIT9ad/MLFaQ==
   dependencies:
-    "@3walletconnector/core" "^0.0.34"
-    "@3walletconnector/helpers" "^0.0.34"
-    "@3walletconnector/react-ui" "^0.0.34"
-    "@3walletconnector/wallet-metamask" "^0.0.34"
-    "@3walletconnector/wallet-phantom" "^0.0.34"
+    "@3walletconnector/core" "^0.0.35"
+    "@3walletconnector/helpers" "^0.0.35"
+    "@3walletconnector/react-ui" "^0.0.35"
+    "@3walletconnector/wallet-metamask" "^0.0.35"
+    "@3walletconnector/wallet-phantom" "^0.0.35"
 
-"@3walletconnector/wallet-metamask@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/wallet-metamask/-/wallet-metamask-0.0.34.tgz#8d60cca93c3681bd0a901f172e368132e55731cd"
-  integrity sha512-DQRHKamStggDoZigILhnoPS9tfMsb1mO/CePHTQ02h1aiZOKYr0KFa+WFQ03DwTnhZ2blWwJwmJnBY77b3P9hg==
+"@3walletconnector/wallet-metamask@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/wallet-metamask/-/wallet-metamask-0.0.35.tgz#4bdc628696202ea8db4ade75298680216f9b2ea8"
+  integrity sha512-szMoThQS8E8mZtKxbOs7klNryCkD0pd3BKMOsxtA57y2jMD0DFci8NANJM6ABQ5ojplOcpU31sWDy1t1YaP0yw==
 
-"@3walletconnector/wallet-phantom@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.npmjs.org/@3walletconnector/wallet-phantom/-/wallet-phantom-0.0.34.tgz#e647da18fef40d29fd6017edd3e7b8071d3b1e3b"
-  integrity sha512-X4pgdpjcdop6EXWpYfQanLu7H3ho8vmtAa7mgv2RT1DL6lB4Brx1FHOCe4GyQNkjqygu9TRj8Kgu8hLSOGiukw==
+"@3walletconnector/wallet-phantom@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmjs.org/@3walletconnector/wallet-phantom/-/wallet-phantom-0.0.35.tgz#bab0d436517e3b1344df8097c057ae5a63310ed4"
+  integrity sha512-DbCU035/bTNOWW34xHbLJKSoVinQvMN/wTgnMw2xhy/TsHNzvM8lGHeHB2T2ZOH3FmV5FpJ3BlYn1k6fS++iLw==
   dependencies:
     "@solana/web3.js" "^1.50.0"
 
