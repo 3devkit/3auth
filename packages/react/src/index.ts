@@ -4,6 +4,9 @@ export * from '@3auth/react-ui';
 export * from '@3auth/plugin-walletsign';
 
 export {
+  useWeb3Provider,
+  useWalletConnector,
+  useWalletState,
   Web3AuthProviderProps,
   WalletConnectStateWrapper,
   EthereumChainInfoHelper,
