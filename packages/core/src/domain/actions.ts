@@ -84,6 +84,7 @@ export class Actions {
    */
   public loginSuccess(account: string, token: string) {
     this.authTokenRepo.set(account, token);
+
     this.store.update({
       loginState: 'loginSuccessful',
       account,

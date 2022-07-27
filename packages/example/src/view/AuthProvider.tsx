@@ -16,7 +16,7 @@ export function Web3AuthProvider(props: React.PropsWithChildren<unknown>) {
     <AuthProvider
       config={{
         serverUrl: 'https://test-server.hipass.xyz',
-        isSignLogin: true,
+        isSignLogin: false,
       }}
       web3AuthProps={web3AuthProps}
     >

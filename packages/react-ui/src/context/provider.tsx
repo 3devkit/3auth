@@ -37,16 +37,12 @@ function AuthProviderConnent(
 
   const walletConnector = useWalletConnector();
 
-  const authSdk = useMemo(() => {
+  const auth = useMemo(() => {
     return new AuthSdk(config, walletConnector);
-  }, [walletConnector]);
-
-  useEffect(() => {
-    authSdk.initLogin();
-  }, [authSdk]);
+  }, [config, walletConnector]);
 
   return (
-    <AuthContext.Provider value={authSdk}>
+    <AuthContext.Provider value={auth}>
       <MyInfoProvider>{props.children}</MyInfoProvider>
     </AuthContext.Provider>
   );

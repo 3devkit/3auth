@@ -3,12 +3,44 @@ import useSWR from 'swr';
 import { useStore } from 'zustand';
 import { useLoginState } from './use-loginState';
 import { useAuth } from './provider';
-
-const GET_SWR_KEY = (account: string) => {
-  return `getMyInfo/${account}`;
-};
+import { UserInfo, useWalletState, WalletState } from '@3auth/react';
 
 export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
+  const auth = useAuth();
+
+  if (auth.config.isSignLogin) {
+    return <MyInfoProviderByServer>{props.children}</MyInfoProviderByServer>;
+  } else {
+    return <MyInfoProviderByWallet>{props.children}</MyInfoProviderByWallet>;
+  }
+}
+
+export const useMyInfo = () => {
+  const auth = useAuth();
+
+  const myInfo = useStore(auth.store, state => state.userInfo);
+
+  return { myInfo };
+};
+
+function MyInfoProviderByWallet(props: React.PropsWithChildren<unknown>) {
+  const auth = useAuth();
+
+  const walletState = useWalletState();
+
+  useEffect(() => {
+    if (walletState.isConnected) {
+      auth.loginLauncher.actions.loginSuccess(walletState.account!, '');
+      auth.loginLauncher.actions.getMyInfoSuccess(
+        walletStateToUserInfo(walletState),
+      );
+    }
+  }, [walletState]);
+
+  return <>{props.children}</>;
+}
+
+function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
   const auth = useAuth();
 
   const loginState = useLoginState();
@@ -26,6 +58,10 @@ export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
   );
 
   useEffect(() => {
+    auth.initLogin();
+  }, []);
+
+  useEffect(() => {
     if (error) {
       console.info('error:', error);
     } else if (myInfo) {
@@ -36,10 +72,14 @@ export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
   return <>{props.children}</>;
 }
 
-export const useMyInfo = () => {
-  const auth = useAuth();
+function GET_SWR_KEY(account: string) {
+  return `getMyInfo/${account}`;
+}
 
-  const myInfo = useStore(auth.store, state => state.userInfo);
-
-  return { myInfo };
-};
+function walletStateToUserInfo(walletState: WalletState): UserInfo {
+  return UserInfo.fromDto({
+    id: 0,
+    regTm: 0,
+    account: walletState.account,
+  });
+}

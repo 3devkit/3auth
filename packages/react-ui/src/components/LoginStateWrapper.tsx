@@ -36,42 +36,21 @@ export function LoginStateWrapper(props: LoginStateWrapperProps) {
   );
 }
 
-function walletStateToUserInfo(walletState: WalletState): UserInfo {
-  return UserInfo.fromDto({
-    id: 0,
-    regTm: 0,
-    account: walletState.account,
-  });
-}
-
 function LoginStateContent(props: LoginStateWrapperProps) {
   const { onLoggedBuilder, onNotLoggedBuilder, onLoadingBuilder } = props;
 
   const { openLoginDialog } = useLoginAction();
 
   const auth = useAuth();
-  const loginState = useLoginState();
-  const walletState = useWalletState();
 
-  useEffect(() => {
-    // Handling non-signature logins
-    if (!auth.config.isSignLogin) {
-      if (walletState.isConnected) {
-        auth.loginLauncher.actions.getMyInfoSuccess(
-          walletStateToUserInfo(walletState),
-        );
-      }
-    }
-  }, [walletState]);
+  const loginState = useLoginState();
 
   if (loginState.isMyInfoGetting) return onLoadingBuilder();
-
-  const myInfo = loginState.userInfo!;
 
   return (
     <>
       {loginState.hasUserInfo
-        ? onLoggedBuilder({ auth, myInfo })
+        ? onLoggedBuilder({ auth, myInfo: loginState.userInfo! })
         : onNotLoggedBuilder({ auth, openLoginDialog })}
     </>
   );

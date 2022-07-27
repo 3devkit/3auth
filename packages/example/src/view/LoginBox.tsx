@@ -1,16 +1,9 @@
-import {
-  LoginStateWrapper,
-  useWeb3Provider,
-  WalletConnectStateWrapper,
-  useLoginAction,
-} from '@3auth/react';
+import { LoginStateWrapper } from '@3auth/react';
 import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
 import styles from './LoginBox.module.scss';
 
 export function LoginBox() {
-  const { openLoginDialog } = useLoginAction();
-
   return (
     <LoginStateWrapper
       onLoadingBuilder={() => {
