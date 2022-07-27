@@ -34,6 +34,12 @@ function MyInfoProviderByWallet(props: React.PropsWithChildren<unknown>) {
       auth.loginLauncher.actions.getMyInfoSuccess(
         walletStateToUserInfo(walletState),
       );
+    } else if (
+      !walletState.isEagerlyConnecting &&
+      !walletState.isConnecting &&
+      !walletState.account
+    ) {
+      auth.loginLauncher.actions.loginFail();
     }
   }, [auth, walletState]);
 
