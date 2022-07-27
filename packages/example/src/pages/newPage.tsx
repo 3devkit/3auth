@@ -2,8 +2,6 @@ import React from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { Web3AuthProvider } from '@/view/AuthProvider';
 import { LoginBox } from '@/view/LoginBox';
-import Link from 'next/link';
-import { ExButton } from '@3lib/components';
 
 export default function Page() {
   return <PageConnent />;
@@ -23,14 +21,6 @@ function PageConnent() {
       <Stack gap={3} direction="horizontal">
         <LoginBox />
       </Stack>
-
-      <div>
-        <Link href={'/newPage'}>
-          <span>
-            <ExButton>NEW PAGE</ExButton>
-          </span>
-        </Link>
-      </div>
     </Container>
   );
 }

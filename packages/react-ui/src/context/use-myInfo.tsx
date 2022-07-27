@@ -35,7 +35,7 @@ function MyInfoProviderByWallet(props: React.PropsWithChildren<unknown>) {
         walletStateToUserInfo(walletState),
       );
     }
-  }, [walletState]);
+  }, [auth, walletState]);
 
   return <>{props.children}</>;
 }

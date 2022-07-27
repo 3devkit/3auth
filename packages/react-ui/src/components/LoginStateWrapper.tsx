@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
-import { ExDialogBox, ExModalProvider, useModalAction } from '@3lib/components';
-import { useMemoizedFn } from 'ahooks';
-import { Web3LoginBox } from './LoginBox';
+import React from 'react';
+import { ExModalProvider } from '@3lib/components';
 import { UserInfo } from '@3auth/core';
-import {
-  useAuth,
-  useLoginState,
-  useWalletState,
-  WalletState,
-} from '@3auth/react';
+import { useAuth, useLoginState } from '@3auth/react';
 import { AuthSdk } from '@3auth/auth';
 import { useLoginAction } from '../context/use-loginActions';
 
