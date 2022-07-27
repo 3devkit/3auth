@@ -1,18 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Container } from 'react-bootstrap';
-import {
-  PhantomConnector,
-  MetamaskConnector,
-  BaseConnector,
-  ConfigureParam,
-  EthereumChainInfoHelper,
-  AuthProvider,
-  LoginStateWrapper,
-} from '@3auth/react';
-import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
-import { StyleHelper } from '@3lib/helpers';
-import styles from './index.module.scss';
-import { Class } from 'utility-types';
+import { Web3AuthProvider } from '@/view/AuthProvider';
+import { LoginBox } from '@/view/LoginBox';
 
 export default function Page() {
   return <PageConnent />;
@@ -23,93 +12,13 @@ Page.getLayout = function getLayout(page: React.ReactElement) {
 };
 
 function LayoutConnent(props: React.PropsWithChildren<unknown>) {
-  const web3AuthProps = useWeb3AuthProps();
-
-  return (
-    <AuthProvider
-      serverUrl="https://test-server.hipass.xyz"
-      web3AuthProps={web3AuthProps}
-    >
-      {props.children}
-    </AuthProvider>
-  );
-}
-
-function useWeb3AuthProps() {
-  const web3AuthProps = useMemo(() => {
-    const configure: ConfigureParam = {
-      appName: '',
-      defaultConnectChainId: EthereumChainInfoHelper.getMainnet().chainId,
-      supportedEthereumChain: [
-        EthereumChainInfoHelper.getMainnet(),
-        EthereumChainInfoHelper.getRinkeby(),
-      ],
-    };
-    const connectors: Class<BaseConnector>[] = [
-      PhantomConnector,
-      MetamaskConnector,
-    ];
-
-    return { configure, connectors };
-  }, []);
-
-  return web3AuthProps;
+  return <Web3AuthProvider>{props.children}</Web3AuthProvider>;
 }
 
 function PageConnent() {
   return (
     <Container>
-      <LoginStateWrapper
-        onLoadingBuilder={() => {
-          return <ExLoading />;
-        }}
-        onLoggedBuilder={context => {
-          return (
-            <div className={styles.UserBox}>
-              <ExPopover
-                onButtonBuilder={open => {
-                  return (
-                    <div
-                      className={StyleHelper.combinedSty(
-                        styles.UserInfo,
-                        open && styles.selected,
-                      )}
-                    >
-                      <div className={styles.avatar} />
-                      <div className={styles.name}>
-                        {context.myInfo.shortAccount}
-                      </div>
-                    </div>
-                  );
-                }}
-                onPopoverBuilder={closeHandle => {
-                  return (
-                    <ExPopoverBox>
-                      <ul className={styles.MenuList}>
-                        <li
-                          onClick={() => {
-                            closeHandle();
-                            context.auth.signout();
-                          }}
-                        >
-                          <div className={styles.left}>Disconnect Wallet</div>
-                        </li>
-                      </ul>
-                    </ExPopoverBox>
-                  );
-                }}
-              />
-            </div>
-          );
-        }}
-        onNotLoggedBuilder={context => {
-          return (
-            <ExButton onClick={context.openLoginDialog}>
-              Connect Wallet
-            </ExButton>
-          );
-        }}
-      />
+      <LoginBox />
     </Container>
   );
 }

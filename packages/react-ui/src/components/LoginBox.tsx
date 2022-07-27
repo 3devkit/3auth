@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginProvider, useView } from './LoginController';
+import { LoginProvider, useView } from './controller';
 import styles from './styles.less';
 
 export function Web3LoginBox(props: React.PropsWithChildren<unknown>) {

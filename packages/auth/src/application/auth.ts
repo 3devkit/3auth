@@ -6,7 +6,7 @@ import {
 } from '@3auth/core';
 import { Web3AuthServerAdapter } from './server';
 import { Plugins } from './plugins';
-import { WalletConnectorSdk } from '@3walletconnector/core';
+import { WalletConnectorSdk } from '@3walletconnector/react';
 
 export class AuthSdk {
   private _serverAdapter: Web3AuthServerAdapter;

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { BaseConnector } from '@3walletconnector/core';
-import { useWalletState } from '@3walletconnector/react';
+import { useWalletState, BaseConnector } from '@3walletconnector/react';
 import { BrowserRender } from '@3lib/helpers';
 import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
-import { IconButton } from './components/button';
-import { useLoginBoxController } from './LoginController';
+import { IconButton } from './button';
+import { useLoginBoxController } from './controller';
 import { useAuth, useLoginState } from '@3auth/react';
 import styles from './styles.less';
 

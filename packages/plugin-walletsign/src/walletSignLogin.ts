@@ -1,4 +1,4 @@
-import { WalletConnectorSdk } from '@3walletconnector/core';
+import { WalletConnectorSdk } from '@3walletconnector/react';
 import { LoginState, BaseLoginPlugin } from '@3auth/core';
 
 export class WalletSignLoginPlugin extends BaseLoginPlugin {

@@ -1,0 +1,102 @@
+.UserBox {
+  width: 200px;
+}
+
+.UserInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 50px;
+  padding: 6px 6px;
+  cursor: pointer;
+  user-select: none;
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    background-color: #eee;
+    border-radius: 50%;
+    margin-right: 6px;
+    background: radial-gradient(
+      75.29% 75.29% at 64.96% 24.36%,
+      #dcc8d0 15.62%,
+      #78c8cf 30.21%,
+      #4d959e 42.71%,
+      #305eb9 55.73%,
+      #311f12 79.69%,
+      #684232 90.62%,
+      #2d1c13 100%
+    );
+  }
+
+  .name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  &:hover {
+    background-color: #e1e1e1;
+  }
+
+  &.selected {
+    background-color: #eee;
+  }
+}
+
+.MenuList {
+  list-style: none;
+  margin: 0;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    color: #3f3f3f;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .right {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .tag {
+        background-color: red;
+        color: #fff;
+        font-size: 12px;
+        padding: 4px 6px;
+        border-radius: 4px;
+      }
+    }
+
+    svg {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      background-color: transparent;
+    }
+
+    &:hover {
+      background-color: #f6f6f6;
+    }
+    &:not(:last-child) {
+      margin-bottom: 6px;
+    }
+  }
+}

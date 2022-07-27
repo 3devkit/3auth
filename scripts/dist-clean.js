@@ -1,6 +1,9 @@
 import { readdirSync } from 'fs';
 import { resolve } from 'path';
 import shell from 'shelljs';
+import * as url from 'url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // 遍历所有的包获取版本
 const packages = readdirSync(resolve(__dirname, '../packages/'));
