@@ -16,4 +16,5 @@ export {
   ConfigureParam,
   MetamaskConnector,
   PhantomConnector,
+  Web3Provider,
 } from '@3walletconnector/react';
