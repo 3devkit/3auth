@@ -7,6 +7,7 @@ export {
   useWeb3Provider,
   useWalletConnector,
   useWalletState,
+  useChainId,
   Web3AuthProviderProps,
   WalletState,
   WalletConnectStateWrapper,
