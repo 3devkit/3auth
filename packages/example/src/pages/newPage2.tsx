@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Stack } from 'react-bootstrap';
-import { LoginBox } from '@/view/LoginBox';
+import { useMyInfo } from '@3auth/react-ui';
 
 export default function Page() {
   return <PageConnent />;
@@ -15,10 +15,13 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 }
 
 function PageConnent() {
+  const { myInfo } = useMyInfo();
+
   return (
     <Container>
       <Stack gap={3} direction="horizontal">
-        <LoginBox />
+        {myInfo?.account}
+        {/* <LoginBox /> */}
       </Stack>
     </Container>
   );

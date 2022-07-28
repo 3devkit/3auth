@@ -16,7 +16,7 @@ export function Web3AuthProvider(props: React.PropsWithChildren<unknown>) {
     <AuthProvider
       config={{
         serverUrl: 'https://test-server.hipass.xyz',
-        isSignLogin: false,
+        isSignLogin: true,
       }}
       web3AuthProps={web3AuthProps}
     >
@@ -29,7 +29,7 @@ function useWeb3AuthProps() {
   const web3AuthProps = useMemo(() => {
     const configure: ConfigureParam = {
       appName: '',
-      defaultConnectChainId: EthereumChainInfoHelper.getMainnet().chainId,
+      defaultConnectChainId: EthereumChainInfoHelper.getRinkeby().chainId,
       supportedEthereumChain: [
         EthereumChainInfoHelper.getMainnet(),
         EthereumChainInfoHelper.getRinkeby(),

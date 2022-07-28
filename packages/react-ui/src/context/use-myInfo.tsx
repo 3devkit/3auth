@@ -67,7 +67,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   useEffect(() => {
     auth.initLogin();
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     if (error) {
@@ -75,7 +75,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
     } else if (myInfo) {
       auth.loginLauncher.actions.getMyInfoSuccess(myInfo);
     }
-  }, [myInfo, error]);
+  }, [auth, myInfo, error]);
 
   return <>{props.children}</>;
 }

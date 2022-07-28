@@ -24,12 +24,19 @@ function PageConnent() {
         <LoginBox />
       </Stack>
 
-      <div>
-        <Link href={'/newPage'}>
-          <span>
-            <ExButton>NEW PAGE</ExButton>
-          </span>
-        </Link>
+      <div style={{ marginTop: 20 }}>
+        <Stack gap={3} direction="horizontal">
+          <Link href={'/newPage'}>
+            <span>
+              <ExButton>NEW PAGE</ExButton>
+            </span>
+          </Link>
+          <Link href={'/newPage2'}>
+            <span>
+              <ExButton>NEW PAGE2</ExButton>
+            </span>
+          </Link>
+        </Stack>
       </div>
     </Container>
   );
