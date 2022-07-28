@@ -68,7 +68,7 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-strip": "^2.1.0",
-    "@rollup/plugin-typescript": "^8.3.3",
+    "@rollup/plugin-typescript": "^8.3.4",
     "@rollup/plugin-url": "^7.0.0",
     "@rollup/pluginutils": "^4.2.1",
     "@svgr/rollup": "6.2.1",
@@ -160,7 +160,7 @@
   "dependencies": {
     "@types/bootstrap": "^5.2.0",
     "@types/react-headroom": "^2.2.2",
-    "ahooks": "^3.5.2",
+    "ahooks": "^3.6.2",
     "axios": "^0.27.2",
     "hooks": "^0.3.2",
     "is-in-browser": "^2.0.0",
