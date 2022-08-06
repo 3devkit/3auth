@@ -5,17 +5,17 @@ import { useAuth, useLoginState } from '@3auth/react';
 import { AuthSdk } from '@3auth/auth';
 import { useLoginAction } from '../context/use-loginActions';
 
-interface LoggedContext {
+export interface LoggedContext {
   auth: AuthSdk;
   myInfo: UserInfo;
 }
 
-interface NotLoggedContext {
+export interface NotLoggedContext {
   auth: AuthSdk;
   openLoginDialog: () => void;
 }
 
-interface LoginStateWrapperProps {
+export interface LoginStateWrapperProps {
   onLoadingBuilder: () => JSX.Element;
   onLoggedBuilder: (context: LoggedContext) => JSX.Element;
   onNotLoggedBuilder: (context: NotLoggedContext) => JSX.Element;
