@@ -59,6 +59,48 @@ export class AuthSdk {
     return this.loginLauncher.actions.signout();
   }
 
+  /**
+   * 跳转到twitter登录
+   * @param callbackUrl 回调地址, /login/twitter/callback为默认回调地址
+   */
+  public async twitterLogin(
+    callbackUrl: string = '/login/twitter/callback',
+  ): Promise<void> {
+    const url = `${window.location.origin}${callbackUrl}`;
+
+    const authorizationUrl = await this._serverAdapter.reqTwitterLoginUrl(url);
+
+    window.localStorage.setItem('OAuthRedirectUrl', window.location.href);
+
+    window.location.href = authorizationUrl;
+  }
+
+  /**
+   * 绑定twitter
+   * @param oauth_token
+   * @param oauth_verifier
+   * @returns 绑定成功后重定向的页面
+   */
+  public async bindTwitter(
+    oauth_token: string,
+    oauth_verifier: string,
+  ): Promise<string | null> {
+    const isSuccess = await this._serverAdapter.bindTwitter(
+      oauth_token,
+      oauth_verifier,
+    );
+
+    if (!isSuccess) {
+      return null;
+    }
+
+    const redirectUrl = window.localStorage.getItem('OAuthRedirectUrl') ?? '/';
+
+    window.localStorage.removeItem('OAuthRedirectUrl');
+
+    return redirectUrl;
+  }
+
   public static get cookies() {
     return LoginLauncherSdk.getCookies();
   }

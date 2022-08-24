@@ -64,4 +64,33 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     });
     return res.Nonce;
   }
+
+  public async reqTwitterLoginUrl(callbackUrl: string): Promise<string> {
+    const res = await this.httpClient.get({
+      url: '/api/auth/twitter',
+      params: {
+        callbackUrl,
+      },
+    });
+
+    return res.authorizationUrl as string;
+  }
+
+  public async bindTwitter(
+    oauth_token: string,
+    oauth_verifier: string,
+  ): Promise<boolean> {
+    try {
+      const res = await this.httpClient.get({
+        url: '/api/auth/twitter/callback',
+        params: {
+          oauth_token,
+          oauth_verifier,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
