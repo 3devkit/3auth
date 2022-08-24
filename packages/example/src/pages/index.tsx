@@ -4,6 +4,7 @@ import { Web3AuthProvider } from '@/view/AuthProvider';
 import { LoginBox } from '@/view/LoginBox';
 import Link from 'next/link';
 import { ExButton } from '@3lib/components';
+import { useMyInfo } from '@3auth/react-ui';
 
 export default function Page() {
   return <PageConnent />;

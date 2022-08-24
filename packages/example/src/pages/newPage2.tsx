@@ -20,8 +20,7 @@ function PageConnent() {
   return (
     <Container>
       <Stack gap={3} direction="horizontal">
-        {myInfo?.account}
-        {/* <LoginBox /> */}
+        {JSON.stringify(myInfo?.toDto)}
       </Stack>
     </Container>
   );

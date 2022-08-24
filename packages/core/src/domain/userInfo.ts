@@ -6,6 +6,10 @@ export interface UserInfoDto {
   ens?: string;
   nickname?: string;
   summary?: string;
+  inviteCode?: string;
+  twitter?: string;
+  discord?: string;
+  email?: string;
 }
 
 export type ChangeUserInfoDto = Partial<
@@ -13,15 +17,35 @@ export type ChangeUserInfoDto = Partial<
 >;
 
 export class UserInfo {
-  public constructor(
-    public id: number,
-    public regTm: number,
-    public avator?: string,
-    public account?: string,
-    public ens?: string,
-    public nickname?: string,
-    public summary?: string,
-  ) {}
+  public id: number;
+  public regTm: number;
+  public avator?: string;
+  public account?: string;
+  public ens?: string;
+  public nickname?: string;
+  public summary?: string;
+  public inviteCode?: string;
+  public twitter?: string;
+  public discord?: string;
+  public email?: string;
+
+  public constructor(private dto: UserInfoDto) {
+    this.id = dto.id;
+    this.regTm = dto.regTm;
+    this.avator = dto.avator;
+    this.account = dto.account;
+    this.ens = dto.ens;
+    this.nickname = dto.nickname;
+    this.summary = dto.summary;
+    this.inviteCode = dto.inviteCode;
+    this.twitter = dto.twitter;
+    this.discord = dto.discord;
+    this.email = dto.email;
+  }
+
+  public static fromDto(dto: UserInfoDto) {
+    return new UserInfo(dto);
+  }
 
   public get shortAccount() {
     return (
@@ -31,27 +55,7 @@ export class UserInfo {
     );
   }
 
-  public static fromDto(dto: UserInfoDto) {
-    return new UserInfo(
-      dto.id,
-      dto.regTm,
-      dto.avator,
-      dto.account,
-      dto.ens,
-      dto.nickname,
-      dto.summary,
-    );
-  }
-
   public get toDto(): UserInfoDto {
-    return {
-      id: this.id,
-      regTm: this.regTm,
-      avator: this.avator,
-      account: this.account,
-      ens: this.ens,
-      nickname: this.nickname,
-      summary: this.summary,
-    };
+    return this.dto;
   }
 }
