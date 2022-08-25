@@ -2,7 +2,11 @@ import Cookies from 'js-cookie';
 import { isExpired } from 'react-jwt';
 
 export class AuthTokenRepo {
-  private AUTH_TOKEN_KEY = 'CURR_ACCOUNT';
+  private AUTH_TOKEN_KEY: string;
+
+  public constructor(appName: String) {
+    this.AUTH_TOKEN_KEY = appName + '_CURR_ACCOUNT';
+  }
 
   public set(account: string, token: string) {
     Cookies.set(this.AUTH_TOKEN_KEY, account);

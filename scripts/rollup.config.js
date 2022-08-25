@@ -1,80 +1,56 @@
 import { rollup as _rollup, watch as _watch } from 'rollup';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { babel } from '@rollup/plugin-babel';
-import strip from '@rollup/plugin-strip';
-import typescript from 'rollup-plugin-typescript2';
-import { terser } from 'rollup-plugin-terser';
-import progress from 'rollup-plugin-progress';
 import postcss from 'rollup-plugin-postcss';
+import { terser } from 'rollup-plugin-terser';
 import { isProdEnv } from './env.js';
-import svgr from '@svgr/rollup';
-import url from '@rollup/plugin-url';
 import { showBuildLog } from './util.js';
-
-// https://github.com/ezolenko/rollup-plugin-typescript2
+import esbuild from 'rollup-plugin-esbuild';
+import dts from 'rollup-plugin-dts';
+import typescript from 'rollup-plugin-typescript2';
 
 const IGNORE_WARNING_CODE = ['UNRESOLVED_IMPORT', 'CIRCULAR_DEPENDENCY'];
-const EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
 
 function getRollupConfig(config) {
   const { inputFile, outputFile, tsconfig, bundleType } = config;
   const inputOptions = {
     input: inputFile,
-    plugins: [
-      peerDepsExternal(),
-      url(),
-      svgr({ icon: true }),
-      postcss({
-        minimize: true,
-        modules: true,
-        use: {
-          sass: null,
-          stylus: null,
-          less: { javascriptEnabled: true },
-        },
-      }),
-      // nodeResolve(),
-      typescript({
-        tsconfig,
-        abortOnError: false,
-        clean: true,
-        check: false,
-      }),
-      // commonjs(),
-      babel({
-        babelrc: false,
-        inputSourceMap: true,
-        babelHelpers: 'bundled',
-        exclude: 'node_modules/**',
-        extensions: EXTENSIONS,
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              modules: false,
-              targets: {
-                esmodules: true,
+    plugins:
+      bundleType === 'd'
+        ? [dts()]
+        : [
+            typescript({
+              tsconfig,
+              abortOnError: false,
+              clean: true,
+              check: false,
+            }),
+            postcss({
+              minimize: true,
+              modules: true,
+              use: {
+                sass: null,
+                stylus: null,
+                less: { javascriptEnabled: true },
               },
-            },
+            }),
+            esbuild({
+              include: /\.[jt]sx?$/,
+              exclude: /node_modules/,
+              sourceMap: false,
+              minify: process.env.NODE_ENV === 'production',
+              target: 'esnext',
+              jsx: 'transform',
+              jsxFactory: 'React.createElement',
+              jsxFragment: 'React.Fragment',
+              define: {
+                __VERSION__: '"x.y.z"',
+              },
+              tsconfig: 'tsconfig.json',
+              loaders: {
+                '.json': 'json',
+                '.js': 'jsx',
+              },
+            }),
           ],
-          '@babel/preset-typescript',
-          '@babel/preset-react',
-        ],
-        plugins: [],
-      }),
-      progress({
-        clearLine: true,
-      }),
-      isProdEnv() &&
-        strip({
-          include: [],
-          debugger: true,
-          //functions: ['console.*', 'assert.*'],
-          functions: ['assert.*'],
-        }),
-    ],
     onwarn: (warning, warn) => {
       if (IGNORE_WARNING_CODE.indexOf(warning.code) !== -1) return;
       throw new Error(warning.message);
@@ -83,9 +59,9 @@ function getRollupConfig(config) {
 
   const outputOptions = {
     file: outputFile,
-    format: bundleType,
+    format: bundleType === 'd' ? 'es' : bundleType,
     sourcemap: true,
-    plugins: [isProdEnv() && terser()],
+    plugins: [],
     globals: { react: 'React', zustand: 'zustand' },
   };
 
@@ -102,68 +78,47 @@ function getRollupConfig(config) {
   };
 }
 
-export function build(configs, isWatch, onAllBuildEnd) {
-  let isFristBuild = true;
-  let buildIndex = 0;
+export function build(configs, isWatch, onAllBuildEnd, pkgCount) {
+  showBuildLog(`PKG TOTAL:`, `${pkgCount}个`);
+
   let buildTotal = configs.length;
-  showBuildLog(`PKG TOTAL:`, `${buildTotal}个`);
 
   const buildByIndex = buildIndex => {
     const pkgConfig = configs[buildIndex];
     if (pkgConfig) {
       const rollupConfig = getRollupConfig(pkgConfig);
-      // showBuildLog('BEGIN:', `${buildIndex + 1}/${buildTotal}`, `> packageName : ${pkgConfig.pkgName}`);
-      showBuildLog('BEGIN:', `${pkgConfig.pkgName}`, `> format : ${pkgConfig.bundleType}`);
       buildPkg(pkgConfig, rollupConfig, isWatch, onBuildPkgEndCallback);
     }
   };
 
-  const onBuildPkgEndCallback = () => {
-    // buildIndex++;
-    // if (buildIndex < buildTotal) {
-    //   buildByIndex(buildIndex);
-    // } else {
-    //   showBuildLog('FINISH');
-    //   if (isWatch) {
-    //     showBuildLog('HOT UPDATE, WATCH...');
-    //   }
-    //   if (isFristBuild) {
-    //     isFristBuild = false;
-    //     onAllBuildEnd();
-    //   }
-    // }
-  };
+  const onBuildPkgEndCallback = () => {};
 
   for (let index = 0; index < buildTotal; index++) {
     buildByIndex(index);
   }
-
-
-  buildByIndex(buildIndex);
 }
 
 async function buildPkg(pkgConfig, rollupConfig, isWatch, onBuildPkgEnd) {
-  const { pkgName } = pkgConfig;
+  const { pkgName, outputFile } = pkgConfig;
   const { inputOptions, outputOptions, watchOptions } = rollupConfig;
 
   const bundle = await _rollup(inputOptions);
   const watcher = _watch(watchOptions);
   await bundle.write(outputOptions);
-  onWatcher(watcher, isWatch, pkgName).then(() => {
+  onWatcher(watcher, isWatch, pkgName, outputFile).then(() => {
     onBuildPkgEnd();
   });
 }
 
-function onWatcher(watcher, isWatch, pkgName) {
+function onWatcher(watcher, isWatch, pkgName, outputFile) {
   return new Promise(resolve => {
     watcher.on('event', event => {
       const { code } = event;
       if (code === 'BUNDLE_START') {
-        showBuildLog('BEGIN', pkgName);
+        // showBuildLog('BEGIN', pkgName);
       } else if (code === 'BUNDLE_END') {
         const { duration } = event;
-        showBuildLog('SUCCESS:', pkgName, `> DURATION: `, duration);
-        // showBuildLog('END');
+        showBuildLog('SUCCESS:', outputFile, `> DURATION: `, duration);
         resolve();
         if (!isWatch) {
           watcher.close();

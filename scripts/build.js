@@ -6,26 +6,38 @@ import { resolve } from 'path';
 import { build } from './rollup.config.js';
 import { setEnv } from './env.js';
 import shell from 'shelljs';
+import { showBuildLog } from './util.js';
 import * as url from 'url';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+const bundleTypes = ['cjs', 'es'];
+
+// const bundleTypes = ['cjs', 'es', 'd'];
+
 const getAllPkgConfigs = () => {
-  const bundleTypes = ['cjs', 'es'];
-  const packages = readdirSync(resolve(__dirname, '../packages/')).filter(item => /^([^.]+)$/.test(item));
+  const packages = readdirSync(resolve(__dirname, '../packages/')).filter(
+    item => /^([^.]+)$/.test(item),
+  );
 
   const allPkgConfigs = [];
+
   packages.forEach(directoryName => {
     const pkgPath = resolve(__dirname, '../packages/', directoryName);
-    const { name: pkgName, private: isPrivate } = JSON.parse(readFileSync(resolve(pkgPath, 'package.json'), 'utf-8'));
+    const { name: pkgName, private: isPrivate } = JSON.parse(
+      readFileSync(resolve(pkgPath, 'package.json'), 'utf-8'),
+    );
 
     if (!isPrivate) {
       bundleTypes.forEach(bundleType => {
         const inputPath = resolve(pkgPath, './src');
         const inputFile = resolve(pkgPath, './src/index.ts');
         const outputPath = resolve(pkgPath, './dist');
-        const outputFile = resolve(pkgPath, `./dist/index.${bundleType}.js`);
+        const outputFile = resolve(
+          pkgPath,
+          `./dist/index.${bundleType}.${bundleType === 'd' ? 'ts' : 'js'}`,
+        );
         const tsconfig = resolve(pkgPath, './tsconfig.json');
         allPkgConfigs.push({
           directoryName,
@@ -59,13 +71,27 @@ const onAllBuildEnd = () => {
 if (args.p) {
   const pkgNames = args.p.split(',');
   const filterPkgConfigs = allPkgConfigs.filter(pkgConfig => {
-    return pkgNames.indexOf(pkgConfig.directoryName) !== -1 || pkgNames.indexOf(pkgConfig.pkgName) !== -1;
+    return (
+      pkgNames.indexOf(pkgConfig.directoryName) !== -1 ||
+      pkgNames.indexOf(pkgConfig.pkgName) !== -1
+    );
   });
+
   if (filterPkgConfigs.length > 0) {
-    build(filterPkgConfigs, isWatch, onAllBuildEnd);
+    build(
+      filterPkgConfigs,
+      isWatch,
+      onAllBuildEnd,
+      filterPkgConfigs.length / bundleTypes.length,
+    );
   } else {
     console.error(`${args.p} Does not exist!`);
   }
 } else {
-  build(allPkgConfigs, isWatch, onAllBuildEnd);
+  build(
+    allPkgConfigs,
+    isWatch,
+    onAllBuildEnd,
+    allPkgConfigs.length / bundleTypes.length,
+  );
 }

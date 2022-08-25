@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ParsedUrlQuery } from 'querystring';
 import { useAsyncEffect } from 'ahooks';
 import { useAuth } from '@3auth/react';
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Stack } from 'react-bootstrap';
-import { Web3AuthProvider } from '@/view/AuthProvider';
 import { LoginBox } from '@/view/LoginBox';
-import Link from 'next/link';
 import { ExButton } from '@3lib/components';
-import { useAuth, useMyInfo } from '@3auth/react-ui';
-import { useRouter } from 'next/router';
+import { useAuth } from '@3auth/react-ui';
+import Link from 'next/link';
+import { Web3AuthProvider } from '@/view/AuthProvider';
 
 export default function Page() {
   return <PageConnent />;
@@ -54,6 +53,12 @@ function PageConnent() {
             Bind Twitter
           </ExButton>
         </Stack>
+      </div>
+
+      <div>
+        <Web3AuthProvider appName="app2" isMetamask={true} isPhantom={false}>
+          <LoginBox />
+        </Web3AuthProvider>
       </div>
     </Container>
   );

@@ -8,15 +8,16 @@ import {
 } from '@3auth/core';
 import { random } from 'lodash';
 import { AuthSdk } from './auth';
+import { AuthSdkConfig } from './config';
 
 export class Web3AuthServerAdapter extends AuthServerAdapter {
   private httpClient: HttpClient;
 
-  public constructor(serverUrl: string) {
+  public constructor(public config: AuthSdkConfig) {
     super();
 
-    this.httpClient = new HttpClient(serverUrl, () => {
-      return AuthSdk.cookies.token ?? '';
+    this.httpClient = new HttpClient(config.serverUrl, () => {
+      return AuthSdk.getCookies(config.appName).token ?? '';
     });
   }
 

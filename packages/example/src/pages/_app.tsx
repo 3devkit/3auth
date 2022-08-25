@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <Web3AuthProvider>
+      <Web3AuthProvider appName="app1" isMetamask={true} isPhantom={true}>
         {getLayout(<Component {...pageProps} />)}
       </Web3AuthProvider>
     </>

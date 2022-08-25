@@ -33,13 +33,13 @@ export function AuthProvider(
 function AuthProviderConnent(
   props: React.PropsWithChildren<AuthProviderProps>,
 ) {
-  const { config } = props;
+  const { config, web3AuthProps } = props;
 
   const walletConnector = useWalletConnector();
 
   const auth = useMemo(() => {
     return new AuthSdk(config, walletConnector);
-  }, [config, walletConnector]);
+  }, [config, web3AuthProps, walletConnector]);
 
   return (
     <AuthContext.Provider value={auth}>

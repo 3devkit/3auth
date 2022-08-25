@@ -20,8 +20,14 @@ export class AuthSdk {
     public walletConnector: WalletConnectorSdk,
   ) {
     this.config = new AuthSdkConfig(configProps);
-    this._serverAdapter = new Web3AuthServerAdapter(this.config.serverUrl);
-    this.loginLauncher = new LoginLauncherSdk(this._serverAdapter);
+
+    this._serverAdapter = new Web3AuthServerAdapter(this.config);
+
+    this.loginLauncher = new LoginLauncherSdk(
+      this._serverAdapter,
+      this.config.appName,
+    );
+
     this.plugins = new Plugins(this.loginLauncher);
   }
 
@@ -101,7 +107,7 @@ export class AuthSdk {
     return redirectUrl;
   }
 
-  public static get cookies() {
-    return LoginLauncherSdk.getCookies();
+  public static getCookies(appName: string = '') {
+    return LoginLauncherSdk.getCookies(appName);
   }
 }
