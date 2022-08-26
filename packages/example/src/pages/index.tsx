@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { LoginBox } from '@/view/LoginBox';
 import { ExButton } from '@3lib/components';
-import { useAuth } from '@3auth/react-ui';
+import { useAuth, useLoginState, useMyInfo } from '@3auth/react-ui';
 import Link from 'next/link';
 import { Web3AuthProvider } from '@/view/AuthProvider';
 
@@ -19,6 +19,35 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 }
 
 function PageConnent() {
+  return (
+    <Container>
+      <h3 className="mb-3">登录区1</h3>
+      <Login />
+
+      <hr />
+
+      <div className="mt-3">
+        <h3 className="mb-3">登录区2</h3>
+        <Web3AuthProvider namespaces="app2">
+          <Login />
+        </Web3AuthProvider>
+      </div>
+    </Container>
+  );
+}
+
+function Login() {
+  const { isLogged } = useLoginState();
+
+  return (
+    <>
+      <LoginBox />
+      {isLogged && <Options />}
+    </>
+  );
+}
+
+function Options() {
   const auth = useAuth();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,35 +60,18 @@ function PageConnent() {
     setLoading(false);
   }
 
-  return (
-    <Container>
-      <Stack gap={3} direction="horizontal">
-        <LoginBox />
-      </Stack>
+  const { myInfo } = useMyInfo();
 
+  return (
+    <>
+      <div className="mt-3">{JSON.stringify(myInfo?.toDto)}</div>
       <div style={{ marginTop: 20 }}>
         <Stack gap={3} direction="horizontal">
-          <Link href={'/newPage'}>
-            <span>
-              <ExButton>NEW PAGE</ExButton>
-            </span>
-          </Link>
-          <Link href={'/newPage2'}>
-            <span>
-              <ExButton>MyInfo</ExButton>
-            </span>
-          </Link>
           <ExButton onClick={onBindTiwitter} loading={loading}>
             Bind Twitter
           </ExButton>
         </Stack>
       </div>
-
-      <div>
-        <Web3AuthProvider namespaces="app2" isMetamask={true} isPhantom={false}>
-          <LoginBox />
-        </Web3AuthProvider>
-      </div>
-    </Container>
+    </>
   );
 }

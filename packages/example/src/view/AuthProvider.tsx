@@ -11,8 +11,6 @@ import { Class } from 'utility-types';
 
 interface Web3AuthProviderProps {
   namespaces?: string;
-  isPhantom?: boolean;
-  isMetamask?: boolean;
 }
 
 export function Web3AuthProvider(
@@ -37,7 +35,7 @@ export function Web3AuthProvider(
 }
 
 function useWeb3AuthProps(props: Web3AuthProviderProps) {
-  const { namespaces, isMetamask, isPhantom } = props;
+  const { namespaces } = props;
 
   const web3AuthProps = useMemo(() => {
     const configure: ConfigureParam = {
@@ -49,10 +47,10 @@ function useWeb3AuthProps(props: Web3AuthProviderProps) {
       ],
     };
 
-    const connectors: Class<BaseConnector>[] = [];
-
-    if (isPhantom) connectors.push(PhantomConnector);
-    if (isMetamask) connectors.push(MetamaskConnector);
+    const connectors: Class<BaseConnector>[] = [
+      PhantomConnector,
+      MetamaskConnector,
+    ];
 
     return { configure, connectors };
   }, []);

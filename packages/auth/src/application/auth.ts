@@ -14,11 +14,14 @@ export class AuthSdk {
   public loginLauncher: LoginLauncherSdk;
   public plugins: Plugins;
   public config: AuthSdkConfig;
+  public walletConnector: WalletConnectorSdk;
 
   public constructor(
     configProps: AuthSdkConfigProps,
-    public walletConnector: WalletConnectorSdk,
+    walletConnector: WalletConnectorSdk,
   ) {
+    this.walletConnector = walletConnector;
+
     this.config = new AuthSdkConfig(configProps);
 
     this._serverAdapter = new Web3AuthServerAdapter(this.config);
