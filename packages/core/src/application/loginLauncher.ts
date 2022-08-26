@@ -9,10 +9,10 @@ export class LoginLauncherSdk {
   public authServer: AuthServerAdapter;
   private authTokenRepo: AuthTokenRepo;
 
-  public constructor(authServer: AuthServerAdapter, appName: string) {
+  public constructor(authServer: AuthServerAdapter, namespaces: string) {
     this.authServer = authServer;
     this.store = new Store();
-    this.authTokenRepo = new AuthTokenRepo(appName);
+    this.authTokenRepo = new AuthTokenRepo(namespaces);
     this.actions = new Actions(this.store, this.authTokenRepo);
   }
 
@@ -24,8 +24,8 @@ export class LoginLauncherSdk {
     return LoginState.fromDto(this.store.state);
   }
 
-  public static getCookies(appName: string) {
-    const tokenRepo = new AuthTokenRepo(appName);
+  public static getCookies(namespaces: string) {
+    const tokenRepo = new AuthTokenRepo(namespaces);
     return tokenRepo.get();
   }
 }

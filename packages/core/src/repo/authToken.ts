@@ -4,8 +4,8 @@ import { isExpired } from 'react-jwt';
 export class AuthTokenRepo {
   private AUTH_TOKEN_KEY: string;
 
-  public constructor(appName: String) {
-    this.AUTH_TOKEN_KEY = appName + '_CURR_ACCOUNT';
+  public constructor(namespaces: String) {
+    this.AUTH_TOKEN_KEY = namespaces + '_CURR_ACCOUNT';
   }
 
   public set(account: string, token: string) {

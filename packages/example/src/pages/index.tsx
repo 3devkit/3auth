@@ -56,7 +56,7 @@ function PageConnent() {
       </div>
 
       <div>
-        <Web3AuthProvider appName="app2" isMetamask={true} isPhantom={false}>
+        <Web3AuthProvider namespaces="app2" isMetamask={true} isPhantom={false}>
           <LoginBox />
         </Web3AuthProvider>
       </div>

@@ -25,7 +25,7 @@ export class AuthSdk {
 
     this.loginLauncher = new LoginLauncherSdk(
       this._serverAdapter,
-      this.config.appName,
+      this.config.namespaces,
     );
 
     this.plugins = new Plugins(this.loginLauncher);
@@ -107,7 +107,7 @@ export class AuthSdk {
     return redirectUrl;
   }
 
-  public static getCookies(appName: string = '') {
-    return LoginLauncherSdk.getCookies(appName);
+  public static getCookies(namespaces: string = '') {
+    return LoginLauncherSdk.getCookies(namespaces);
   }
 }

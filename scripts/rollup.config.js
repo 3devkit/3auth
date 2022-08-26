@@ -1,10 +1,10 @@
 import { rollup as _rollup, watch as _watch } from 'rollup';
 import postcss from 'rollup-plugin-postcss';
-import { terser } from 'rollup-plugin-terser';
-import { isProdEnv } from './env.js';
 import { showBuildLog } from './util.js';
 import esbuild from 'rollup-plugin-esbuild';
 import dts from 'rollup-plugin-dts';
+import svgr from '@svgr/rollup';
+import url from '@rollup/plugin-url';
 import typescript from 'rollup-plugin-typescript2';
 
 const IGNORE_WARNING_CODE = ['UNRESOLVED_IMPORT', 'CIRCULAR_DEPENDENCY'];
@@ -17,6 +17,8 @@ function getRollupConfig(config) {
       bundleType === 'd'
         ? [dts()]
         : [
+            url(),
+            svgr({ icon: true }),
             typescript({
               tsconfig,
               abortOnError: false,
