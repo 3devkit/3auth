@@ -21,13 +21,13 @@ function LayoutConnent(props: React.PropsWithChildren<unknown>) {
 function PageConnent() {
   return (
     <Container>
-      <h3 className="mb-3">登录区1</h3>
+      <h3 className="mb-3">Login1</h3>
       <Login />
 
       <hr />
 
       <div className="mt-3">
-        <h3 className="mb-3">登录区2</h3>
+        <h3 className="mb-3">Login2</h3>
         <Web3AuthProvider namespaces="app2">
           <Login />
         </Web3AuthProvider>

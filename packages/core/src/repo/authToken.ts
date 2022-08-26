@@ -5,12 +5,14 @@ export class AuthTokenRepo {
   private AUTH_TOKEN_KEY: string;
 
   public constructor(namespaces: String) {
-    this.AUTH_TOKEN_KEY = namespaces + '_CURR_ACCOUNT';
+    this.AUTH_TOKEN_KEY = namespaces + '_USER';
   }
 
   public set(account: string, token: string) {
-    Cookies.set(this.AUTH_TOKEN_KEY, account);
-    Cookies.set(account, token);
+    Cookies.set(this.AUTH_TOKEN_KEY, {
+      account,
+      token,
+    });
   }
 
   public has(): boolean {
@@ -19,31 +21,22 @@ export class AuthTokenRepo {
   }
 
   public get(): { account: string | null; token: string | null } {
-    const nullValue = { account: null, token: null };
+    const json = Cookies.get(this.AUTH_TOKEN_KEY);
 
-    const account = Cookies.get(this.AUTH_TOKEN_KEY) ?? null;
-    const token = account ? Cookies.get(account) ?? null : null;
+    if (!json) return { account: null, token: null };
 
-    if (account && token) {
-      const isExpiredBool = isExpired(token);
-      if (isExpiredBool) {
-        this.clear();
-        return nullValue;
-      }
+    const { account, token } = JSON.parse(json);
+
+    if (isExpired(token)) {
+      this.clear();
+
+      return { account: null, token: null };
     }
 
-    return {
-      account,
-      token,
-    };
+    return { account, token };
   }
 
   public clear() {
-    const account = Cookies.get(this.AUTH_TOKEN_KEY);
-
-    if (account) {
-      Cookies.remove(this.AUTH_TOKEN_KEY);
-      Cookies.remove(account);
-    }
+    Cookies.remove(this.AUTH_TOKEN_KEY);
   }
 }
