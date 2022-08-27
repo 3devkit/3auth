@@ -51,6 +51,7 @@ function Options() {
   const auth = useAuth();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [cookie, setCookie] = useState<string>();
 
   async function onBindTiwitter() {
     setLoading(true);
@@ -62,14 +63,21 @@ function Options() {
 
   const { myInfo } = useMyInfo();
 
+  function onGetCookie() {
+    const cookie = auth.getCookies();
+    setCookie(JSON.stringify(cookie));
+  }
+
   return (
     <>
       <div className="mt-3">{JSON.stringify(myInfo?.toDto)}</div>
+      <div className="mt-3">{cookie}</div>
       <div style={{ marginTop: 20 }}>
         <Stack gap={3} direction="horizontal">
           <ExButton onClick={onBindTiwitter} loading={loading}>
             Bind Twitter
           </ExButton>
+          <ExButton onClick={onGetCookie}>GetCookie</ExButton>
         </Stack>
       </div>
     </>

@@ -110,6 +110,10 @@ export class AuthSdk {
     return redirectUrl;
   }
 
+  public getCookies() {
+    return this.loginLauncher.authTokenRepo.get();
+  }
+
   public static getCookies(namespaces: string = '') {
     return LoginLauncherSdk.getCookies(namespaces);
   }

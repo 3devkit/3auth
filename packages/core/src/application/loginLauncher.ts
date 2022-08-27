@@ -7,7 +7,7 @@ export class LoginLauncherSdk {
   public store: Store;
   public actions: Actions;
   public authServer: AuthServerAdapter;
-  private authTokenRepo: AuthTokenRepo;
+  public authTokenRepo: AuthTokenRepo;
 
   public constructor(authServer: AuthServerAdapter, namespaces: string) {
     this.authServer = authServer;
