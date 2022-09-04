@@ -4,14 +4,23 @@ import { useAsyncEffect } from 'ahooks';
 import { useAuth, useMyInfo } from '@3auth/react';
 
 export default function Page() {
-  return <PageConnent />;
+  return <BindDiscordView />;
 }
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
   return <>{page}</>;
 };
 
-function PageConnent() {
+export const useOAuthParam = () => {
+  const router = useRouter();
+
+  return router.query as {
+    state: string;
+    code: string;
+  };
+};
+
+function BindDiscordView() {
   const router = useRouter();
 
   const param = useOAuthParam();
@@ -52,12 +61,3 @@ function PageConnent() {
 
   return <></>;
 }
-
-export const useOAuthParam = () => {
-  const router = useRouter();
-
-  return router.query as {
-    state: string;
-    code: string;
-  };
-};
