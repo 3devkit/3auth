@@ -4,10 +4,12 @@ import {
   ChangeUserInfoDto,
   LoginState,
 } from '@3auth/core';
-import { Web3AuthServerAdapter } from './server';
+import { AuthProvider, Web3AuthServerAdapter } from './server';
 import { Plugins } from './plugins';
 import { WalletConnectorSdk } from '@3walletconnector/react';
 import { AuthSdkConfig, AuthSdkConfigProps } from './config';
+import { BindDiscordProps, OAuthDiscordRepo } from '../repo/oAuthDiscord';
+import { BindTwitterProps, OAuthTwitterRepo } from '../repo/oAuthTwitter';
 
 export class AuthSdk {
   private _serverAdapter: Web3AuthServerAdapter;
@@ -46,68 +48,90 @@ export class AuthSdk {
     return this.loginLauncher.loginState.isLogged;
   }
 
+  /**
+   * get my info
+   */
   public get myInfo(): UserInfo | undefined {
     return this.loginLauncher.loginState.userInfo;
   }
 
+  /**
+   * get login status
+   */
   public get loginState(): LoginState {
     return this.loginLauncher.loginState;
   }
 
+  /**
+   * https request my info
+   * @returns
+   */
   public async reqMyInfo(): Promise<UserInfo> {
     const dto = await this._serverAdapter.getMyInfo();
     return UserInfo.fromDto(dto);
   }
 
+  /**
+   * update my info
+   * @param changeInfo
+   * @returns
+   */
   public async updateMyInfo(changeInfo: ChangeUserInfoDto): Promise<boolean> {
     return await this._serverAdapter.updateUserInfo(changeInfo);
   }
 
+  /**
+   * signout
+   * @returns
+   */
   public async signout(): Promise<void> {
     this.walletConnector.disconnect();
     return this.loginLauncher.actions.signout();
   }
 
   /**
-   * 跳转到twitter登录
-   * @param callbackUrl 回调地址, /login/twitter/callback为默认回调地址
+   * twitter login
+   * @param callbackUrl
+   * @returns
    */
-  public async twitterLogin(
-    callbackUrl: string = '/login/twitter/callback',
-  ): Promise<void> {
-    const url = `${window.location.origin}${callbackUrl}`;
-
-    const authorizationUrl = await this._serverAdapter.reqTwitterLoginUrl(url);
-
-    window.localStorage.setItem('OAuthRedirectUrl', window.location.href);
-
-    window.location.href = authorizationUrl;
+  public async twitterLogin(callbackUrl: string = '/login/twitter/callback') {
+    return await new OAuthTwitterRepo(this._serverAdapter).login(callbackUrl);
   }
 
   /**
-   * 绑定twitter
-   * @param oauth_token
-   * @param oauth_verifier
-   * @returns 绑定成功后重定向的页面
+   * bind twitter
+   * @param props
+   * @returns
    */
-  public async bindTwitter(
-    oauth_token: string,
-    oauth_verifier: string,
-  ): Promise<string | null> {
-    const isSuccess = await this._serverAdapter.bindTwitter(
-      oauth_token,
-      oauth_verifier,
-    );
+  public async bindTwitter(props: BindTwitterProps) {
+    return await new OAuthTwitterRepo(this._serverAdapter).bind(props);
+  }
 
-    if (!isSuccess) {
-      return null;
-    }
+  /**
+   * discord login
+   * @param callbackUrl
+   * @returns
+   */
+  public async discordLogin(callbackUrl: string = '/login/discord/callback') {
+    return await new OAuthDiscordRepo(this._serverAdapter).login(callbackUrl);
+  }
 
-    const redirectUrl = window.localStorage.getItem('OAuthRedirectUrl') ?? '/';
+  /**
+   * bind discord
+   * @param props
+   * @returns
+   */
+  public async bindDiscord(props: BindDiscordProps) {
+    return await new OAuthDiscordRepo(this._serverAdapter).bind(props);
+  }
 
-    window.localStorage.removeItem('OAuthRedirectUrl');
-
-    return redirectUrl;
+  /**
+   * remove bind
+   * @param authProvider
+   * @returns
+   */
+  public async removeBind(authProvider: AuthProvider): Promise<boolean> {
+    return this._serverAdapter.removeBind(authProvider);
   }
 
   public getCookies() {

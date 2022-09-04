@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { useStore } from 'zustand';
 import { useLoginState } from './use-loginState';
 import { useAuth } from './provider';
@@ -18,9 +18,15 @@ export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
 export const useMyInfo = () => {
   const auth = useAuth();
 
+  const { mutate } = useSWRConfig();
+
   const myInfo = useStore(auth.store, state => state.userInfo);
 
-  return { myInfo };
+  function reload() {
+    mutate(GET_SWR_KEY(auth.myInfo?.account));
+  }
+
+  return { myInfo, reload };
 };
 
 function MyInfoProviderByWallet(props: React.PropsWithChildren<unknown>) {
@@ -53,13 +59,10 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   const loginState = useLoginState();
 
-  const {
-    data: myInfo,
-    mutate: reload,
-    error,
-  } = useSWR(
-    loginState.account && GET_SWR_KEY(loginState.account),
+  const key = GET_SWR_KEY(auth.myInfo?.account);
 
+  const { data: myInfo, error } = useSWR(
+    loginState.isLogged && key,
     async () => {
       return await auth.reqMyInfo();
     },
@@ -80,7 +83,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
   return <>{props.children}</>;
 }
 
-function GET_SWR_KEY(account: string) {
+function GET_SWR_KEY(account?: string) {
   return `getMyInfo/${account}`;
 }
 

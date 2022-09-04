@@ -10,6 +10,8 @@ import { random } from 'lodash';
 import { AuthSdk } from './auth';
 import { AuthSdkConfig } from './config';
 
+export type AuthProvider = 'twitter' | 'discord' | 'telegram';
+
 export class Web3AuthServerAdapter extends AuthServerAdapter {
   private httpClient: HttpClient;
 
@@ -36,6 +38,7 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
         wallet,
       },
     });
+
     return res.authorization;
   }
 
@@ -82,11 +85,51 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     oauth_verifier: string,
   ): Promise<boolean> {
     try {
-      const res = await this.httpClient.get({
+      await this.httpClient.get({
         url: '/api/auth/twitter/callback',
         params: {
           oauth_token,
           oauth_verifier,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  public async reqDiscordLoginUrl(callbackUrl: string): Promise<string> {
+    const res = await this.httpClient.get({
+      url: '/api/auth/discord',
+      params: {
+        callbackUrl,
+      },
+    });
+
+    return res.authorizationUrl as string;
+  }
+
+  public async bindDiscord(state: string, code: string): Promise<boolean> {
+    try {
+      await this.httpClient.get({
+        url: '/api/auth/discord/callback',
+        params: {
+          state,
+          code,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  public async removeBind(authProvider: AuthProvider) {
+    try {
+      await this.httpClient.delete({
+        url: '/api/auth/bind',
+        params: {
+          authProvider,
         },
       });
       return true;

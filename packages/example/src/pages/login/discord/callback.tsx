@@ -16,7 +16,7 @@ function PageConnent() {
 
   const param = useOAuthParam();
 
-  const isParamError = !param.oauth_token || !param.oauth_verifier;
+  const isParamError = !param.state || !param.code;
 
   const auth = useAuth();
 
@@ -31,7 +31,7 @@ function PageConnent() {
 
     setIsLoading(true);
 
-    const redirectUrl = await auth.bindTwitter(param);
+    const redirectUrl = await auth.bindDiscord(param);
 
     setBindStatus(redirectUrl ? 'success' : 'error');
 
@@ -57,7 +57,7 @@ export const useOAuthParam = () => {
   const router = useRouter();
 
   return router.query as {
-    oauth_token: string;
-    oauth_verifier: string;
+    state: string;
+    code: string;
   };
 };

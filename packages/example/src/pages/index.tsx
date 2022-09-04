@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { LoginBox } from '@/view/LoginBox';
-import { ExButton } from '@3lib/components';
+import {
+  ExButton,
+  ExPopover,
+  ExPopoverBox,
+  ExPopoverMenu,
+} from '@3lib/components';
 import { useAuth, useLoginState, useMyInfo } from '@3auth/react-ui';
-import Link from 'next/link';
 import { Web3AuthProvider } from '@/view/AuthProvider';
+import { AuthProvider } from '@3auth/auth';
 
 export default function Page() {
   return <PageConnent />;
@@ -50,22 +55,41 @@ function Login() {
 function Options() {
   const auth = useAuth();
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const { myInfo, reload } = useMyInfo();
+
+  const [bindTwitterLoading, setBindTwitterLLoading] = useState<boolean>(false);
+
+  const [bindDiscordLoading, setBindDiscordLoading] = useState<boolean>(false);
+
+  const [removeBindLoading, setRemoveBindLoading] = useState<boolean>(false);
+
   const [cookie, setCookie] = useState<string>();
 
   async function onBindTiwitter() {
-    setLoading(true);
+    setBindTwitterLLoading(true);
 
     await auth.twitterLogin();
-
-    setLoading(false);
   }
 
-  const { myInfo } = useMyInfo();
+  async function onBindDiscord() {
+    setBindDiscordLoading(true);
+
+    await auth.discordLogin();
+  }
 
   function onGetCookie() {
     const cookie = auth.getCookies();
     setCookie(JSON.stringify(cookie));
+  }
+
+  async function onRemoveBind(authProvider: AuthProvider) {
+    setRemoveBindLoading(true);
+
+    await auth.removeBind(authProvider);
+
+    reload();
+
+    setRemoveBindLoading(false);
   }
 
   return (
@@ -74,9 +98,42 @@ function Options() {
       <div className="mt-3">{cookie}</div>
       <div style={{ marginTop: 20 }}>
         <Stack gap={3} direction="horizontal">
-          <ExButton onClick={onBindTiwitter} loading={loading}>
+          <ExButton onClick={onBindTiwitter} loading={bindTwitterLoading}>
             Bind Twitter
           </ExButton>
+
+          <ExButton onClick={onBindDiscord} loading={bindDiscordLoading}>
+            Bind Discord
+          </ExButton>
+
+          <ExPopover
+            onButtonBuilder={function (open) {
+              return (
+                <ExButton loading={removeBindLoading}>Remove Bind</ExButton>
+              );
+            }}
+            onPopoverBuilder={function (closeHandle) {
+              return (
+                <ExPopoverBox>
+                  <ExPopoverMenu
+                    title={'Twitter'}
+                    onClick={() => {
+                      onRemoveBind('twitter');
+                      closeHandle();
+                    }}
+                  />
+                  <ExPopoverMenu
+                    title={'Discord'}
+                    onClick={() => {
+                      onRemoveBind('discord');
+                      closeHandle();
+                    }}
+                  />
+                </ExPopoverBox>
+              );
+            }}
+          />
+
           <ExButton onClick={onGetCookie}>GetCookie</ExButton>
         </Stack>
       </div>
