@@ -42,6 +42,14 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     return res.authorization;
   }
 
+  public async refreshToken(): Promise<string> {
+    const res = await this.httpClient.get({
+      url: '/api/auth/refresh',
+    });
+
+    return res.authorization as string;
+  }
+
   public async getMyInfo(): Promise<UserInfoDto> {
     const userInfoDto = (await this.httpClient.get({
       url: '/api/user',

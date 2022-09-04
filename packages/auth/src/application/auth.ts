@@ -10,6 +10,7 @@ import { WalletConnectorSdk } from '@3walletconnector/react';
 import { AuthSdkConfig, AuthSdkConfigProps } from './config';
 import { BindDiscordProps, OAuthDiscordRepo } from '../repo/oAuthDiscord';
 import { BindTwitterProps, OAuthTwitterRepo } from '../repo/oAuthTwitter';
+import jwt from 'jsonwebtoken';
 
 export class AuthSdk {
   private _serverAdapter: Web3AuthServerAdapter;
@@ -68,7 +69,21 @@ export class AuthSdk {
    */
   public async reqMyInfo(): Promise<UserInfo> {
     const dto = await this._serverAdapter.getMyInfo();
+
     return UserInfo.fromDto(dto);
+  }
+
+  /**
+   * refresh Token
+   */
+  public async refreshToken() {
+    const { account } = this.getCookies();
+
+    if (account) {
+      const authorization = await this._serverAdapter.refreshToken();
+
+      this.loginLauncher.actions.refreshToken(account, authorization);
+    }
   }
 
   /**

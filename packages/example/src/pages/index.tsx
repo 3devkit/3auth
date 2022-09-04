@@ -63,6 +63,8 @@ function Options() {
 
   const [removeBindLoading, setRemoveBindLoading] = useState<boolean>(false);
 
+  const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
+
   const [cookie, setCookie] = useState<string>();
 
   async function onBindTiwitter() {
@@ -79,7 +81,18 @@ function Options() {
 
   function onGetCookie() {
     const cookie = auth.getCookies();
+
     setCookie(JSON.stringify(cookie));
+  }
+
+  async function onRefreshToken() {
+    setRefreshLoading(true);
+
+    await auth.refreshToken();
+
+    onGetCookie();
+
+    setRefreshLoading(false);
   }
 
   async function onRemoveBind(authProvider: AuthProvider) {
@@ -135,6 +148,10 @@ function Options() {
           />
 
           <ExButton onClick={onGetCookie}>GetCookie</ExButton>
+
+          <ExButton onClick={onRefreshToken} loading={refreshLoading}>
+            Refresh Token
+          </ExButton>
         </Stack>
       </div>
     </>

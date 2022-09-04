@@ -42,6 +42,14 @@ export class Actions {
   }
 
   /**
+   * refresh Token
+   * @param token
+   */
+  public refreshToken(account: string, token: string) {
+    this.authTokenRepo.set(account, token);
+  }
+
+  /**
    * When the user information is obtained successfully，
    * call this function to change the state
    * @param userInfo

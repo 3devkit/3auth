@@ -4,6 +4,7 @@ import { useStore } from 'zustand';
 import { useLoginState } from './use-loginState';
 import { useAuth } from './provider';
 import { UserInfo, useWalletState, WalletState } from '@3auth/react';
+import { useLocalStorageState, useMemoizedFn } from 'ahooks';
 
 export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
   const auth = useAuth();
@@ -61,9 +62,12 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   const key = GET_SWR_KEY(auth.myInfo?.account);
 
+  const { checkRefreshToken } = useRefreshToken();
+
   const { data: myInfo, error } = useSWR(
     loginState.isLogged && key,
     async () => {
+      await checkRefreshToken();
       return await auth.reqMyInfo();
     },
   );
@@ -74,6 +78,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   useEffect(() => {
     if (error) {
+      // Need to handle errors
       console.info('error:', error);
     } else if (myInfo) {
       auth.loginLauncher.actions.getMyInfoSuccess(myInfo);
@@ -93,4 +98,34 @@ function walletStateToUserInfo(walletState: WalletState): UserInfo {
     regTm: 0,
     account: walletState.account,
   });
+}
+
+function useRefreshToken() {
+  const auth = useAuth();
+
+  const refreshInterval = 3600;
+
+  const getCurrTm = useMemoizedFn(() => {
+    return Math.floor(new Date().valueOf() / 1000);
+  });
+
+  const [lastRefreshTm, setLastRefreshTm] = useLocalStorageState<number>(
+    'RefreshTokenTm',
+    { defaultValue: getCurrTm() },
+  );
+
+  async function checkRefreshToken() {
+    const currTm = getCurrTm();
+
+    const isRefresh = currTm - lastRefreshTm >= refreshInterval;
+
+    if (isRefresh) {
+      console.log('RefreshToken');
+      setLastRefreshTm(currTm);
+
+      await auth.refreshToken();
+    }
+  }
+
+  return { checkRefreshToken };
 }

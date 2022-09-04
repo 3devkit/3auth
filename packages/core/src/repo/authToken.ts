@@ -1,5 +1,13 @@
 import Cookies from 'js-cookie';
 import { isExpired } from 'react-jwt';
+import jwt from 'jsonwebtoken';
+
+interface Token {
+  exp: number;
+  account: string;
+  id: number;
+  orig_iat: number;
+}
 
 export class AuthTokenRepo {
   private AUTH_TOKEN_KEY: string;
@@ -38,5 +46,13 @@ export class AuthTokenRepo {
 
   public clear() {
     Cookies.remove(this.AUTH_TOKEN_KEY);
+  }
+
+  public decode(): Token | null {
+    const { token } = this.get();
+
+    if (!token) return null;
+
+    return jwt.decode(token) as Token;
   }
 }
