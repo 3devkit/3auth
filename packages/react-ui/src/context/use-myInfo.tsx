@@ -93,7 +93,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
 function GET_SWR_KEY(auth: AuthSdk) {
   const namespaces = auth.config.namespaces;
-  const account = auth.myInfo?.account;
+  const account = auth.loginState.account;
   return `getMyInfo/${namespaces}/${account}`;
 }
 
