@@ -5,6 +5,7 @@ import { useLoginState } from './use-loginState';
 import { useAuth } from './provider';
 import { AuthSdk, UserInfo, useWalletState, WalletState } from '@3auth/react';
 import { useLocalStorageState, useMemoizedFn } from 'ahooks';
+import { BusinessError } from '@3auth/helpers';
 
 export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
   const auth = useAuth();
@@ -60,18 +61,17 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   const loginState = useLoginState();
 
-  const key = GET_SWR_KEY(auth);
+  const key = loginState.isLogged && GET_SWR_KEY(auth);
 
   const { checkRefreshToken } = useRefreshToken();
 
-  const { data: myInfo, error } = useSWR(
-    loginState.isLogged && key,
-    async () => {
-      await checkRefreshToken();
+  const { data: myInfo, error } = useSWR(key, async () => {
+    console.info('======coolies====', auth.getCookies());
 
-      return await auth.reqMyInfo();
-    },
-  );
+    await checkRefreshToken();
+
+    return await auth.reqMyInfo();
+  });
 
   useEffect(() => {
     auth.initLogin();
@@ -79,9 +79,18 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   useEffect(() => {
     if (error) {
-      // Need to handle errors
-      console.info('error:', error);
-    } else if (myInfo) {
+      const e = error as BusinessError;
+
+      console.info('reqMyInfo Error:', e);
+
+      if (e.code === 401) {
+        // auth.signout();
+      }
+
+      return;
+    }
+
+    if (myInfo) {
       auth.loginLauncher.actions.getMyInfoSuccess(myInfo);
     }
   }, [auth, myInfo, error]);
@@ -110,7 +119,8 @@ function walletStateToUserInfo(walletState: WalletState): UserInfo {
 function useRefreshToken() {
   const auth = useAuth();
 
-  const refreshInterval = 3600;
+  // const refreshInterval = 3600;
+  const refreshInterval = 10;
 
   const getCurrTm = useMemoizedFn(() => {
     return Math.floor(new Date().valueOf() / 1000);
@@ -125,6 +135,14 @@ function useRefreshToken() {
     const currTm = getCurrTm();
 
     const isRefresh = currTm - lastRefreshTm >= refreshInterval;
+
+    console.info(
+      '=====isRefresh========',
+      currTm,
+      lastRefreshTm,
+      currTm - lastRefreshTm,
+      isRefresh,
+    );
 
     if (isRefresh) {
       console.log('RefreshToken');
