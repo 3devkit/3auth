@@ -64,6 +64,11 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   const { checkRefreshToken } = useRefreshToken();
 
+  console.info(
+    '================MyInfoProviderByServer====================',
+    key,
+  );
+
   const { data: myInfo, error } = useSWR(
     loginState.isLogged && key,
     async () => {
