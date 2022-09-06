@@ -66,8 +66,6 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
   const { checkRefreshToken } = useRefreshToken();
 
   const { data: myInfo, error } = useSWR(key, async () => {
-    console.info('======coolies====', auth.getCookies());
-
     await checkRefreshToken();
 
     return await auth.reqMyInfo();
@@ -84,7 +82,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
       console.info('reqMyInfo Error:', e);
 
       if (e.code === 401) {
-        // auth.signout();
+        auth.signout();
       }
 
       return;
@@ -120,7 +118,7 @@ function useRefreshToken() {
   const auth = useAuth();
 
   // const refreshInterval = 3600;
-  const refreshInterval = 10;
+  const refreshInterval = 10 * 60;
 
   const getCurrTm = useMemoizedFn(() => {
     return Math.floor(new Date().valueOf() / 1000);
@@ -135,14 +133,6 @@ function useRefreshToken() {
     const currTm = getCurrTm();
 
     const isRefresh = currTm - lastRefreshTm >= refreshInterval;
-
-    console.info(
-      '=====isRefresh========',
-      currTm,
-      lastRefreshTm,
-      currTm - lastRefreshTm,
-      isRefresh,
-    );
 
     if (isRefresh) {
       console.log('RefreshToken');
