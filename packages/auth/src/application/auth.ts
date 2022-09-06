@@ -4,7 +4,7 @@ import {
   ChangeUserInfoDto,
   LoginState,
 } from '@3auth/core';
-import { AuthProvider, Web3AuthServerAdapter } from './server';
+import { OAuthProvider, Web3AuthServerAdapter } from './server';
 import { Plugins } from './plugins';
 import { WalletConnectorSdk } from '@3walletconnector/react';
 import { AuthSdkConfig, AuthSdkConfigProps } from './config';
@@ -144,7 +144,7 @@ export class AuthSdk {
    * @param authProvider
    * @returns
    */
-  public async removeBind(authProvider: AuthProvider): Promise<boolean> {
+  public async removeBind(authProvider: OAuthProvider): Promise<boolean> {
     return this._serverAdapter.removeBind(authProvider);
   }
 

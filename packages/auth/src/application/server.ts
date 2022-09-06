@@ -10,7 +10,7 @@ import { random } from 'lodash';
 import { AuthSdk } from './auth';
 import { AuthSdkConfig } from './config';
 
-export type AuthProvider = 'twitter' | 'discord' | 'telegram';
+export type OAuthProvider = 'twitter' | 'discord' | 'telegram';
 
 export class Web3AuthServerAdapter extends AuthServerAdapter {
   private httpClient: HttpClient;
@@ -132,7 +132,7 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     }
   }
 
-  public async removeBind(authProvider: AuthProvider) {
+  public async removeBind(authProvider: OAuthProvider) {
     try {
       await this.httpClient.delete({
         url: '/api/auth/bind',

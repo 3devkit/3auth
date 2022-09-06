@@ -9,7 +9,7 @@ import {
 } from '@3lib/components';
 import { useAuth, useLoginState, useMyInfo } from '@3auth/react-ui';
 import { Web3AuthProvider } from '@/view/AuthProvider';
-import { AuthProvider } from '@3auth/auth';
+import { OAuthProvider } from '@3auth/auth';
 
 export default function Page() {
   return <PageConnent />;
@@ -95,7 +95,7 @@ function Options() {
     setRefreshLoading(false);
   }
 
-  async function onRemoveBind(authProvider: AuthProvider) {
+  async function onRemoveBind(authProvider: OAuthProvider) {
     setRemoveBindLoading(true);
 
     await auth.removeBind(authProvider);
