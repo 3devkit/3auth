@@ -10,7 +10,6 @@ import { WalletConnectorSdk } from '@3walletconnector/react';
 import { AuthSdkConfig, AuthSdkConfigProps } from './config';
 import { BindDiscordProps, OAuthDiscordRepo } from '../repo/oAuthDiscord';
 import { BindTwitterProps, OAuthTwitterRepo } from '../repo/oAuthTwitter';
-import jwt from 'jsonwebtoken';
 
 export class AuthSdk {
   private _serverAdapter: Web3AuthServerAdapter;

@@ -3,7 +3,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useStore } from 'zustand';
 import { useLoginState } from './use-loginState';
 import { useAuth } from './provider';
-import { UserInfo, useWalletState, WalletState } from '@3auth/react';
+import { AuthSdk, UserInfo, useWalletState, WalletState } from '@3auth/react';
 import { useLocalStorageState, useMemoizedFn } from 'ahooks';
 
 export function MyInfoProvider(props: React.PropsWithChildren<unknown>) {
@@ -24,7 +24,7 @@ export const useMyInfo = () => {
   const myInfo = useStore(auth.store, state => state.userInfo);
 
   function reload() {
-    mutate(GET_SWR_KEY(auth.myInfo?.account));
+    mutate(GET_SWR_KEY(auth));
   }
 
   return { myInfo, reload };
@@ -60,7 +60,7 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 
   const loginState = useLoginState();
 
-  const key = GET_SWR_KEY(auth.myInfo?.account);
+  const key = GET_SWR_KEY(auth);
 
   const { checkRefreshToken } = useRefreshToken();
 
@@ -88,8 +88,10 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
   return <>{props.children}</>;
 }
 
-function GET_SWR_KEY(account?: string) {
-  return `getMyInfo/${account}`;
+function GET_SWR_KEY(auth: AuthSdk) {
+  const namespaces = auth.config.namespaces;
+  const account = auth.myInfo?.account;
+  return `getMyInfo/${namespaces}_${account}`;
 }
 
 function walletStateToUserInfo(walletState: WalletState): UserInfo {

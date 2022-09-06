@@ -5,7 +5,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 import { ExButton, ExLoading, useModalAction } from '@3lib/components';
 import { IconButton } from './button';
 import { useLoginBoxController } from './controller';
-import { useAuth, useLoginState, UserInfo } from '@3auth/react';
+import { useAuth, useLoginState } from '@3auth/react';
 import styles from './styles.less';
 
 export function WalletList() {
