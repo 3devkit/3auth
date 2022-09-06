@@ -67,8 +67,6 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
   const { data: myInfo, error } = useSWR(
     loginState.isLogged && key,
     async () => {
-      console.info('reqMyInfo:', key);
-
       await checkRefreshToken();
 
       return await auth.reqMyInfo();
@@ -97,8 +95,6 @@ function GET_SWR_KEY(auth: AuthSdk) {
   const account = auth.loginState.account;
 
   const key = `getMyInfo/${namespaces}/${account}`;
-
-  console.info('=====loginState11===', auth.loginState.isLogged, key);
 
   return key;
 }
