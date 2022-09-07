@@ -99,7 +99,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "hox": "^1.1.6",
     "husky": "^8.0.1",
     "jest": "^28.1.2",
     "jest-watch-yarn-workspaces": "^1.1.0",
