@@ -1,11 +1,6 @@
 import { AuthSdkConfig } from '../application';
 
-export interface BindInfo {
-  redirectUrl: string;
-  namespace: string;
-}
-
-export abstract class OAuth {
+export class OAuth {
   public constructor(private _config: AuthSdkConfig) {}
 
   public static REDIRECT_KEY = 'BindOAuthRedirectUrl';

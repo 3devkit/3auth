@@ -53,7 +53,7 @@ export class TwitterParamVo extends ParamVo {
     return !!this.dto.oauth_token && !!this.dto.oauth_verifier;
   }
 
-  public getBindParam() {
+  public getBindParam(): BindTwitterProps {
     return {
       oauth_token: this.dto.oauth_token!,
       oauth_verifier: this.dto.oauth_verifier!,

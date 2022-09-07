@@ -50,7 +50,7 @@ export class DiscordParamVo extends ParamVo {
     return !!this.dto.code && !!this.dto.state;
   }
 
-  public getBindParam() {
+  public getBindParam(): BindDiscordProps {
     return {
       code: this.dto.code!,
       state: this.dto.state!,
