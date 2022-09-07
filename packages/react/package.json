@@ -1,6 +1,6 @@
 {
   "name": "@3auth/react",
-  "version": "0.0.62",
+  "version": "0.0.63",
   "description": "wallet login",
   "author": "WEB3.WALLE <web3.walle@gmail.com>",
   "homepage": "",
@@ -21,11 +21,11 @@
   },
   "gitHead": "fe75cc5f7a4943c4dcb69452b43f3e940e5f3ab0",
   "dependencies": {
-    "@3auth/auth": "^0.0.62",
-    "@3auth/core": "^0.0.62",
-    "@3auth/helpers": "^0.0.62",
-    "@3auth/plugin-walletsign": "^0.0.62",
-    "@3auth/react-ui": "^0.0.62",
+    "@3auth/auth": "^0.0.63",
+    "@3auth/core": "^0.0.63",
+    "@3auth/helpers": "^0.0.63",
+    "@3auth/plugin-walletsign": "^0.0.63",
+    "@3auth/react-ui": "^0.0.63",
     "@3walletconnector/react": "^0.0.49"
   }
 }
