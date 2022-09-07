@@ -30,7 +30,7 @@ export class AuthSdk {
 
     this.loginLauncher = new LoginLauncherSdk(
       this._serverAdapter,
-      this.config.namespaces,
+      this.config.namespace,
     );
 
     this.plugins = new Plugins(this.loginLauncher);
@@ -152,7 +152,7 @@ export class AuthSdk {
     return this.loginLauncher.authTokenRepo.get();
   }
 
-  public static getCookies(namespaces: string = '') {
-    return LoginLauncherSdk.getCookies(namespaces);
+  public static getCookies(namespace: string = '') {
+    return LoginLauncherSdk.getCookies(namespace);
   }
 }

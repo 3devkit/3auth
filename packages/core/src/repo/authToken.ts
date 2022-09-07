@@ -12,8 +12,8 @@ interface Token {
 export class AuthTokenRepo {
   private AUTH_TOKEN_KEY: string;
 
-  public constructor(namespaces: String) {
-    this.AUTH_TOKEN_KEY = namespaces + '_USER';
+  public constructor(namespace: String) {
+    this.AUTH_TOKEN_KEY = namespace + '_USER';
   }
 
   public set(account: string, token: string) {

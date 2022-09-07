@@ -10,22 +10,22 @@ import {
 import { Class } from 'utility-types';
 
 interface Web3AuthProviderProps {
-  namespaces?: string;
+  namespace?: string;
 }
 
 export function Web3AuthProvider(
   props: React.PropsWithChildren<Web3AuthProviderProps>,
 ) {
-  const { namespaces } = props;
+  const { namespace } = props;
 
   const web3AuthProps = useWeb3AuthProps(props);
 
   return (
     <AuthProvider
       config={{
-        namespaces,
+        namespace,
         serverUrl: 'https://test-server.hipass.xyz',
-        isSignLogin: true,
+        isSignLogin: false,
       }}
       web3AuthProps={web3AuthProps}
     >
@@ -35,11 +35,11 @@ export function Web3AuthProvider(
 }
 
 function useWeb3AuthProps(props: Web3AuthProviderProps) {
-  const { namespaces } = props;
+  const { namespace } = props;
 
   const web3AuthProps = useMemo(() => {
     const configure: ConfigureParam = {
-      namespaces,
+      namespace,
       defaultConnectChainId: EthereumChainInfoHelper.getRinkeby().chainId,
       supportedEthereumChain: [
         EthereumChainInfoHelper.getMainnet(),

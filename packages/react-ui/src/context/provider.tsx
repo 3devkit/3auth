@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { createContext } from 'react';
 import { AuthSdk, AuthSdkConfigProps } from '@3auth/auth';
 import { MyInfoProvider } from './use-myInfo';

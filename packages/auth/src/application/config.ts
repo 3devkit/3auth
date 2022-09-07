@@ -1,18 +1,18 @@
 export interface AuthSdkConfigProps {
   isSignLogin: boolean;
   serverUrl: string;
-  namespaces?: string;
+  namespace?: string;
 }
 
 export class AuthSdkConfig {
   public isSignLogin: boolean;
   public serverUrl: string;
-  public namespaces: string;
+  public namespace: string;
 
   public constructor(props: AuthSdkConfigProps) {
-    const { isSignLogin, serverUrl, namespaces } = props;
+    const { isSignLogin, serverUrl, namespace } = props;
     this.isSignLogin = isSignLogin;
     this.serverUrl = serverUrl;
-    this.namespaces = namespaces ?? '';
+    this.namespace = namespace ?? '';
   }
 }

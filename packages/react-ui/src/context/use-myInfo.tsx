@@ -97,13 +97,11 @@ function MyInfoProviderByServer(props: React.PropsWithChildren<unknown>) {
 }
 
 function GET_SWR_KEY(auth: AuthSdk) {
-  const namespaces = auth.config.namespaces;
+  const namespace = auth.config.namespace;
 
   const account = auth.loginState.account;
 
-  const key = `getMyInfo/${namespaces}/${account}`;
-
-  return key;
+  return `getMyInfo/${namespace}/${account}`;
 }
 
 function walletStateToUserInfo(walletState: WalletState): UserInfo {
@@ -117,8 +115,7 @@ function walletStateToUserInfo(walletState: WalletState): UserInfo {
 function useRefreshToken() {
   const auth = useAuth();
 
-  // const refreshInterval = 3600;
-  const refreshInterval = 10 * 60;
+  const refreshInterval = 3600;
 
   const getCurrTm = useMemoizedFn(() => {
     return Math.floor(new Date().valueOf() / 1000);

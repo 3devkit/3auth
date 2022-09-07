@@ -19,7 +19,7 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     super();
 
     this.httpClient = new HttpClient(config.serverUrl, () => {
-      return AuthSdk.getCookies(config.namespaces).token ?? '';
+      return AuthSdk.getCookies(config.namespace).token ?? '';
     });
   }
 

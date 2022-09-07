@@ -33,7 +33,7 @@ function PageConnent() {
 
       <div className="mt-3">
         <h3 className="mb-3">Login2</h3>
-        <Web3AuthProvider namespaces="app2">
+        <Web3AuthProvider namespace="app2">
           <Login />
         </Web3AuthProvider>
       </div>
