@@ -91,19 +91,14 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
   public async bindTwitter(
     oauth_token: string,
     oauth_verifier: string,
-  ): Promise<boolean> {
-    try {
-      await this.httpClient.get({
-        url: '/api/auth/twitter/callback',
-        params: {
-          oauth_token,
-          oauth_verifier,
-        },
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
+  ): Promise<void> {
+    await this.httpClient.get({
+      url: '/api/auth/twitter/callback',
+      params: {
+        oauth_token,
+        oauth_verifier,
+      },
+    });
   }
 
   public async reqDiscordLoginUrl(callbackUrl: string): Promise<string> {
@@ -117,19 +112,14 @@ export class Web3AuthServerAdapter extends AuthServerAdapter {
     return res.authorizationUrl as string;
   }
 
-  public async bindDiscord(state: string, code: string): Promise<boolean> {
-    try {
-      await this.httpClient.get({
-        url: '/api/auth/discord/callback',
-        params: {
-          state,
-          code,
-        },
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
+  public async bindDiscord(state: string, code: string): Promise<void> {
+    await this.httpClient.get({
+      url: '/api/auth/discord/callback',
+      params: {
+        state,
+        code,
+      },
+    });
   }
 
   public async removeBind(authProvider: OAuthProvider) {

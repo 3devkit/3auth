@@ -109,7 +109,9 @@ export class AuthSdk {
    * @returns
    */
   public async twitterLogin(callbackUrl: string = '/login/twitter/callback') {
-    return await new OAuthTwitterRepo(this._serverAdapter).login(callbackUrl);
+    return await new OAuthTwitterRepo(this.config, this._serverAdapter).login(
+      callbackUrl,
+    );
   }
 
   /**
@@ -118,7 +120,7 @@ export class AuthSdk {
    * @returns
    */
   public async bindTwitter(props: BindTwitterProps) {
-    return await new OAuthTwitterRepo(this._serverAdapter).bind(props);
+    await new OAuthTwitterRepo(this.config, this._serverAdapter).bind(props);
   }
 
   /**
@@ -127,7 +129,9 @@ export class AuthSdk {
    * @returns
    */
   public async discordLogin(callbackUrl: string = '/login/discord/callback') {
-    return await new OAuthDiscordRepo(this._serverAdapter).login(callbackUrl);
+    return await new OAuthDiscordRepo(this.config, this._serverAdapter).login(
+      callbackUrl,
+    );
   }
 
   /**
@@ -136,7 +140,7 @@ export class AuthSdk {
    * @returns
    */
   public async bindDiscord(props: BindDiscordProps) {
-    return await new OAuthDiscordRepo(this._serverAdapter).bind(props);
+    await new OAuthDiscordRepo(this.config, this._serverAdapter).bind(props);
   }
 
   /**

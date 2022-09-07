@@ -1,5 +1,5 @@
-import { Web3AuthServerAdapter } from '../application';
-import { OAuth } from './oAuth';
+import { AuthSdkConfig, Web3AuthServerAdapter } from '../application';
+import { OAuth, ParamVo } from './oAuth';
 
 export interface BindTwitterProps {
   oauth_token: string;
@@ -7,8 +7,11 @@ export interface BindTwitterProps {
 }
 
 export class OAuthTwitterRepo extends OAuth {
-  public constructor(private _serverAdapter: Web3AuthServerAdapter) {
-    super();
+  public constructor(
+    _config: AuthSdkConfig,
+    private _serverAdapter: Web3AuthServerAdapter,
+  ) {
+    super(_config);
   }
 
   public async login(callbackUrl: string): Promise<void> {
@@ -16,19 +19,44 @@ export class OAuthTwitterRepo extends OAuth {
 
     const authorizationUrl = await this._serverAdapter.reqTwitterLoginUrl(url);
 
-    this.saveCurrFromPageUrl();
+    this.beginLogin();
 
     location.href = authorizationUrl;
   }
 
-  public async bind(props: BindTwitterProps): Promise<string | null> {
-    const isSuccess = await this._serverAdapter.bindTwitter(
+  public async bind(props: BindTwitterProps) {
+    await this._serverAdapter.bindTwitter(
       props.oauth_token,
       props.oauth_verifier,
     );
 
-    if (!isSuccess) return null;
+    this.bindEnd();
+  }
+}
 
-    return this.getFromPageUrl();
+export interface TwitterParamDto {
+  oauth_token?: string;
+  oauth_verifier?: string;
+  denied?: string;
+}
+
+export class TwitterParamVo extends ParamVo {
+  public constructor(private dto: TwitterParamDto) {
+    super();
+  }
+
+  public get isDenied(): boolean {
+    return !!this.dto.denied;
+  }
+
+  public get isSuccess(): boolean {
+    return !!this.dto.oauth_token && !!this.dto.oauth_verifier;
+  }
+
+  public getBindParam() {
+    return {
+      oauth_token: this.dto.oauth_token!,
+      oauth_verifier: this.dto.oauth_verifier!,
+    };
   }
 }

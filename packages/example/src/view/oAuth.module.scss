@@ -1,0 +1,25 @@
+.Error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    margin-bottom: 30px;
+  }
+}
+
+.CallbackPage {
+  padding: 100px 0;
+
+  .loadingBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

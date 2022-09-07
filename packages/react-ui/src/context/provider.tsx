@@ -7,7 +7,6 @@ import {
   Web3AuthProvider,
   Web3AuthProviderProps,
 } from '@3walletconnector/react';
-import { ExModalProvider } from '@3lib/components';
 
 export const AuthContext = createContext<AuthSdk | null>(null);
 
@@ -23,9 +22,7 @@ export function AuthProvider(
 
   return (
     <Web3AuthProvider {...web3AuthProps}>
-      <AuthProviderConnent {...props}>
-        <ExModalProvider>{props.children}</ExModalProvider>
-      </AuthProviderConnent>
+      <AuthProviderConnent {...props}>{props.children}</AuthProviderConnent>
     </Web3AuthProvider>
   );
 }

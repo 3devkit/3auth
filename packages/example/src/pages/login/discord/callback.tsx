@@ -1,63 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-import { useAsyncEffect } from 'ahooks';
-import { useAuth, useMyInfo } from '@3auth/react';
+import { useAuth, DiscordParamDto, DiscordParamVo } from '@3auth/react';
+import { AuthWrapper, OAuthCallbackView, OAuthErrorInfo } from '@/view/oAuth';
 
 export default function Page() {
-  return <BindDiscordView />;
+  return <PageConnent />;
 }
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return <>{page}</>;
+  return <AuthWrapper>{page}</AuthWrapper>;
 };
+
+function PageConnent() {
+  const paramVo = useOAuthParam();
+
+  const auth = useAuth();
+
+  return (
+    <OAuthCallbackView
+      paramVo={paramVo}
+      onBindFun={async () => {
+        return await auth.bindDiscord(paramVo.getBindParam());
+      }}
+      onErrorText={(errorInfo: OAuthErrorInfo) => {
+        if (errorInfo.type === 'Denied') {
+          return 'You declined the authorization';
+        }
+        switch (errorInfo.error.code) {
+          case 70:
+            return 'The discord has been bound to another wallet address and cannot be bound repeatedly';
+          default:
+            return errorInfo.error.message;
+        }
+      }}
+    />
+  );
+}
 
 export const useOAuthParam = () => {
   const router = useRouter();
 
-  return router.query as {
-    state: string;
-    code: string;
-  };
+  const dto = router.query as DiscordParamDto;
+
+  return new DiscordParamVo(dto);
 };
-
-function BindDiscordView() {
-  const router = useRouter();
-
-  const param = useOAuthParam();
-
-  const isParamError = !param.state || !param.code;
-
-  const auth = useAuth();
-
-  const [loading, setIsLoading] = useState<boolean>(false);
-
-  const [bindStatus, setBindStatus] = useState<'success' | 'error'>();
-
-  const { reload } = useMyInfo();
-
-  useAsyncEffect(async () => {
-    if (isParamError) return;
-
-    setIsLoading(true);
-
-    const redirectUrl = await auth.bindDiscord(param);
-
-    setBindStatus(redirectUrl ? 'success' : 'error');
-
-    reload();
-
-    setIsLoading(false);
-
-    if (redirectUrl) {
-      router.replace(redirectUrl);
-    }
-  }, [auth, param, isParamError]);
-
-  if (isParamError) return <>Param Error</>;
-
-  if (bindStatus === 'error') return <>Bind Error</>;
-
-  if (loading) return <>loading...</>;
-
-  return <></>;
-}

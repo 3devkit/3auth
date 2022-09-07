@@ -14,14 +14,18 @@ export abstract class AuthServerAdapter {
     wallet: string,
   ): Promise<AuthToken>;
 
-  public abstract reqTwitterLoginUrl(callbackUrl: string): Promise<string>;
-
   public abstract getMyInfo(): Promise<UserInfoDto>;
 
   public abstract updateUserInfo(dto: ChangeUserInfoDto): Promise<boolean>;
 
+  public abstract reqTwitterLoginUrl(callbackUrl: string): Promise<string>;
+
   public abstract bindTwitter(
     oauth_token: string,
     oauth_verifier: string,
-  ): Promise<boolean>;
+  ): Promise<void>;
+
+  public abstract reqDiscordLoginUrl(callbackUrl: string): Promise<string>;
+
+  public abstract bindDiscord(state: string, code: string): Promise<void>;
 }

@@ -25,7 +25,7 @@ export function Web3AuthProvider(
       config={{
         namespace,
         serverUrl: 'https://test-server.hipass.xyz',
-        isSignLogin: false,
+        isSignLogin: true,
       }}
       web3AuthProps={web3AuthProps}
     >

@@ -1,5 +1,5 @@
-import { Web3AuthServerAdapter } from '../application';
-import { OAuth } from './oAuth';
+import { AuthSdkConfig, Web3AuthServerAdapter } from '../application';
+import { OAuth, ParamVo } from './oAuth';
 
 export interface BindDiscordProps {
   state: string;
@@ -7,8 +7,11 @@ export interface BindDiscordProps {
 }
 
 export class OAuthDiscordRepo extends OAuth {
-  public constructor(private _serverAdapter: Web3AuthServerAdapter) {
-    super();
+  public constructor(
+    _config: AuthSdkConfig,
+    private _serverAdapter: Web3AuthServerAdapter,
+  ) {
+    super(_config);
   }
 
   public async login(callbackUrl: string): Promise<void> {
@@ -16,19 +19,41 @@ export class OAuthDiscordRepo extends OAuth {
 
     const authorizationUrl = await this._serverAdapter.reqDiscordLoginUrl(url);
 
-    this.saveCurrFromPageUrl();
+    this.beginLogin();
 
     location.href = authorizationUrl;
   }
 
-  public async bind(props: BindDiscordProps): Promise<string | null> {
-    const isSuccess = await this._serverAdapter.bindDiscord(
-      props.state,
-      props.code,
-    );
+  public async bind(props: BindDiscordProps) {
+    await this._serverAdapter.bindDiscord(props.state, props.code);
 
-    if (!isSuccess) return null;
+    this.bindEnd();
+  }
+}
 
-    return this.getFromPageUrl();
+export interface DiscordParamDto {
+  code?: string;
+  state?: string;
+  error?: string;
+}
+
+export class DiscordParamVo extends ParamVo {
+  public constructor(private dto: DiscordParamDto) {
+    super();
+  }
+
+  public get isDenied(): boolean {
+    return this.dto.error === 'access_denied';
+  }
+
+  public get isSuccess(): boolean {
+    return !!this.dto.code && !!this.dto.state;
+  }
+
+  public getBindParam() {
+    return {
+      code: this.dto.code!,
+      state: this.dto.state!,
+    };
   }
 }

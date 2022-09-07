@@ -1,15 +1,40 @@
+import { AuthSdkConfig } from '../application';
+
+export interface BindInfo {
+  redirectUrl: string;
+  namespace: string;
+}
+
 export abstract class OAuth {
-  public static KEY = 'BindOAuthRedirectUrl';
+  public constructor(private _config: AuthSdkConfig) {}
 
-  protected saveCurrFromPageUrl() {
-    localStorage.setItem(OAuth.KEY, location.href);
+  public static REDIRECT_KEY = 'BindOAuthRedirectUrl';
+  public static NAMESPACE_KEY = 'BindOAuthNamespace';
+
+  public static getBindNamespace(): string | undefined {
+    return localStorage.getItem(OAuth.NAMESPACE_KEY) ?? undefined;
   }
 
-  protected getFromPageUrl(): string {
-    const redirectUrl = localStorage.getItem(OAuth.KEY) ?? '/';
-
-    localStorage.removeItem(OAuth.KEY);
-
-    return redirectUrl;
+  public static getRedirectUrl(): string {
+    return localStorage.getItem(OAuth.REDIRECT_KEY) ?? '/';
   }
+
+  protected beginLogin() {
+    localStorage.setItem(OAuth.REDIRECT_KEY, location.href);
+    localStorage.setItem(OAuth.NAMESPACE_KEY, this._config.namespace);
+  }
+
+  protected bindEnd(): string {
+    localStorage.removeItem(OAuth.REDIRECT_KEY);
+    localStorage.removeItem(OAuth.NAMESPACE_KEY);
+    return OAuth.getRedirectUrl();
+  }
+}
+
+export abstract class ParamVo {
+  public abstract get isDenied(): boolean;
+
+  public abstract get isSuccess(): boolean;
+
+  public abstract getBindParam(): Record<any, any>;
 }
