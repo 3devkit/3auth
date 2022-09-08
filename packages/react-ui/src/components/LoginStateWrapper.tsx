@@ -1,5 +1,4 @@
 import React from 'react';
-import { ExModalProvider } from '@3lib/components';
 import { UserInfo } from '@3auth/core';
 import { useAuth, useLoginState } from '@3auth/react';
 import { AuthSdk } from '@3auth/auth';
@@ -22,11 +21,7 @@ export interface LoginStateWrapperProps {
 }
 
 export function LoginStateWrapper(props: LoginStateWrapperProps) {
-  return (
-    <ExModalProvider>
-      <LoginStateContent {...props} />
-    </ExModalProvider>
-  );
+  return <LoginStateContent {...props} />;
 }
 
 function LoginStateContent(props: LoginStateWrapperProps) {

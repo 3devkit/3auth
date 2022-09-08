@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { LoginBox } from '@/view/LoginBox';
 import {
@@ -10,6 +10,7 @@ import {
 import { useAuth, useLoginState, useMyInfo } from '@3auth/react-ui';
 import { Web3AuthProvider } from '@/view/AuthProvider';
 import { OAuthProvider } from '@3auth/auth';
+import { MetamaskConnector } from '@3walletconnector/react';
 
 export default function Page() {
   return <PageConnent />;
@@ -34,15 +35,27 @@ function PageConnent() {
       <div className="mt-3">
         <h3 className="mb-3">Login2</h3>
         <Web3AuthProvider namespace="app2">
-          <Login />
+          <Login2 />
         </Web3AuthProvider>
       </div>
     </Container>
   );
 }
 
+function Login2() {
+  const auth = useAuth();
+
+  useMemo(() => {
+    auth.walletConnector.setConnectors([MetamaskConnector]);
+  }, [auth]);
+
+  return <Login />;
+}
+
 function Login() {
   const { isLogged } = useLoginState();
+
+  const auth = useAuth();
 
   return (
     <>

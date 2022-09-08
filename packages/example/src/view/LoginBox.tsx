@@ -1,9 +1,11 @@
-import { LoginStateWrapper } from '@3auth/react';
+import { LoginStateWrapper, useLoginAction } from '@3auth/react';
 import { ExButton, ExLoading, ExPopover, ExPopoverBox } from '@3lib/components';
 import { StyleHelper } from '@3lib/helpers';
 import styles from './LoginBox.module.scss';
 
 export function LoginBox() {
+  const { openLoginDialog } = useLoginAction();
+
   return (
     <LoginStateWrapper
       onLoadingBuilder={() => {
@@ -49,7 +51,7 @@ export function LoginBox() {
         );
       }}
       onNotLoggedBuilder={context => {
-        return <ExButton onClick={context.openLoginDialog}>Login</ExButton>;
+        return <ExButton onClick={openLoginDialog}>Login</ExButton>;
       }}
     />
   );

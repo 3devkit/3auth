@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { createContext } from 'react';
 import { AuthSdk, AuthSdkConfigProps } from '@3auth/auth';
 import { MyInfoProvider } from './use-myInfo';
+import { ExModalProvider } from '@3lib/components';
 import {
   useWalletConnector,
   Web3AuthProvider,
@@ -22,7 +23,9 @@ export function AuthProvider(
 
   return (
     <Web3AuthProvider {...web3AuthProps}>
-      <AuthProviderConnent {...props}>{props.children}</AuthProviderConnent>
+      <AuthProviderConnent {...props}>
+        <ExModalProvider>{props.children}</ExModalProvider>
+      </AuthProviderConnent>
     </Web3AuthProvider>
   );
 }
