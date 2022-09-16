@@ -11,6 +11,7 @@ import { useAuth, useLoginState, useMyInfo } from '@3auth/react-ui';
 import { Web3AuthProvider } from '@/view/AuthProvider';
 import { OAuthProvider } from '@3auth/auth';
 import { MetamaskConnector } from '@3walletconnector/react';
+import { useUpdate } from 'ahooks';
 
 export default function Page() {
   return <PageConnent />;
@@ -54,8 +55,6 @@ function Login2() {
 
 function Login() {
   const { isLogged } = useLoginState();
-
-  const auth = useAuth();
 
   return (
     <>
